@@ -39,6 +39,11 @@ class AbstractPerson
      */
     private $isPresenter;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +93,18 @@ class AbstractPerson
     public function setIsPresenter(bool $isPresenter): self
     {
         $this->isPresenter = $isPresenter;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

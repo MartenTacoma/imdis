@@ -75,19 +75,12 @@ class Person
      */
     // private $account;
 
-    /**
-     * @ORM\OneToMany(targetEntity=CommitteePerson::class, mappedBy="person", orphanRemoval=true)
-     */
-    private $committee;
-    
-
 
     public function __construct()
     {
         $this->abstracts = new ArrayCollection();
         $this->session = new ArrayCollection();
         $this->presentation = new ArrayCollection();
-        $this->committee = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -271,35 +264,5 @@ class Person
     
     public function __toString(){
         return $this->name;
-    }
-
-    /**
-     * @return Collection|CommitteePerson[]
-     */
-    public function getCommittee(): Collection
-    {
-        return $this->committee;
-    }
-
-    public function addCommittee(CommitteePerson $committee): self
-    {
-        if (!$this->committee->contains($committee)) {
-            $this->committee[] = $committee;
-            $committee->setPerson($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommittee(CommitteePerson $committee): self
-    {
-        if ($this->committee->removeElement($committee)) {
-            // set the owning side to null (unless already changed)
-            if ($committee->getPerson() === $this) {
-                $committee->setPerson(null);
-            }
-        }
-
-        return $this;
     }
 }

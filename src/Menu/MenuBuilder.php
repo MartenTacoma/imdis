@@ -70,18 +70,16 @@ class MenuBuilder
         
         $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
         
-        $menu[$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
-        
         $menu[$infoLabel]->addChild('Previous editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
+        
         $menu[$infoLabel]['Previous editions']->setLinkAttribute('target', '_blank');
         
         
         if ($this->auth->isGranted('ROLE_ADMIN')) {
+            $menu->addChild('Registrations', ['route'=>'user_index']);
             $menu->addChild('Admin', ['route'=>'admin']);
-            if ($this->auth->isGranted('ROLE_SUPER_ADMIN')) {
-                $menu['Admin']->addChild('Users', ['route'=>'user_index']);
-            }
-            $menu['Admin']->addChild('Edit People', ['route'=>'person_index']);
+            $menu['Admin']->addChild('Registrations', ['route'=>'user_index']);
+            $menu['Admin']->addChild('Edit People (for abstracts/presentations/posters)', ['route'=>'person_index']);
             $menu['Admin']->addChild('Edit Abstracts', ['route'=>'imdis_abstract_manage']);
             $menu['Admin']->addChild('Edit program', ['route'=>'program_block_index']);
             $menu['Admin']->addChild('Edit posters', ['route'=>'poster_manage']);
