@@ -20,9 +20,7 @@
 <table>
 <thead><tr><th>Start</th><th>Title / theme</th><th>Chairs</th><th>Actions</th></tr></thead>
 {% for session in program_block.session %}
-<tr><td>{{session.TimeStart|date('H:i') }}</td><td>{{session.title ?? session.theme.title}}</td><td>
-{% for chair in session.chair %}{% if not loop.first %}, {% endif %}{{chair.person.name}}{% endfor %}
-</td><td><button onclick="window.location.href='{{ path('program_session_show', {'id': session.id}) }}'">view</button> <button onclick="window.location.href='{{ path('program_session_edit', {'id': session.id}) }}'"><span class="icon-pencil"></span>edit</button></td></tr>
+<tr><td>{{session.TimeStart|date('H:i') }}</td><td>{{session.title ?? session.theme.title}}</td><td>{{ session.chair|join(', ')}}</td><td><button onclick="window.location.href='{{ path('program_session_show', {'id': session.id}) }}'">view</button> <button onclick="window.location.href='{{ path('program_session_edit', {'id': session.id}) }}'"><span class="icon-pencil"></span>edit</button></td></tr>
 {% endfor %}
 </table>
 <button onclick="window.location.href='{{ path('program_block_session', {'id': program_block.id}) }}'"><span class="icon-plus"></span> Add session</button>

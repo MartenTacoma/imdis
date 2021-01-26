@@ -24,12 +24,6 @@ class SessionChair
     private $session;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="session")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $person;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $sort;
@@ -56,18 +50,6 @@ class SessionChair
         return $this;
     }
 
-    public function getPerson(): ?Person
-    {
-        return $this->person;
-    }
-
-    public function setPerson(?Person $person): self
-    {
-        $this->person = $person;
-
-        return $this;
-    }
-
     public function getSort(): ?int
     {
         return $this->sort;
@@ -81,7 +63,7 @@ class SessionChair
     }
     
     public function __toString(){
-        return $this->person->__toString();
+        return $this->name;
     }
 
     public function getName(): ?string

@@ -40,14 +40,7 @@
                             {%- if person.isPresenter %}
                                 <span class="speaker">
                             {%- endif %}
-                            {%- if person.person.orcid %}
-                                <a href="https://orcid.org/{{ author.orcid }}">
-                            {%- endif %}
-                            {{ person.person.name }}
-                            {# <sup>{{ person.person.affiliation }}</sup> #}
-                            {%- if person.person.orcid %}
-                                <span class="icon-orcid"></span></a>
-                            {%- endif %}
+                            {{ person.name }}
                             {%- if person.isPresenter %}
                                 </span>
                             {%- endif %}

@@ -12,7 +12,7 @@ class AbstractPersonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('person')
+            ->add('name')
             ->add('sort')
             ->add('isPresenter')
         ;

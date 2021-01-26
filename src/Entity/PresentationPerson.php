@@ -24,12 +24,6 @@ class PresentationPerson
     private $presentation;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="presentation")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $person;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $sort;
@@ -57,18 +51,6 @@ class PresentationPerson
     public function setPresentation(?Presentation $presentation): self
     {
         $this->presentation = $presentation;
-
-        return $this;
-    }
-
-    public function getPerson(): ?Person
-    {
-        return $this->person;
-    }
-
-    public function setPerson(?Person $person): self
-    {
-        $this->person = $person;
 
         return $this;
     }

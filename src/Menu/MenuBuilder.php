@@ -79,7 +79,6 @@ class MenuBuilder
             $menu->addChild('Registrations', ['route'=>'user_index']);
             $menu->addChild('Admin', ['route'=>'admin']);
             $menu['Admin']->addChild('Registrations', ['route'=>'user_index']);
-            $menu['Admin']->addChild('Edit People (for abstracts/presentations/posters)', ['route'=>'person_index']);
             $menu['Admin']->addChild('Edit Abstracts', ['route'=>'imdis_abstract_manage']);
             $menu['Admin']->addChild('Edit program', ['route'=>'program_block_index']);
             $menu['Admin']->addChild('Edit posters', ['route'=>'poster_manage']);

@@ -24,12 +24,6 @@ class AbstractPerson
     private $abstract;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="abstracts")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $person;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $sort;
@@ -57,18 +51,6 @@ class AbstractPerson
     public function setAbstract(?ImdisAbstract $abstract): self
     {
         $this->abstract = $abstract;
-
-        return $this;
-    }
-
-    public function getPerson(): ?Person
-    {
-        return $this->person;
-    }
-
-    public function setPerson(?Person $person): self
-    {
-        $this->person = $person;
 
         return $this;
     }

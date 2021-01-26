@@ -12,7 +12,7 @@ class SessionChairType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('person')
+            ->add('name')
             ->add('sort')
         ;
     }
