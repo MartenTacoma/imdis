@@ -1,0 +1,45 @@
+form {
+    > div {
+        margin-bottom: 10px;
+    }
+    label {
+        width: 140px;
+        display: inline-block;
+        &:after {
+            // content: ':';
+        }
+        &.required {
+            font-weight: bold;
+        }
+    }
+    
+    .errors {
+        color: #ff4444;
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    select, input {
+        margin-bottom: 3px;
+    }
+    ul {
+        padding-left: 0px;
+        li {
+            list-style: none;
+            clear: left;
+            div {
+                float: left;
+                label {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+.controls > button {
+    float: left;
+}
+
+.formEnd {
+    display: none;
+}

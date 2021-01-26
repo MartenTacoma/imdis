@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'New session in block ' ~ program_session.block %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+
+{% block body %}
+    {{ include('program_session/_form.html.twig') }}
+{% endblock %}

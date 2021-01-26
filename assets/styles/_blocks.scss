@@ -1,0 +1,139 @@
+.content {
+    max-width: 1400px;
+    margin: 0px auto;
+    .cols {
+        display: flex;
+        flex-flow: row-reverse;
+        gap: 15px;
+        .side {
+            .sticky {
+                position: sticky;
+                top: 61px;
+                > div {
+                    padding: 10px;
+                    background: $line-color;
+                    margin-top: 15px;
+                    h4 {
+                        margin: 0px;
+                        margin-bottom: 5px;
+                    }
+                    ul {
+                        margin: 0px;
+                        padding: 0px;
+                        li {
+                            list-style: none;
+                        }
+                    }
+                }
+            }
+            @media screen and (min-width: $desktop) {
+                width: 30%;
+                min-width: 250px;
+                max-width: 500px;
+                flex-shrink: 0;
+            }
+        }
+        .main {
+            width: 100%;
+        }
+        @media screen and (max-width: $mobile) {
+            display: block;
+        }
+    }
+}
+#top {
+    background: $blue;
+    color: white;
+    padding: 20px 10px;
+    img {
+        float: left;
+        margin-right: 10px;
+        max-width: 25vw;
+    }
+   
+    span {
+        display: block;
+    }
+    .period {
+        font-style: italic;
+    }
+    .tagline {
+        clear: both;
+        @media screen and (max-width: 520px){
+            font-size: 3.1vw;
+        }
+    }
+    
+    .session {
+        float: right;
+        a {
+            color: white;
+        }
+    }
+}
+
+#content {
+    padding: 10px 20px;
+    margin: 0px auto;
+    padding-bottom: 20px;
+    @media screen and (max-width: $mobile){
+        padding: 10px;
+    }
+    .timezone {
+        font-style: italic;
+        position: sticky;
+        top: 41px;
+        background-color: white;
+        z-index: 9;
+        padding-top: 2px;
+    }
+}
+
+#foot {
+    background: $blue;
+    color: white;
+    padding: 10px;
+    font-size: 0.8em;
+    > div {
+        display: flex;
+        flex-flow: row wrap;
+        > div {
+            flex-grow: 1;
+            &:not(:first-child){
+                border-left: solid 1px rgba(255,255,255,0.75);
+                padding-left: 10px;
+                margin-left: 10px;
+            }
+        }
+    }
+    .header {
+        font-size: 1rem;
+    }
+    a {
+        color: white;
+    }
+    #bottomMenu {
+        ul {
+            padding-left: 10px;
+            li {
+                list-style: none;
+            }
+        }
+    }
+    #partners {
+        .grid {
+            display: flex;
+            flex-flow: row wrap;
+            background: $darkblue;
+            padding: 5px;
+            margin: 10px;
+            .partner {
+                flex-grow: 1;
+                img {
+                    max-width: 116px;
+                    max-height: 255px;
+                }
+            }
+        }
+    }
+}

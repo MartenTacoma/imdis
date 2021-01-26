@@ -1,0 +1,46 @@
+$link-color: #1a75ae;
+$text-color: #333;
+$line-color: #e3e3e3;
+$na-color: #999;
+$blue: #093564;
+$darkblue: #062240;
+$accentcolor: #fceb2e;
+
+$mobile: 799px;
+$desktop: $mobile + 1;
+
+* {
+    box-sizing: border-box;
+}
+html, body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: $text-color;
+}
+
+h1 {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-size: 2em;
+}
+
+
+h2 {
+    color: $darkblue;
+}
+
+a {
+    color: $link-color;
+    text-decoration: underline dotted;
+}
+
+.clear {
+    clear: both;
+}
+
+@import '_menu.scss';
+@import '_blocks.scss';
+@import '_main.scss';
+@import '_form.scss';
+@import '_pages.scss';

@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+Block usualy shouldn't be editted
+    {{ form_row(form.block) }}
+    {{ form_row(form.time_start) }}
+
+<div class="choice">
+When theme is selected title is ignored
+    {{ form_row(form.title) }}
+    {{ form_row(form.theme) }}
+</div>
+    <strong>Chairs (name | sort):</strong>
+    <ul class="subform chair" data-prototype="{{ form_widget(form.chair.vars.prototype)|e('html_attr') }}">
+    {% for chair in form.chair %}
+    <li>{{ form_row(chair) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="chair"><span class="icon-plus"></span> Add a chair</button>
+    <br/><br/>
+    <button class="btn"><span class="icon-floppy-disk"></span> {{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

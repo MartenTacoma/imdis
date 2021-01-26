@@ -1,0 +1,15 @@
+.committees {
+    display: flex;
+    gap: 20px;
+    line-height: 1.5em;
+    > div {
+        flex-grow: 1;
+    }
+    ul {
+        list-style: none;
+        padding-left: 0px;
+    }
+    @media screen and (max-width: $mobile){
+        display: block;
+    }
+}

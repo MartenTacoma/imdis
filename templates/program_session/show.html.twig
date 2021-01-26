@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Session ' ~ program_session %}
+
+{% block body %}
+<p><a href="{{ path('program_block_show', {'id': program_session.block.id}) }}">Back to block</a></p>
+<div class="controls"><button onclick="window.location.href='{{ path('program_session_edit', {'id': program_session.id}) }}'"><span class="icon-pencil"></span> Edit</button> {{ include('program_session/_delete_form.html.twig') }}</div>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Title</th>
+            <td>{{ program_session.title }}</td>
+        </tr>
+        <tr>
+            <th>Theme</th>
+            <td>{{ program_session.theme }}</td>
+        </tr>
+        <tr>
+            <th>Start time</th>
+            <td>{{ program_session.TimeStart|date('H:i') }}</td>
+        </tr>
+        <tr>
+            <th>Chairs</th>
+            <td>{% for chair in program_session.chair %}{% if not loop.first %}<br/>{% endif %}{{chair}}{% endfor %}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Presentation</h3>
+Poster sessions and breaks also can be inserted as presentation
+<table>
+<thead><tr><th>Time</th><th>Type</th><th>Title</th><th>Presenter</th><th>Actions</th></tr></thead>
+{% for presentation in program_session.presentations %}
+    <tr><td>{{presentation.TimeStart|date('H:i') }}</td><td>{{presentation.theTitle}}</td><td>
+    </td>
+    <td><button onclick="window.location.href='{{ path('presentation_edit', {'id': presentation.id}) }}'"><span class="icon-pencil"></span> edit</button></td>
+    </tr>
+{% endfor %}
+</table>
+<button onclick="window.location.href='{{ path('presentation_new', {'id': program_session.id}) }}'"><span class="icon-plus"></span> Add presentation</button>
+{% endblock %}

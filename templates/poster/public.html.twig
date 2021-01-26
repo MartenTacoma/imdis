@@ -1,0 +1,124 @@
+{% extends "page_cols.html.twig" %}
+
+{% set pagetitle = 'Posters' %}
+
+{% block head %}
+    <div class="timezone"><span class="icon-clock"></span> All times are listed in CET (UTC+1)</div>
+{% endblock %}
+
+{% block side %}
+    <div class="sticky">
+    {% if is_granted('ROLE_MANAGER') %}
+        <div><h4>Maintainance <span class="icon-lock"></span></h4><ul>
+        <li><a href="{{path('poster_manage')}}">Edit posters</a></li>
+        {% if is_granted('ROLE_ADMIN') %}
+        <li><a href="{{path('poster_session_index')}}">Edit poster sessions</a></li>
+        {% endif %}
+        </ul></div>
+    {% endif %}
+        <div><h4>Blocks</h4><ul>
+        {% for block in posters %}
+            <li><a href="#{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}">{{ block }}</a></li>
+        {% endfor %}
+        </ul></div>
+
+        <div><span class="icon-video-camera"></span> All authors have been given the option to record a video to present their poster.<br/>
+            <span class="icon-bubble"></span> Using this link you can leave comments on the poster on Google Drive. Please leave your name with your comments.<br/>
+            <span class="icon-users"></span> At the timeslot indicated there will be a dedicated online meeting room per poster.</div>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <div class="posters">
+    {% for block in posters %}
+    <div class="anchor{% if loop.first %} first{%endif%}"><a name="{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}"></div></a><div class="day"><h3>{{ block.date|date('l d F') }} | {% for theme in block.theme %}{% if not loop.first %} / {% endif %}{{theme}}{% endfor %}</h3><span class="time">{{ block.TimeStart|date('H:i') }}</span> - <span class="time">{{ block.TimeEnd|date('H:i') }}</span></div>
+    {% for poster in block.posters %}
+        <div class="poster">
+            <div class="main">
+                <div class="id"><a href="/poster/{{ poster.id }}">#{{ poster.abstract.ImdisId }}</a></div>
+                <div class="title">{{ poster.abstract.title }}</div>
+                <div class="authors">{% apply spaceless %}
+                    {%- for person in  poster.abstract.people %}
+                        {%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}
+                            {%- if person.isPresenter %}
+                                <span class="speaker">
+                            {%- endif %}
+                            {%- if person.person.orcid %}
+                                <a href="https://orcid.org/{{ author.orcid }}">
+                            {%- endif %}
+                            {{ person.person.name }}
+                            {# <sup>{{ person.person.affiliation }}</sup> #}
+                            {%- if person.person.orcid %}
+                                <span class="icon-orcid"></span></a>
+                            {%- endif %}
+                            {%- if person.isPresenter %}
+                                </span>
+                            {%- endif %}
+                        {% endfor %}
+                    
+                {% endapply %}</div>
+                <div class="abstract">{{ poster.abstract.abstract }}</div>
+            </div>
+            {% if not (poster.PreviewUrl or poster.DownloadUrl) %}
+                <div class="preview noposter"></div>
+            {% else %}
+                <div class="preview">
+                {% if poster.PreviewUrl %}
+                    <img src="/img/poster/{{ poster.PreviewUrl }}" />
+                {% else %}
+                    No preview available
+                {% endif %}
+                {% if poster.DownloadUrl %}
+                    <a href="{{ poster.DownloadUrl }}"><span class="icon-download3"></span> <span>Download poster</span></a>
+                {% else %}
+                    No download available
+                {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="interactive">
+            {% if poster.VideoUrl %}
+                <div class="video">
+                    <a href="{{ poster.VideoUrl }}">
+                        <span class="icon-video-camera"></span>
+                        <span class="label">Video presentation</span>
+                    </a>
+                </div>
+            {% else %}
+                <div class="video none">
+                    <span class="icon-video-camera"></span>
+                    <span class="label">Video presentation</span>
+                </div>
+            {% endif %}
+            {% if poster.CommentUrl %}
+                <div class="comment">
+                    <a href="{{ poster.CommentUrl }}">
+                        <span class="icon-bubble"></span>
+                        <span class="label">Comments</span>
+                    </a>
+                </div>
+            {% else %}
+                <div class="comment none">
+                    <span class="icon-bubble"></span>
+                    <span class="label">Comments</span>
+                </div>
+            {% endif %}
+            {% if poster.SessionUrl %}
+                <div class="discussion">
+                    <a href="{{ poster.SessionUrl }}">
+                        <span class="icon-users"></span>
+                        <span class="label">Virtual discussion ({{ poster.PosterSession.date|date('d F') }}, <span class="time">{{ poster.PosterSession.TimeStart|date('H:i') }}</span>-<span class="time">{{ poster.PosterSession.TimeEnd|date('H:i') }}</span>)</span>
+                        <span class="mobiletime">{{ poster.PosterSession.date|date('d F') }}<br/><span class="time">{{ poster.PosterSession.TimeStart|date('H:i') }}</span>-<span class="time">{{ poster.PosterSession.TimeEnd|date('H:i') }}</span></span>
+                    </a>
+                </div>
+            {% else %}
+                <div class="discussion none">
+                    <span class="icon-users"></span>
+                    <span class="label">Virtual discussion</span>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    {% endfor %}
+    </div>
+{% endblock %}

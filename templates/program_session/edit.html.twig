@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Edit program session' %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+{% block body %}
+    <a href="{{ path('program_block_show', {'id': program_session.block.id}) }}">Back to block</a>
+    {{ include('program_session/_form.html.twig', {'button_label': 'Save'}) }}
+
+    
+    {{ include('program_session/_delete_form.html.twig') }}
+{% endblock %}

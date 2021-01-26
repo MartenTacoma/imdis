@@ -1,0 +1,17 @@
+{%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}
+{%- if author.corresponding %}
+    <span class="corresponding">
+{%- endif %}
+{%- if author.speaker %}
+    <span class="speaker">
+{%- endif %}
+{%- if author.orcid %}
+    <a href="https://orcid.org/{{ author.orcid }}">
+{%- endif %}
+{{ author.name }}<sup>{{ author.affiliation }}</sup>
+{%- if author.orcid %}
+    <span class="icon-orcid"></span></a>
+{%- endif %}
+{%- if author.corresponding or author.speaker %}
+    </span>
+{%- endif %}

@@ -1,0 +1,41 @@
+{{ form_start(form) }}
+    {{form_row(form.program_session)}}
+    {{form_row(form.time_start)}}
+    {{form_row(form.type)}}
+
+<div class="togglefield field_abstract">{{form_row(form.abstract)}}</div>
+<div class="togglefield field_title">{{form_row(form.title)}}</div>
+<div class="togglefield field_video_url">{{form_row(form.video_url)}}</div>
+<div class="togglefield field_poster_session">{{form_row(form.poster_session)}}</div>
+<div class="togglefield field_presentation_people field_multi">
+<strong>People (name | sort | is presenting)</strong>
+    <ul class="subform people" data-prototype="{{ form_widget(form.presentationPeople.vars.prototype)|e('html_attr') }}">
+    {% for chair in form.presentationPeople %}
+    <li>{{ form_row(chair) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="people"><span class="icon-plus"></span> Add a person</button>
+    </div>
+    <br/><br/>
+    <button class="btn"><span class="icon-floppy-disk"></span> {{ button_label|default('Save') }}</button>
+    <div class="formEnd">
+{{ form_end(form) }}
+</div>
+
+<script type="text/javascript">
+var typeField = 'presentation_type';
+var fields = {
+{% for type in types %}
+{% if not loop.first %}, {% endif %}
+    '{{type.id}}': {'required':[
+    {% for field in type.FieldsRequired %}{% if not loop.first %}, {% endif %}
+        '{{field}}'
+    {% endfor %}
+    ], 'not_allowed':[
+    {% for field in type.FieldsNotAllowed %}
+    {% if not loop.first %}, {% endif %}
+        '{{field}}'
+    {% endfor %}
+    ]}
+{% endfor %}
+}
+</script>

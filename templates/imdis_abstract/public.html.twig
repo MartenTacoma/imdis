@@ -1,0 +1,66 @@
+{% extends "page_cols.html.twig" %}
+
+{% set pagetitle = 'Abstracts' %}
+
+{% block head %}
+    <div class="timezone"><span class="icon-clock"></span> All times are listed in CET (UTC+1)</div>
+{% endblock %}
+
+{% block side %}
+    <div class="sticky">
+    {% if is_granted('ROLE_MANAGER') %}
+        <div><h4>Maintainance <span class="icon-lock"></span></h4><ul>
+        <li><a href="{{path('imdis_abstract_manage')}}">Edit abstracts</a></li>
+        </ul></div>
+    {% endif %}
+    <div>
+    <h4>Sessions</h4>
+    <ul>
+    {% for theme in themes %}
+    <li><a href="#{{theme.title}}">{{theme.title}}</a></li>
+    {% endfor %}
+    </ul>
+    </div>
+    </div>
+{% endblock %}
+
+{% block main %}
+    {# <table class="abstracts"><thead><tr><th>id</th><th>Title</th><th>Authors</th><th>Presentation</th></tr></thead> #}
+    {% for theme in themes %}
+        {% if loop.index == 1 %}
+            <div class="anchor"><a name="{{ theme.title }}"></a></div><table class="abstracts">
+        {% else %}
+            <tr class="spacer"><td colspan="4"><a name="{{ theme.title }}"></a>&nbsp;</td></tr>
+        {% endif %}
+        
+        <tr class="day"><td colspan="4"><h3>{{theme.title}}: {{theme.tagline}}</h3></td></tr>
+        {% for abstract in theme.abstracts %}
+            <tr><td>{{ abstract.ImdisId}}</td><td><a href="{{path('imdis_abstract_show', {'id':abstract.id}) }}">{{abstract.title}}</a></td><td class="authors">{%- for person in abstract.people %}
+                        {%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}
+                            {%- if person.isPresenter %}
+                                <span class="speaker">
+                            {%- endif %}
+                            {%- if person.person.orcid %}
+                                <a href="https://orcid.org/{{ author.orcid }}">
+                            {%- endif %}
+                            {{ person.person.name }}
+                            {# <sup>{{ person.person.affiliation }}</sup> #}
+                            {%- if person.person.orcid %}
+                                <span class="icon-orcid"></span></a>
+                            {%- endif %}
+                            {%- if person.isPresenter %}
+                                </span>
+                            {%- endif %}
+                        {% endfor %}</td><td>
+                        {% if abstract.presentation %}
+                            Oral | {{abstract.presentation.ProgramSession.block.date|date('l d F')}} {{abstract.presentation.TimeStart|date('H:i')}}
+                        {% elseif abstract.poster %}
+                            Poster | {{abstract.poster.PosterSession.date|date('l d F')}} {{abstract.poster.PosterSession.TimeStart|date('H:i')}}
+                        {% else %}
+                            Not scheduled yet
+                        {% endif%}</td></tr>
+        {% endfor %}
+    {% endfor %}
+    </table>
+
+{% endblock %}

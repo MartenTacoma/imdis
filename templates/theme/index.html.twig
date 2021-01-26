@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Sessions' %}
+
+{% block body %}
+    {% for theme in themes %}
+        <a name="{{theme.title}}"></a><h3>{{theme.title}}: {{theme.tagline}}</h3>
+        {{theme.description|raw}}
+    {% endfor %}
+{% endblock %}

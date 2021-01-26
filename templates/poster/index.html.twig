@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Poster index{% endblock %}
+
+{% block body %}
+    <h1>Poster index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Video_url</th>
+                <th>Comment_url</th>
+                <th>Download_url</th>
+                <th>Session_url</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for poster in posters %}
+            <tr>
+                <td>{{ poster.id }}</td>
+                <td>{{ poster.videoUrl }}</td>
+                <td>{{ poster.commentUrl }}</td>
+                <td>{{ poster.downloadUrl }}</td>
+                <td>{{ poster.sessionUrl }}</td>
+                <td>
+                    <a href="{{ path('poster_show', {'id': poster.id}) }}">show</a>
+                    <a href="{{ path('poster_edit', {'id': poster.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('poster_new') }}">Create new</a>
+{% endblock %}

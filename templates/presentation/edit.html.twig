@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Edit Presentation' %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+    
+{% block body %}
+    <a href="{{ path('program_session_show', {'id': presentation.ProgramSession.id}) }}">Back to session</a>
+    
+    {{ include('presentation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    {{ include('presentation/_delete_form.html.twig') }}
+{% endblock %}

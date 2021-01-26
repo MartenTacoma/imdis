@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Program blocks' %}
+
+{% block body %}
+<p>Each block is a continuous period of time during which sessions and presentations are held</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Time_start</th>
+                <th>Time_end</th>
+                <th>Session_url</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for program_block in program_blocks %}
+            <tr>
+                <td>{{ program_block.id }}</td>
+                <td>{{ program_block.date ? program_block.date|date('Y-m-d') : '' }}</td>
+                <td>{{ program_block.timeStart ? program_block.timeStart|date('H:i:s') : '' }}</td>
+                <td>{{ program_block.timeEnd ? program_block.timeEnd|date('H:i:s') : '' }}</td>
+                <td>{{ program_block.sessionUrl }}</td>
+                <td>
+                    <button onclick="window.location.href='{{ path('program_block_show', {'id': program_block.id}) }}'">view</button>
+                    <button onclick="window.location.href='{{ path('program_block_edit', {'id': program_block.id}) }}'"><span class="icon-pencil"></span> edit</button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <button onclick="window.location.href='{{ path('program_block_new') }}'"><span class="icon-plus"></span> Add block</button>
+{% endblock %}

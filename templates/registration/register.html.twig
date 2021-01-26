@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Register' %}
+
+{% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    <p>Welcome to IMDIS 2021. Please fill in the form below. After completion of the form you will receive a link by email to verify your email address. After verification of your email address you can fill in your personal details in your profile.</p>
+    {{ form_start(registrationForm) }}
+        {# {{form_errors(registrationForm.email)}} #}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

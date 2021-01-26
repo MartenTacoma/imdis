@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+    {{form_row(form.imdisId)}}
+    {{form_row(form.theme)}}
+    {{form_row(form.title)}}
+    {{form_row(form.abstract)}}
+    <strong>People (name | sort | is presenting)</strong>
+    <ul class="subform people" data-prototype="{{ form_widget(form.people.vars.prototype)|e('html_attr') }}">
+    {% for person in form.people %}
+    <li>{{ form_row(person) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="people"><span class="icon-plus"></span> Add a person</button>
+    <br/><br/>
+    <button class="btn"><span class="icon-floppy-disk"></span> {{ button_label|default('Save') }}</button>
+    <div class="formEnd">
+{{ form_end(form) }}
+</div>

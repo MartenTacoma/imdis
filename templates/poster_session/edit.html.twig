@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit PosterSession{% endblock %}
+
+{% block body %}
+    <h1>Edit PosterSession</h1>
+
+    {{ include('poster_session/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('poster_session_index') }}">back to list</a>
+
+    {{ include('poster_session/_delete_form.html.twig') }}
+{% endblock %}

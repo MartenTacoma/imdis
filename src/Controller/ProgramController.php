@@ -1,0 +1,261 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\ProgramSession;
+use App\Form\ProgramSessionType;
+use App\Repository\ProgramSessionRepository;
+use App\Entity\ProgramBlock;
+use App\Form\ProgramBlockType;
+use App\Repository\ProgramBlockRepository;
+use App\Entity\Presentation;
+use App\Form\PresentationType as PresentationForm;
+use App\Repository\PresentationRepository;
+use App\Entity\PresentationType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+ * @Route("/program")
+ */
+class ProgramController extends AbstractController
+{
+    /**
+     * @Route("/", name="program_index", methods={"GET"})
+     */
+    public function program_index(ProgramBlockRepository $programBlockRepository){
+        return $this->render(
+            'program/public.html.twig',
+            [
+                'program' => $programBlockRepository->findAll()
+            ]
+        );
+    }
+    
+    /**
+     * @Route("/manage/", name="program_block_index", methods={"GET"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function block_index(ProgramBlockRepository $programBlockRepository): Response
+    {
+        return $this->render('program/index.html.twig', [
+            'program_blocks' => $programBlockRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/block/new", name="program_block_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function block_new(Request $request): Response
+    {
+        $programBlock = new ProgramBlock();
+        $form = $this->createForm(ProgramBlockType::class, $programBlock);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($programBlock);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('program_block_index');
+        }
+
+        return $this->render('program/new.html.twig', [
+            'program_block' => $programBlock,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/block/{id}", name="program_block_show", methods={"GET"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function block_show(ProgramBlock $programBlock): Response
+    {
+        return $this->render('program/show.html.twig', [
+            'program_block' => $programBlock,
+        ]);
+    }
+
+    /**
+     * @Route("/block/{id}/edit", name="program_block_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function block_edit(Request $request, ProgramBlock $programBlock): Response
+    {
+        $form = $this->createForm(ProgramBlockType::class, $programBlock);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('program_block_index');
+        }
+
+        return $this->render('program/edit.html.twig', [
+            'program_block' => $programBlock,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/block/{id}", name="program_block_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function block_delete(Request $request, ProgramBlock $programBlock): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$programBlock->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($programBlock);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_block_index');
+    }
+    
+    /**
+     * @Route("/block/{id}/session", name="program_block_session", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function session_block_new(Request $request, ProgramBlock $programBlock): Response
+    {
+        $programSession = new ProgramSession();
+        $programSession->setBlock($programBlock);
+        $form = $this->createForm(ProgramSessionType::class, $programSession);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($programSession);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('program_session_show', ['id' => $programSession->getId()]);
+        }
+
+        return $this->render('program_session/new.html.twig', [
+            'program_session' => $programSession,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/session/{id}", name="program_session_show", methods={"GET"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function session_show(ProgramSession $programSession): Response
+    {
+        return $this->render('program_session/show.html.twig', [
+            'program_session' => $programSession,
+        ]);
+    }
+
+    /**
+     * @Route("/session/{id}/edit", name="program_session_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function session_edit(Request $request, ProgramSession $programSession): Response
+    {
+        $form = $this->createForm(ProgramSessionType::class, $programSession);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('program_session_show', ['id' => $programSession->getId()]);
+        }
+
+        return $this->render('program_session/edit.html.twig', [
+            'program_session' => $programSession,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/session/{id}", name="program_session_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function session_delete(Request $request, ProgramSession $programSession): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$programSession->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($programSession);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_block_show', ['id' => $programSession->getBlock()->getId()]);
+    }
+    
+        /**
+     * @Route("/session/{id}/presentation", name="presentation_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function new(Request $request, ProgramSession $programSession): Response
+    {
+        $presentation = new Presentation();
+        $presentation->setProgramSession($programSession);
+        $form = $this->createForm(PresentationForm::class, $presentation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($presentation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('program_session_show', ['id' => $programSession->getId()]);
+        }
+        
+        $repository = $this->getDoctrine()->getRepository(PresentationType::class);
+        
+        $types = $repository->findAll();
+        
+        return $this->render('presentation/new.html.twig', [
+            'presentation' => $presentation,
+            'form' => $form->createView(),
+            'types' => $types
+        ]);
+    }
+    
+        /**
+     * @Route("/presentation/{id}/edit", name="presentation_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function edit(Request $request, Presentation $presentation): Response
+    {
+        $form = $this->createForm(PresentationForm::class, $presentation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('program_session_show', ['id' => $presentation->getProgramSession()->getId()]);
+        }
+
+        $repository = $this->getDoctrine()->getRepository(PresentationType::class);
+        
+        $types = $repository->findAll();
+        
+        return $this->render('presentation/edit.html.twig', [
+            'presentation' => $presentation,
+            'form' => $form->createView(),
+            'types' => $types
+        ]);
+    }
+
+    /**
+     * @Route("/presentation/{id}", name="presentation_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_MANAGER")
+     */
+    public function delete(Request $request, Presentation $presentation): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$presentation->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($presentation);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_session_show', ['id' => $presentation->getProgramSession()->getId()]);
+    }
+}

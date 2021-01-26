@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle='Add Presentation' %}
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+{% block body %}
+    {{ include('presentation/_form.html.twig') }}
+    
+{% endblock %}
