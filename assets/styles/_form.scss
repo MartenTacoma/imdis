@@ -3,7 +3,7 @@ form {
         margin-bottom: 10px;
     }
     label {
-        width: 140px;
+        min-width: 140px;
         display: inline-block;
         &:after {
             // content: ':';

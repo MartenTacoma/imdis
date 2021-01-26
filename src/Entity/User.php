@@ -46,6 +46,31 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $affiliation;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $show_in_list;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $show_email=false;
+
     public function __construct(){
         if(empty($this->registration_time)){
             $this->registration_time = new \DateTime();
@@ -149,6 +174,66 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getAffiliation(): ?string
+    {
+        return $this->affiliation;
+    }
+
+    public function setAffiliation(?string $affiliation): self
+    {
+        $this->affiliation = $affiliation;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getShowInList(): ?string
+    {
+        return $this->show_in_list;
+    }
+
+    public function setShowInList(string $show_in_list): self
+    {
+        $this->show_in_list = $show_in_list;
+
+        return $this;
+    }
+
+    public function getShowEmail(): ?bool
+    {
+        return $this->show_email;
+    }
+
+    public function setShowEmail(bool $show_email): self
+    {
+        $this->show_email = $show_email;
 
         return $this;
     }
