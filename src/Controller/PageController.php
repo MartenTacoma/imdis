@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class PageController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
      */
     public function index(): Response
     {

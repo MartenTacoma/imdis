@@ -42,7 +42,8 @@ class MenuBuilder
     private function doCreateMenu(array $options, $last_empty = false): ItemInterface
     {
         $menu = $this->factory->createItem('root');
-        $menu->addChild('Home', ['route' => 'home']);
+        $menu->addChild('IMDIS', ['uri' => 'https://imdis.seadatanet.org/']);
+        $menu['IMDIS']->setLinkAttribute('target', '_blank');
         
         $menu->addChild('Program', ['route' => 'program_index']);
         $uri = $this->router->generate('program_index');
@@ -72,6 +73,8 @@ class MenuBuilder
         $menu[$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
         
         $menu[$infoLabel]->addChild('Previous editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
+        $menu[$infoLabel]['Previous editions']->setLinkAttribute('target', '_blank');
+        
         
         if ($this->auth->isGranted('ROLE_ADMIN')) {
             $menu->addChild('Admin', ['route'=>'admin']);
