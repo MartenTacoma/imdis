@@ -31,6 +31,7 @@
 .talk,
 .poster {
     .authors {
+        font-size: 14px;
         a[href^="https:\/\/orcid.org\/"] {
             color: $text-color;
             text-decoration: none;
@@ -45,7 +46,7 @@
 .day {
     padding: 10px;
     td {padding: 10px !important;}
-    background: $darkblue !important;
+    background: $blue;
     margin-top: 15px;
     color: white;
     position: sticky;
@@ -65,10 +66,9 @@
     border-collapse: collapse;
     margin-top: 15px;
     tr {
-        border-top: solid 1px $line-color;
+        border-top: solid 1px $grey;
         &.session {
-            background: $blue;
-            color: white;
+            background: $grey;
             padding: 10px;
             padding-bottom: 5px;
             h4 {
@@ -76,22 +76,20 @@
             }
         }
         &.break {
-            background: lighten($blue, 15%);
-            color: white;
+            background: $lightGrey;
             text-align: center;
             .time {
                 text-align: left;
             }
         }
         &.keynote {
-            td:nth-child(2)::before {
-                content: 'Keynote';
-                font-variant: small-caps;
-                display: block;
+            .title::before {
+                content: 'Keynote ';
+                font-weight: bold;
             }
         }
         &.postersession {
-            background: lighten($blue,55%);
+            background: $grey;
         }
         &.spacer {
             background-color: white;
@@ -148,29 +146,6 @@
             display: none;
         }
     }
-    @media screen and (min-width: $desktop){
-        > div {
-            display: flex;
-            > div {
-                &.meta {
-                    width: calc((100vw - 60px ) * 0.6);
-                    width: calc((1400px - 60px ) * 0.6);
-                }
-                &.chairs,
-                &.authors {
-                    width: calc((100vw - 60px ) * 0.3);
-                    width: calc((1400px - 60px ) * 0.3);
-                }
-            }
-            &.session div.meta {
-                width: calc((100vw - 60px ) * 0.6 + 60px);
-                width: calc((1400px - 60px ) * 0.6 + 60px);
-            }
-        }
-        .authors {
-            margin-left: 10px;
-        }
-    }
 }
 
 .singleposter,
@@ -200,7 +175,7 @@
         }
     }
     .poster {
-        border-top: solid 1px $line-color;
+        border-top: solid 1px $grey;
         margin-top: 15px;
         padding-top: 15px;
         display: flex;
@@ -317,7 +292,7 @@
 table {
     tbody {
         tr:nth-child(odd){
-            // background-color: $line-color;
+            // background-color: $grey;
         }
     }
 }
