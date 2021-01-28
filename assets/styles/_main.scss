@@ -58,6 +58,11 @@
     a {
         color: white;
     }
+    .connect {
+        float: right;
+        max-width: 40%;
+        text-align: right;
+    }
 }
 
 .abstracts,
@@ -71,7 +76,7 @@
             background: $grey;
             padding: 10px;
             padding-bottom: 5px;
-            h4 {
+            h3 {
                 margin: 0px;
             }
         }

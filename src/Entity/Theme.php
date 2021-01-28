@@ -36,6 +36,7 @@ class Theme
 
     /**
      * @ORM\OneToMany(targetEntity=ImdisAbstract::class, mappedBy="theme", orphanRemoval=true)
+     * @ORM\OrderBy({"title" = "ASC"})
      */
     private $abstracts;
 

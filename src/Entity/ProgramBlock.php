@@ -133,6 +133,16 @@ class ProgramBlock
         return $this;
     }
     
+    public function getStatus(){
+        if (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_end->format('H:i')) + 900){
+            return 'past';
+        };
+        $start = strtotime($this->date->format('Y-m-d') . ' '. $this->time_start->format('H:i'));
+        
+        
+        return $start;
+    }
+    
     public function __toString(){
         $string = $this->date->format('l d F') . ' '
             . $this->time_start->format('H:i') . ' - '
