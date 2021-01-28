@@ -1,4 +1,4 @@
-{% extends 'page_cols.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set pagetitle = 'Program' %}
 
@@ -9,11 +9,11 @@
 {% block side %}
     <div class="sticky">
     {% if is_granted('ROLE_MANAGER') %}
-        <div><h4>Maintainance <span class="icon-lock"></span></h4><ul>
+        <div><h3>Maintainance <span class="icon-lock"></span></h3><ul>
         <li><a href="{{path('program_block_index')}}">Edit program</a></li>
         </ul></div>
     {% endif %}
-        <div><h4>Blocks</h4><ul>
+        <div><h3>Blocks</h3><ul>
         {% for block in program %}
             <li><a href="#{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}">{{ block }}</a></li>
         {% endfor %}
@@ -30,10 +30,10 @@
     {% else %}
         <tr class="spacer"><td colspan="3"><a name="{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}"></a>&nbsp;</td></tr>
     {% endif %}
-    <tr class="day"><td colspan="3"><h3>{{ block.date|date('l d F') }}</h3><span class="time">{{ block.TimeStart|date('H:i') }}</span> - <span class="time">{{ block.TimeEnd|date('H:i') }}</span> | TODO: opmaak <a href="{{block.SessionUrl}}">Join this session</a></td></tr>
+    <tr class="day"><td colspan="3"><h2>{{ block.date|date('l d F') }}</h2><span class="time">{{ block.TimeStart|date('H:i') }}</span> - <span class="time">{{ block.TimeEnd|date('H:i') }}</span> | TODO: opmaak <a href="{{block.SessionUrl}}">Join this session</a></td></tr>
     {%- for session in block.session %}
         <tr class="session">
-            <td colspan="2"><h4>{% if session.theme %}Session {{session.theme }}: {{session.theme.tagline}} {% else %}{{ session.title }}{% endif %}</h4></td>
+            <td colspan="2"><h3>{% if session.theme %}Session {{session.theme }}: {{session.theme.tagline}} {% else %}{{ session.title }}{% endif %}</h3></td>
             <td>Chairs: {{session.chair|join(', ')}}</td>
         </tr>
         {%- for talk in session.presentations %}

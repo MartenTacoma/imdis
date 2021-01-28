@@ -3,7 +3,7 @@ var $ = require('jquery');
 $(function() {
     if( typeof fields !== 'undefined'){
         setFields();
-        $('#' + typeField).on('change', function(){
+        $(inputField).on('change', function(){
             setFields();
         });
     }
@@ -25,14 +25,29 @@ function setFields(){
     $('.togglefield label').removeClass('required');
     $('.togglefield select, .togglefield input').removeAttr('required');
     
-    var curFields = fields[$('#' + typeField).val()];
-    for (i = 0; i < curFields.required.length; i++){
-        var field = $('.field_' + curFields.required[i]);
-        field.find('label').addClass('required');
-        field.find('select,input').attr('required', 'required');
+    if (inputType == 'radio'){
+        var curFields = fields[$(inputField+":checked").val()];
+    } else {
+        var curFields = fields[$(inputField).val()];
     }
-    for(i = 0; i < curFields.not_allowed.length; i++){
-        $('.field_' + curFields.not_allowed[i]).hide();
+    if (typeof curFields != 'undefined') {
+        for (i = 0; i < curFields.required.length; i++) {
+            var field = $('.field_' + curFields.required[i]);
+            field.find('label').addClass('required');
+            field.find('select,input').attr('required', 'required');
+        }
+        for(i = 0; i < curFields.not_allowed.length; i++){
+            $('.field_' + curFields.not_allowed[i]).hide();
+        }
+        if (typeof curFields.set_value == 'object') {
+            for (field in curFields.set_value){
+                if (curFields.set_value[field] == 'checked'){
+                    $(field).prop('checked', true);
+                } else {
+                    $(field).val(curFields.set_value[field]);
+                }
+            }
+        }
     }
 }
 

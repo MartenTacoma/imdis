@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
@@ -56,11 +57,12 @@ class RegistrationController extends AbstractController
                     (new TemplatedEmail())
                         ->from(new Address('noreply@eupeodes.nl', 'IMDIS 2021'))
                         ->to($user->getEmail())
-                        ->subject('Please Confirm your Email')
+                        ->subject('Registration confirmation IMDIS 2021')
                         ->htmlTemplate('registration/confirmation_email.html.twig')
                 );
                 // do anything else you need here, like send an email
-
+                $this->addFlash('success', 'Your account has been created. You will receive a confirmation shortly. Please verify your email within one hour using the link in the email.');
+                
                 return $guardHandler->authenticateUserAndHandleSuccess(
                     $user,
                     $request,
@@ -78,13 +80,27 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/verify/email", name="app_verify_email")
      */
-    public function verifyUserEmail(Request $request): Response
+    public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $id = $request->get('id'); // retrieve the user id from the url
+
+        // Verify the user id exists and is not null
+        if (null === $id) {
+            return $this->redirectToRoute('program_index');
+        }
+
+        $user = $userRepository->find($id);
+
+        // Ensure the user exists in persistence
+        if (null === $user) {
+            return $this->redirectToRoute('program_index');
+        }
 
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+            $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 

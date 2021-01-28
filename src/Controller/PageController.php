@@ -9,13 +9,31 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PageController extends AbstractController
 {
+    public static $termspages = [
+        'conditions' => 'Privacy & Terms',
+        'cookies' => 'Cookie Policy',
+        'codeofconduct' => 'Code of Conduct',
+    ];
     /**
      */
     public function index(): Response
     {
-        return $this->render('page/index.html.twig', [
-            
-        ]);
+        return $this->render('page/index.html.twig');
+    }
+    
+    /**
+     * @Route("/terms/{terms}", name="terms")
+     */
+    public function terms($terms): Response
+    {
+        
+        return $this->render(
+            'page/terms.html.twig',
+            [
+                'terms' => $terms,
+                'pagetitle' => self::$termspages[$terms]
+            ]
+        );
     }
     
     /**

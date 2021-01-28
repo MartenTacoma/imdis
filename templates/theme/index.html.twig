@@ -2,9 +2,9 @@
 
 {% set pagetitle = 'Sessions' %}
 
-{% block body %}
+{% block main %}
     {% for theme in themes %}
-        <a name="{{theme.title}}"></a><h3>{{theme.title}}: {{theme.tagline}}</h3>
+        <a name="{{theme.title}}"></a><h2>{{theme.title}}: {{theme.tagline}}</h2>
         {{theme.description|raw}}
     {% endfor %}
 {% endblock %}

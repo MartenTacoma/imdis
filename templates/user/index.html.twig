@@ -1,39 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% set pagetitle = 'Registrations' %}
 
-{% block body %}
-    <h1>User index</h1>
-
-    <table class="table">
+{% block main %}
+{% if admin %}
+<p>You are now in the admin view. Be aware that you can now see all details, even of participants who have opted to not be listed in the online participants list. The records/fields that are not available for all participants are indicated <span class="adminOnly">like this</span></p>
+{% endif %}
+    <table class="table" style="width:100%">
         <thead>
             <tr>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Registration_time</th>
-                <th>IsVerified</th>
-                <th>actions</th>
+                <th>Name</th>
+                <th>Affiliation</th>
+                <th>Country</th>
+                {% if is_granted('ROLE_USER') %}
+                    <th>e-mail</th>
+                    {% if admin %}
+                        <th>Roles</th>
+                        <th>Registered</th>
+                    {% endif %}
+                {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
-            <tr>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.registrationTime ? user.registrationTime|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
+            {% if admin or user.showInList == 'public' or (user.showInList == 'login' and is_granted('ROLE_USER')) %}
+                <tr {% if not (user.showInList == 'public' or (user.showInList == 'login' and is_granted('ROLE_USER'))) %} class="adminOnly" {% endif %}>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.affiliation }}</td>
+                    <td>{{ user.CountryName }}</td>
+                    {% if is_granted('ROLE_USER') %}
+                        <td {% if admin and not user.ShowEmail %} class="adminOnly" {% endif %}>{% if admin or user.ShowEmail %}{{user.email}}{% endif %}</td>
+                        {% if admin %}
+                            <td>
+                                {%- if 'ROLE_ADMIN' in user.roles %}Admin
+                                {% elseif 'ROLE_MANAGER' in user.roles %}Manager{% endif %}
+                            </td>
+                            <td>{{ user.registrationTime ? user.registrationTime|date('Y-m-d H:i:s') : '' }}</td>
+                            <td><a href="{{ path('user_edit', {'id': user.id}) }}"><span class="icon-pencil"></span></a></td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('user_new') }}">Create new</a>
 {% endblock %}
+
+{% block side %}
+<div class="sticky"><div>There are {{users|length}} registrations for IMDIS 2021.</div></div>
+{% endblock %}
+

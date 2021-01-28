@@ -15,9 +15,20 @@
         {% include 'base/blocks/menu.twig' %}
         <div id="content">
             <div class="content">
-                <h2>{{ pagetitle ?? 'Welcome' }}</h2>
+                <h1>{{ pagetitle ?? 'Welcome' }}</h1>
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                 {% block head %}{% endblock %}
-                {% block body %}{{ content }}{% endblock %}
+        
+                {% block body %}
+                    <div class="cols">
+                        <div class="side">{% block side %}{% endblock %}</div>
+                        <div class="main">{% block main %}{{ content }}{% endblock %}</div>
+                    </div>
+                {% endblock %}
             </div>
         </div>
         {% include 'base/blocks/foot.twig' %}

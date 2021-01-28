@@ -2,28 +2,55 @@
 
 {% set pagetitle = 'Register' %}
 
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+
 {% block body %}
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
-    <p>Welcome to IMDIS 2021. Please fill in the form below. After completion of the form you will receive a link by email to verify your email address. After verification of your email address you can fill in your personal details in your profile.</p>
+    <p>Welcome to IMDIS 2021. Please fill in the form below. After completion of the form you will receive a link by email to verify your email address.</p>
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
+    <h2>Personal details</h2>
+    {{ form_row(registrationForm.name) }}
+    {{ form_row(registrationForm.email) }}
+    {{ form_row(registrationForm.affiliation) }}
+    {{ form_row(registrationForm.country) }}
+    
+    {{ form_row(registrationForm.show_in_list)}}
+<div class="togglefield field_show_email">{{ form_row(registrationForm.show_email)}}</div>
+    <h2>Account</h2>
+    <p>The links to join the sessions will only be available to logged in participants. Please set your password below.</p>
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
         
-    <h3>Personal details</h3>
-    {{ form_row(registrationForm.name) }}
-    {{ form_row(registrationForm.affiliation) }}
-    {{ form_row(registrationForm.country) }}
-    
-    <h3>Terms and Privacy</h3>
-    <p>IMDIS 2021 will be an online event using platforms like Zoom, google drive and youtube. Sessions can be recorded. By joining IMDIS 2021 you agree with the use of these platforms and the recording of sessions. IMDIS 2021 will not share your details as provided above with any of the use platforms.</p>
+    <h2>Terms and Privacy</h2>
+    <p>Please read our Privacy &amp; Terms <a href="{{path('terms', {'terms': 'conditions'})}}" target="_blank">here</a> (opens in new window)<br/>
+    Please read our Code of Conduct <a href="{{path('terms', {'terms': 'codeofconduct'})}}" target="_blank">here</a> (opens in new window)</p>
         {{ form_row(registrationForm.agreeTerms) }}
         
-    {{ form_row(registrationForm.show_in_list)}}
-
+    
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
+    <script type="text/javascript">
+var inputField = '[name="registration_form[show_in_list]"]'
+var inputType = 'radio';
+var fields = {
+    'public': {
+        'required': ['show_email'],
+        'not_allowed': []
+    },
+    'login': {
+        'required': ['show_email'],
+        'not_allowed': []
+    },
+    'hide': {
+        'required': [],
+        'not_allowed': ['show_email'],
+        'set_value': {'#registration_form_show_email_1': 'checked'}
+    }
+}
+</script>
 {% endblock %}

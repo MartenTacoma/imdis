@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Intl\Countries;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -212,6 +213,15 @@ class User implements UserInterface
         $this->country = $country;
 
         return $this;
+    }
+    
+    public function getCountryName(): ?string
+    {
+        if (empty($this->country)) {
+            return null;
+        } else {
+            return Countries::getName($this->country);
+        }
     }
 
     public function getShowInList(): ?string

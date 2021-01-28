@@ -22,7 +22,8 @@
 </div>
 
 <script type="text/javascript">
-var typeField = 'presentation_type';
+var inputField = '#presentation_type';
+var inputType = 'select';
 var fields = {
 {% for type in types %}
 {% if not loop.first %}, {% endif %}

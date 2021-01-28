@@ -40,11 +40,6 @@
             font-weight: bold;
         }
     }
-    .affiliation {
-        font-style: italic;
-        font-size: 0.8em;
-        display: block;
-    }
 }
 
 .day {
@@ -55,7 +50,7 @@
     color: white;
     position: sticky;
     top: 61px;
-    h3 {
+    h2 {
         margin: 0px;
         margin-top: 5px;
     }
@@ -325,4 +320,14 @@ table {
             // background-color: $line-color;
         }
     }
+}
+
+.alert-success{
+    border: solid 1px green;
+    background: lightgreen;
+    padding: 10px;
+}
+.adminOnly{
+    font-style: italic;
+    text-decoration: underline dashed orange;
 }

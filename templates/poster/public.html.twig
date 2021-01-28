@@ -1,4 +1,4 @@
-{% extends "page_cols.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% set pagetitle = 'Posters' %}
 
@@ -9,14 +9,14 @@
 {% block side %}
     <div class="sticky">
     {% if is_granted('ROLE_MANAGER') %}
-        <div><h4>Maintainance <span class="icon-lock"></span></h4><ul>
+        <div><h3>Maintainance <span class="icon-lock"></span></h3><ul>
         <li><a href="{{path('poster_manage')}}">Edit posters</a></li>
         {% if is_granted('ROLE_ADMIN') %}
         <li><a href="{{path('poster_session_index')}}">Edit poster sessions</a></li>
         {% endif %}
         </ul></div>
     {% endif %}
-        <div><h4>Blocks</h4><ul>
+        <div><h3>Blocks</h3><ul>
         {% for block in posters %}
             <li><a href="#{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}">{{ block }}</a></li>
         {% endfor %}
@@ -31,7 +31,7 @@
 {% block main %}
     <div class="posters">
     {% for block in posters %}
-    <div class="anchor{% if loop.first %} first{%endif%}"><a name="{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}"></div></a><div class="day"><h3>{{ block.date|date('l d F') }} | {% for theme in block.theme %}{% if not loop.first %} / {% endif %}{{theme}}{% endfor %}</h3><span class="time">{{ block.TimeStart|date('H:i') }}</span> - <span class="time">{{ block.TimeEnd|date('H:i') }}</span></div>
+    <div class="anchor{% if loop.first %} first{%endif%}"><a name="{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}"></div></a><div class="day"><h2>{{ block.date|date('l d F') }} | {% for theme in block.theme %}{% if not loop.first %} / {% endif %}{{theme}}{% endfor %}</h2><span class="time">{{ block.TimeStart|date('H:i') }}</span> - <span class="time">{{ block.TimeEnd|date('H:i') }}</span></div>
     {% for poster in block.posters %}
         <div class="poster">
             <div class="main">

@@ -4,6 +4,7 @@ namespace App\Menu;
 
 use App\Entity\ProgramBlock;
 use App\Entity\PosterSession;
+use App\Controller\PageController;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -37,7 +38,6 @@ class MenuBuilder
     {
         return $this->doCreateMenu($options);
     }
-    
     
     private function doCreateMenu(array $options, $last_empty = false): ItemInterface
     {
@@ -86,6 +86,16 @@ class MenuBuilder
         }
         if($last_empty){
             $menu->addChild('');//empty last item needed for correct menu rendering
+        }
+        return $menu;
+    }
+    
+    public function createLegalMenu(array $options) :ItemInterface
+    {
+        $menu = $this->factory->createItem('root');
+        foreach(PageController::$termspages as $id=>$label){
+            $menu->addChild($label, ['route'=>'terms', 'routeParameters' => ['terms' => $id]]);
+        
         }
         return $menu;
     }

@@ -24,7 +24,7 @@ class RegistrationFormType extends AbstractType
             ->add('affiliation')
             ->add('country', CountryType::class, ['required'=>false, 'help'=>'We ask your country for statistics to report to the EU'])
             ->add('agreeTerms', CheckboxType::class, [
-                'label' => 'I have read the terms above and agree with them',
+                'label' => 'I have read the Privacy & Terms and the Code of Conduct and agree with them',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -41,15 +41,21 @@ class RegistrationFormType extends AbstractType
                         'My personal details can be included in the online list of participants, but only visible for other participants'=>'login',
                         'I want to be hidden from the online list of participants'=>'hide'
                     ],
-                    'expanded' => true
+                    'expanded' => true,
+                    'label' => 'Can we include you in the online list of participants?'
                 ]
             )
             ->add(
                 'show_email',
-                CheckboxType::class,
+                ChoiceType::class,
                 [
-                    'label' => 'Show my email for logged in users',
-                    'help' => 'Only applicable if details can be shown'
+                    'label' => 'Do you also want your email address displayed for other participants (when they are logged in)?',
+                    'help' => 'Only applicable if details can be shown, otherwise should be no',
+                    'choices' => [
+                        'Yes'=>'Yes',
+                        'No' => 'No'
+                    ],
+                    'expanded' => true
                 ]
             )
             ->add('plainPassword', PasswordType::class, [

@@ -2,7 +2,7 @@ form {
     > div {
         margin-bottom: 10px;
     }
-    label {
+    label, legend {
         min-width: 140px;
         display: inline-block;
         &:after {
@@ -11,6 +11,9 @@ form {
         &.required {
             font-weight: bold;
         }
+    }
+    input[type="radio"] + label.required {
+        font-weight: normal;
     }
     
     .errors {

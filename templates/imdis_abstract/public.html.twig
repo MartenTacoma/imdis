@@ -1,4 +1,4 @@
-{% extends "page_cols.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% set pagetitle = 'Abstracts' %}
 
@@ -9,12 +9,12 @@
 {% block side %}
     <div class="sticky">
     {% if is_granted('ROLE_MANAGER') %}
-        <div><h4>Maintainance <span class="icon-lock"></span></h4><ul>
+        <div><h3>Maintainance <span class="icon-lock"></span></h3><ul>
         <li><a href="{{path('imdis_abstract_manage')}}">Edit abstracts</a></li>
         </ul></div>
     {% endif %}
     <div>
-    <h4>Sessions</h4>
+    <h3>Sessions</h3>
     <ul>
     {% for theme in themes %}
     <li><a href="#{{theme.title}}">{{theme.title}}</a></li>
@@ -33,7 +33,7 @@
             <tr class="spacer"><td colspan="4"><a name="{{ theme.title }}"></a>&nbsp;</td></tr>
         {% endif %}
         
-        <tr class="day"><td colspan="4"><h3>{{theme.title}}: {{theme.tagline}}</h3></td></tr>
+        <tr class="day"><td colspan="4"><h2>{{theme.title}}: {{theme.tagline}}</h2></td></tr>
         {% for abstract in theme.abstracts %}
             <tr><td>{{ abstract.ImdisId}}</td><td><a href="{{path('imdis_abstract_show', {'id':abstract.id}) }}">{{abstract.title}}</a></td><td class="authors">{%- for person in abstract.people %}
                         {%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}
