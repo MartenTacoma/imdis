@@ -43,11 +43,6 @@ class User implements UserInterface
     private $registration_time;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
@@ -163,18 +158,6 @@ class User implements UserInterface
     public function setRegistrationTime(\DateTimeInterface $registration_time): self
     {
         $this->registration_time = $registration_time;
-
-        return $this;
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
 
         return $this;
     }

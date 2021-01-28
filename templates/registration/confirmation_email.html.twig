@@ -1,11 +1,6 @@
 <p>Hi {{user.name}},</p>
 
-<p>Thank you for registering for IMDIS 2021. Please confirm your email address by clicking the following link: <br><br>
-<a href="{{ signedUrl|raw }}">Confirm my Email</a><br/>
-This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-</p>
-
-<p>We have recorded the following details for you</p>
+<p>Thank you for registering for IMDIS 2021. We have recorded the following details for you:</p>
 
 <table>
 <tr><th>Name</th><td>{{user.name}}</td></tr>
@@ -15,5 +10,5 @@ This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'Ver
 {% if user.ShowInList != 'hidden' %}<tr><th>Show email for logged in users</th><td>{{user.ShowEmail ? 'Yes' : 'No' }}</td></tr>{% endif %}
 </table>
 
-<p>You can find the program and connection info for the sessions on <a href="https://{{ app.request.getHttpHost() }}">{{ app.request.getHttpHost() }}</a>/</p>
+<p>You can find the program and connection info for the sessions on <a href="https://{{ app.request.getHttpHost() }}">{{ app.request.getHttpHost() }}</a></p>
 <p>We are looking forward to see you online at IMDIS 2021!</p>
