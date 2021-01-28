@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+{{ include('base/legal/' ~ terms  ~ '.twig')}}
+{% endblock %}
+
+{% block side %}
+<div class="sticky"><div>
+<h3>Terms</h3>
+{{ knp_menu_render('legal')}}
+</div></div>
+{% endblock %}
