@@ -38,16 +38,7 @@
                 <div class="id"><a href="/poster/{{ poster.id }}">#{{ poster.abstract.ImdisId }}</a></div>
                 <div class="title">{{ poster.abstract.title }}</div>
                 <div class="authors">{% apply spaceless %}
-                    {%- for person in poster.abstract.people %}
-                        {%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}
-                            {%- if person.isPresenter %}
-                                <span class="speaker">
-                            {%- endif %}
-                            {{ person.name }}
-                            {%- if person.isPresenter %}
-                                </span>
-                            {%- endif %}
-                        {% endfor %}
+                    {%- for person in poster.abstract.people %}{%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}
                     
                 {% endapply %}</div>
                 <div class="abstract">{{ poster.abstract.abstract }}</div>

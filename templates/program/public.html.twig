@@ -28,19 +28,19 @@
     {% if loop.index == 1 %}
         <div class="anchor"><a name="{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}"></a></div><table class="program">
     {% else %}
-        <tr class="spacer"><td colspan="3"><a name="{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}"></a>&nbsp;</td></tr>
+        <tr class="spacer"><td colspan="2"><a name="{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}"></a>&nbsp;</td></tr>
     {% endif %}
-    <tr class="day"><td colspan="3"><h2>{{ block.date|date('l d F') }}</h2><span class="time">{{ block.TimeStart|date('H:i') }}</span> - <span class="time">{{ block.TimeEnd|date('H:i') }}</span> | TODO: opmaak <a href="{{block.SessionUrl}}">Join this session</a></td></tr>
+    <tr class="day"><td colspan="2"><h2>{{ block.date|date('l d F') }}</h2><span class="time">{{ block.TimeStart|date('H:i') }}</span> - <span class="time">{{ block.TimeEnd|date('H:i') }}</span> | TODO: opmaak <a href="{{block.SessionUrl}}">Join this session</a></td></tr>
     {%- for session in block.session %}
         <tr class="session">
-            <td colspan="2"><h3>{% if session.theme %}Session {{session.theme }}: {{session.theme.tagline}} {% else %}{{ session.title }}{% endif %}</h3></td>
-            <td>Chairs: {{session.chair|join(', ')}}</td>
+            <td colspan="2"><h3>{% if session.theme %}Session {{session.theme }}: {{session.theme.tagline}} {% else %}{{ session.title }}{% endif %}</h3>
+            Chairs: {{session.chair|join(', ')}}</td>
         </tr>
         {%- for talk in session.presentations %}
             {% if talk.type == 'break / end' %}
-                <tr class="break"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td colspan="2">{{talk.title}}</td></tr>
+                <tr class="break"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td>{{talk.title}}</td></tr>
             {% elseif talk.type == 'posters' %}
-                <tr class="postersession"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td colspan="2">Poster session {{ talk.PosterSession.theme|join(' / ') }}, <nobr><a href="{{path('poster_index')}}#{{ block.date|date('Ymd') }}{{ talk.PosterSession.TimeStart|date('Hi') }}">view posters here</a></nobr></td></tr>
+                <tr class="postersession"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td>Poster session {{ talk.PosterSession.theme|join(' / ') }}, <nobr><a href="{{path('poster_index')}}#{{ block.date|date('Ymd') }}{{ talk.PosterSession.TimeStart|date('Hi') }}">view posters here</a></nobr></td></tr>
             {% else %}
                 <tr class="talk {% if talk.type == 'keynote' %}keynote{% endif %}">
                     <td><span class="time">{{ talk.TimeStart|date('H:i') }}</span>
@@ -51,20 +51,9 @@
                     <td>
                         <span class="title">{{ talk.abstract.title ?? talk.title }}</span>
                         {# <span class="teaser">{{ talk.teaser }}</span> #}
-                    </td>
-                    <td class="authors">{% apply spaceless %}
+                    <span class="authors">{% apply spaceless %}
                     {% if talk.abstract %}
-                        {%- for person in talk.abstract.people %}
-                        {%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}
-                            {%- if person.isPresenter %}
-                                <span class="speaker">
-                            {%- endif %}
-                            {{ person.name }}
-                            {# <sup>{{ person.person.affiliation }}</sup> #}
-                            {%- if person.isPresenter %}
-                                </span>
-                            {%- endif %}
-                        {% endfor %}
+                        {%- for person in talk.abstract.people %}{%- if not loop.first %}{%- if loop.last %} and {% else %}, {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}
                     {% else %}
                     {%- for person in talk.presentationPeople %}
                         {%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}
@@ -78,6 +67,7 @@
                         {% endfor %}
                     {% endif %}
                         {% endapply %}
+                        </span>
                     </td>
                 </div>
             {% endif %}
