@@ -38,7 +38,7 @@
     {%- for session in block.session %}
         <tr class="session">
             <td colspan="2"><h3>{% if session.theme %}Session {{session.theme }}: {{session.theme.tagline}} {% else %}{{ session.title }}{% endif %}</h3>
-            Chairs: {{session.chair|join(', ')}}</td>
+            Chairs: {{session.chair|join(', ')}}{% if session.theme %}<br/>{{session.theme.abstracts|filter((a) => a.presentation)|length}} orals, {{session.theme.abstracts|filter((a) => a.poster)|length}} posters{% endif %}</td>
         </tr>
         {%- for talk in session.presentations %}
             {% if talk.type == 'break / end' %}
