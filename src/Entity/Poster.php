@@ -76,7 +76,7 @@ class Poster
         return $this->video_url;
     }
 
-    public function setVideoUrl(string $video_url): self
+    public function setVideoUrl(?string $video_url): self
     {
         $this->video_url = $video_url;
 

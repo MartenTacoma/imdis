@@ -136,11 +136,11 @@ class ProgramBlock
     public function getStatus(){
         if (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_end->format('H:i')) + 900){
             return 'past';
-        };
-        $start = strtotime($this->date->format('Y-m-d') . ' '. $this->time_start->format('H:i'));
-        
-        
-        return $start;
+        } elseif (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_start->format('H:i')) - 900) {
+            return 'current';
+        } else {
+            return 'future';
+        }
     }
     
     public function __toString(){

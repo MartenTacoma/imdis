@@ -43,6 +43,10 @@
     }
 }
 
+.link-ok {
+    color: green;
+}
+
 .day {
     padding: 10px;
     td {padding: 10px !important;}
@@ -161,6 +165,15 @@
         }
     }
 
+    .past {
+        color: $na-color;
+        span {
+            color: $na-color;
+        }
+        &::after {
+            content: 'No longer available'
+        }
+    }
     .none {
         color: $na-color;
         span {

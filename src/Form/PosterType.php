@@ -14,6 +14,7 @@ class PosterType extends AbstractType
         $builder
             ->add('video_url')
             ->add('comment_url')
+            ->add('preview_url')
             ->add('download_url')
             ->add('session_url')
             ->add('abstract')

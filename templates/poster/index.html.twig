@@ -1,29 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Poster index{% endblock %}
+{% set pagetitle = 'Manage posters' %}
 
 {% block body %}
-    <h1>Poster index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Video_url</th>
-                <th>Comment_url</th>
-                <th>Download_url</th>
-                <th>Session_url</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Theme</th>
+                <th>Video</th>
+                <th>Comment</th>
+                <th>Preview</th>
+                <th>Download</th>
+                <th>Session</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for poster in posters %}
             <tr>
-                <td>{{ poster.id }}</td>
-                <td>{{ poster.videoUrl }}</td>
-                <td>{{ poster.commentUrl }}</td>
-                <td>{{ poster.downloadUrl }}</td>
-                <td>{{ poster.sessionUrl }}</td>
+                <td>{{ poster.abstract.ImdisId }}</td>
+                <td>{{ poster.abstract.title }}</td>
+                <td>{{ poster.abstract.theme }}</td>
+                <td style="text-align:center">{% if poster.videoUrl %}<span class="icon-checkmark link-ok"></span>{% endif %}</td>
+                <td style="text-align:center">{% if poster.commentUrl %}<span class="icon-checkmark link-ok"></span>{% endif %}</td>
+                <td style="text-align:center">{% if poster.previewUrl %}<span class="icon-checkmark link-ok"></span>{% endif %}</td>
+                <td style="text-align:center">{% if poster.downloadUrl %}<span class="icon-checkmark link-ok"></span>{% endif %}</td>
+                <td style="text-align:center">{% if poster.sessionUrl %}<span class="icon-checkmark link-ok"></span>{% endif %}</td>
                 <td>
                     <a href="{{ path('poster_show', {'id': poster.id}) }}">show</a>
                     <a href="{{ path('poster_edit', {'id': poster.id}) }}">edit</a>

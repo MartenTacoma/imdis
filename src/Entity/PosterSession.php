@@ -172,6 +172,17 @@ class PosterSession
         return $this;
     }
     
+    public function getStatus(){
+        if (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_end->format('H:i')) + 900){
+            return 'past';
+        } elseif (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_start->format('H:i')) - 900) {
+            return 'current';
+        } else {
+            return 'future';
+        }
+    }
+    
+    
     public function __toString(){
         $themes = [];
         foreach($this->theme as $theme){
