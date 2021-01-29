@@ -34,7 +34,7 @@ class BulkController extends AbstractController
                 $abstract = new ImdisAbstract();
                 $abstract
                     ->setTitle($line[3])
-                    ->setImdisId($line['5'])
+                    ->setImdisId(substr($line[5],2))
                     ->setTheme($theme)
                 ;
                 $authors = explode(',', str_replace([' and ', ', '], ',', $line['4']));
@@ -76,7 +76,7 @@ class BulkController extends AbstractController
                 $abstract = new ImdisAbstract();
                 $abstract
                     ->setTitle($line[3])
-                    ->setImdisId($line['0'].'-'.$line[1])
+                    ->setImdisId($line[1])
                     ->setTheme($theme)
                 ;
                 $authors = explode(',', str_replace([' and ', ', '], ',', $line['2']));
