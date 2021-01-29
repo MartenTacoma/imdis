@@ -25,6 +25,11 @@
                         }
                     }
                 }
+                .mobile {
+                    @media screen and (min-width: $desktop){
+                        display: none;
+                    }
+                }
             }
             @media screen and (min-width: $desktop) {
                 width: 30%;
