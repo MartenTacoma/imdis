@@ -175,6 +175,7 @@
         }
     }
     .none {
+        display: none;
         color: $na-color;
         span {
             color: $na-color;
@@ -307,10 +308,12 @@
     }
 }
 
-table {
+table.table {
+    border-collapse: collapse;
     tbody {
-        tr:nth-child(odd){
-            // background-color: $grey;
+        td {
+            border-top: solid 1px $grey;
+            padding: 2px;
         }
     }
 }

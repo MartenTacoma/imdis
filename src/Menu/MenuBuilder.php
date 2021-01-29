@@ -74,9 +74,9 @@ class MenuBuilder
         
         $menu[$infoLabel]['Previous editions']->setLinkAttribute('target', '_blank');
         
+        $menu->addChild('Registrations', ['route'=>'user_index']);
         
         if ($this->auth->isGranted('ROLE_ADMIN')) {
-            $menu->addChild('Registrations', ['route'=>'user_index']);
             $menu->addChild('Admin', ['route'=>'admin']);
             $menu['Admin']->addChild('Registrations', ['route'=>'user_index']);
             $menu['Admin']->addChild('Edit Abstracts', ['route'=>'imdis_abstract_manage']);

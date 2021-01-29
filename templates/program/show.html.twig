@@ -17,7 +17,7 @@
 
 <h2>Sessions</h2>
 
-<table>
+<table class="table">
 <thead><tr><th>Start</th><th>Title / theme</th><th>Chairs</th><th>Actions</th></tr></thead>
 {% for session in program_block.session %}
 <tr><td>{{session.TimeStart|date('H:i') }}</td><td>{{session.title ?? session.theme.title}}</td><td>{{ session.chair|join(', ')}}</td><td><button onclick="window.location.href='{{ path('program_session_show', {'id': session.id}) }}'">view</button> <button onclick="window.location.href='{{ path('program_session_edit', {'id': session.id}) }}'"><span class="icon-pencil"></span>edit</button></td></tr>

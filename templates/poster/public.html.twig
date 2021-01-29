@@ -24,7 +24,8 @@
 
         <div><span class="mobile">When an icon is dark a link is available, you can click the icon to open the link. If the icon is light no link is available.<br/></span><span class="icon-video-camera"></span> All authors have been given the option to record a video to present their poster.<br/>
             <span class="icon-bubble"></span> Using this link you can leave comments on the poster on Google Drive. Please leave your name with your comments.<br/>
-            <span class="icon-users"></span> At the timeslot indicated there will be a dedicated online meeting room per poster.</div>
+            {# <span class="icon-users"></span> At the timeslot indicated there will be a dedicated online meeting room per poster. #}
+            </div>
     </div>
 {% endblock %}
 
@@ -89,6 +90,7 @@
                         <span class="label">Comments</span>
                     </div>
                 {% endif %}
+{#                 
                 {% if poster.PosterSession.status == 'past' %}
                     <div class="discussion past">
                         <span class="icon-users"></span>
@@ -107,7 +109,7 @@
                         <span class="icon-users"></span>
                         <span class="label">Virtual discussion</span>
                     </div>
-                {% endif %}
+                {% endif %} #}
             {% endif %}
         </div>
     {% endfor %}

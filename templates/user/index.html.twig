@@ -47,6 +47,12 @@
 {% endblock %}
 
 {% block side %}
-<div class="sticky"><div>There are {{users|length}} registrations for IMDIS 2021.</div></div>
+<div class="sticky">
+{% if is_granted('ROLE_MANAGER') %}
+        <div><h3>Maintainance <span class="icon-lock"></span></h3><ul>
+        <li><a href="{{path('user_admin')}}">Manage registrations</a> (and view hidden info)</li>
+        </ul></div>
+    {% endif %}
+<div>There are {{users|length}} registrations for IMDIS 2021.</div></div>
 {% endblock %}
 
