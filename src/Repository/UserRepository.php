@@ -71,4 +71,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+    
+    public function findAllStatistics(){
+        return $this->createQueryBuilder('u')
+            ->select(
+                "count(u.id) AS total",
+                "count(distinct(u.country)) AS countries",
+                "sum(CASE WHEN u.show_in_list='public' THEN 1 ELSE 0 END) AS public",
+                "sum(CASE WHEN u.show_in_list='login' THEN 1 ELSE 0 END) AS login",
+                "sum(CASE WHEN u.show_in_list='hide' THEN 1 ELSE 0 END) AS hide",
+                "count(u.id)-count(u.country) AS no_country"
+                )
+            ->getQuery()
+            ->getResult()[0];
+    }
 }
