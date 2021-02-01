@@ -70,6 +70,12 @@ class MenuBuilder
         
         $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
         
+        $menu[$infoLabel]->addChild('Help', ['route'=>'help_index']);
+        foreach(PageController::$helppages as $id=>$label){
+            $menu[$infoLabel]['Help']->addChild($label, ['route'=>'help', 'routeParameters' => ['help' => $id]]);
+        
+        }
+        
         $menu[$infoLabel]->addChild('Previous editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
         
         $menu[$infoLabel]['Previous editions']->setLinkAttribute('target', '_blank');
@@ -79,7 +85,7 @@ class MenuBuilder
             $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
         }
         
-        if ($this->auth->isGranted('ROLE_ADMIN')) {
+        if ($this->auth->isGranted('ROLE_ADMIN') && false) {
             $menu->addChild('Admin', ['route'=>'admin']);
             $menu['Admin']->addChild('Registrations', ['route'=>'user_index']);
             $menu['Admin']->addChild('Edit Abstracts', ['route'=>'imdis_abstract_manage']);

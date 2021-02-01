@@ -18,7 +18,7 @@
                 <th><a href="?sort=affiliation&amp;dir={% if sort=='affiliation' and dir=='asc' %}desc{% else %}asc{% endif %}" {% if sort=='affiliation' %} class="sort-{{dir}}"{% endif %}>Affiliation</a></th>
                 <th><a href="?sort=country&amp;dir={% if sort=='country' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='country' %} class="sort-{{dir}}"{% endif %}>Country</a></th>
                 {% if is_granted('ROLE_USER') %}
-                    <th><a href="?sort=email&amp;dir={% if sort=='email' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='email' %} class="sort-{{dir}}"{% endif %}>e-mail</a></th>
+                    <th><a href="?sort=email&amp;dir={% if sort=='email' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='email' %} class="sort-{{dir}}"{% endif %}>E-mail</a></th>
                     {% if admin %}
                         <th><a href="?sort=roles&amp;dir={% if sort=='roles' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='roles' %} class="sort-{{dir}}"{% endif %}>Roles</a></th>
                         <th><a href="?sort=registration_time&amp;dir={% if sort=='registration_time' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='registration_time' %} class="sort-{{dir}}"{% endif %}>Registered</a></th>

@@ -14,6 +14,12 @@ class PageController extends AbstractController
         'cookies' => 'Cookie Policy',
         'codeofconduct' => 'Code of Conduct',
     ];
+    public static $helppages = [
+        'zoom' => 'Zoom',
+        'poster' => 'Poster presentations',
+        'oral' => 'Oral presentations',
+        'video' => 'Making a video presentation'
+    ];
     /**
      */
     public function index(): Response
@@ -32,6 +38,35 @@ class PageController extends AbstractController
             [
                 'terms' => $terms,
                 'pagetitle' => self::$termspages[$terms]
+            ]
+        );
+    }
+    
+    /**
+     * @Route("/help/{help}", name="help")
+     */
+    public function help($help): Response
+    {
+        
+        return $this->render(
+            'page/help.html.twig',
+            [
+                'help' => $help,
+                'pagetitle' => self::$helppages[$help]
+            ]
+        );
+    }
+    
+    /**
+     * @Route("/help", name="help_index")
+     */
+    public function help_index(): Response
+    {
+        return $this->render(
+            'page/menu.html.twig',
+            [
+                'pagetitle' => 'Help',
+                'menu' => ['main', 'Conference info', 'Help']
             ]
         );
     }

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+{{ include('page/help/' ~ help  ~ '.twig')}}
+{% endblock %}
+
+{% block side %}
+<div class="sticky"><div>
+<h3>Help</h3>
+{{ knp_menu_render(['main', 'Conference info', 'Help'])}}
+</div></div>
+{% endblock %}
