@@ -85,7 +85,7 @@ class MenuBuilder
             $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
         }
         
-        if ($this->auth->isGranted('ROLE_ADMIN') && false) {
+        if ($this->auth->isGranted('ROLE_MANAGER') && false) {
             $menu->addChild('Admin', ['route'=>'admin']);
             $menu['Admin']->addChild('Registrations', ['route'=>'user_index']);
             $menu['Admin']->addChild('Edit Abstracts', ['route'=>'imdis_abstract_manage']);

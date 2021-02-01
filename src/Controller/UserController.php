@@ -48,6 +48,7 @@ class UserController extends AbstractController
     
     /**
      * @Route("/registrations.csv", name="user_csv")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function csv(UserRepository $userRepository): Response
     {

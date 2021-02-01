@@ -11,7 +11,7 @@
     {% if is_granted('ROLE_MANAGER') %}
         <div><h3>Maintainance <span class="icon-lock"></span></h3><ul>
         <li><a href="{{path('poster_manage')}}">Edit posters</a></li>
-        {% if is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_MANAGER') %}
         <li><a href="{{path('poster_session_index')}}">Edit poster sessions</a></li>
         {% endif %}
         </ul></div>
