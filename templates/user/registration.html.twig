@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Registration' %}
+
+{% block side %}
+<div class="sticky"><div>
+<ul>
+<li><a href="{{ path('registration_edit') }}">Edit details</a></li>
+<li>To change your password use <a href="{{path('app_forgot_password_request')}}">reset password</a>.</li>
+</ul>
+</div></div>
+{% endblock %}
+{% block main %}
+<p>Thank you for registering for IMDIS 2021. We have recorded the following details for you:</p>
+
+<table>
+<tr><th>Name</th><td>{{user.name}}</td></tr>
+<tr><th>Affiliation</th><td>{{user.affiliation}}</td></tr>
+<tr><th>Country</th><td>{{user.CountryName}}</td></tr>
+<tr><th>Show my details</th><td>{% if user.ShowInList == 'public' %}For everybody{% elseif user.ShowInList == 'login' %}For other (logged in) participants{% else %}Only for organizers{% endif %}</td></tr>
+{% if user.ShowInList != 'hidden' %}<tr><th>Show email for logged in users</th><td>{{user.ShowEmail ? 'Yes' : 'No' }}</td></tr>{% endif %}
+</table>
+
+{% endblock %}

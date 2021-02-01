@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = "Edit registration" %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+    <h2>Personal details</h2>
+    {{ form_row(form.name) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.affiliation) }}
+    {{ form_row(form.country) }}
+    
+    {{ form_row(form.show_in_list)}}
+<div class="togglefield field_show_email">{{ form_row(form.show_email)}}</div>
+<button type="submit" class="btn">Update</button>
+    {{ form_end(form) }}
+    <script type="text/javascript">
+var inputField = '[name="registration[show_in_list]"]'
+var inputType = 'radio';
+var fields = {
+    'public': {
+        'required': ['show_email'],
+        'not_allowed': []
+    },
+    'login': {
+        'required': ['show_email'],
+        'not_allowed': []
+    },
+    'hide': {
+        'required': [],
+        'not_allowed': ['show_email'],
+        'set_value': {'#registration_show_email_1': 'checked'}
+    }
+}
+</script>
+{% endblock %}

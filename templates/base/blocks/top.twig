@@ -2,7 +2,7 @@
     <div class="content">
         <div class="session">
             {% if app.user %}
-                You are logged in as {{app.user.email}}, <a href="/logout">Log out</a>
+                You are logged in as <a href="{{path('user_self')}}">{{app.user.name ?? app.user.email }}</a>, <a href="/logout">Log out</a>
             {% else %}
                 <a href="/login">Log in</a> / <a href="/register">Register</a> 
             {% endif %}

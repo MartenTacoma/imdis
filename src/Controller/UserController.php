@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\RegistrationType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="user_index", methods={"GET"})
+     * @Route("/list", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -27,7 +28,7 @@ class UserController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin", name="user_admin", methods={"GET"})
+     * @Route("/list/admin", name="user_admin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function admin(UserRepository $userRepository): Response
@@ -37,7 +38,42 @@ class UserController extends AbstractController
             'admin' => true
         ]);
     }
+    
+    /**
+     * @Route("/", name="user_self", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function show_self(Request $request): Response
+    {
+        return $this->render('user/registration.html.twig',
+            ['user' => $this->getUser()]
+        );
+    }
 
+    
+    /**
+     * @Route("/edit", name="registration_edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function self_edit(Request $request): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(RegistrationType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('user_self');
+        }
+
+        return $this->render('user/edit_registration.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
@@ -64,7 +100,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function show(User $user): Response
     {
