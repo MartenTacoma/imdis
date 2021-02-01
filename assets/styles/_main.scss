@@ -310,6 +310,18 @@
 
 table.table {
     border-collapse: collapse;
+    thead {
+        a {
+            text-decoration: none;
+            color: $blue;
+            &.sort-asc::after {
+                content: ' \25bc';
+            }
+            &.sort-desc::after {
+                content: ' \25b2';
+            }
+        }
+    }
     tbody {
         td {
             border-top: solid 1px $grey;

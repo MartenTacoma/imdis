@@ -75,6 +75,9 @@ class MenuBuilder
         $menu[$infoLabel]['Previous editions']->setLinkAttribute('target', '_blank');
         
         $menu->addChild('Registrations', ['route'=>'user_index']);
+        if ($this->auth->isGranted('ROLE_USER')) {
+            $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
+        }
         
         if ($this->auth->isGranted('ROLE_ADMIN')) {
             $menu->addChild('Admin', ['route'=>'admin']);

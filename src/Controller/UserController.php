@@ -20,25 +20,28 @@ class UserController extends AbstractController
     /**
      * @Route("/list", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, $admin = false): Response
     {
         $options = [];
         if(empty($_GET['sort'])){
             $users = $userRepository->findAll();
         } else {
-            $users = $userRepository->findBy([], [$_GET['sort']=>$_GET['dir']]);
+            $users = $userRepository->findBy([], [$_GET['sort']=>$_GET['dir'], 'name'=>$_GET['dir'], 'email'=>$_GET['dir']]);
         }
         return $this->render('user/index.html.twig', [
             'users' => $users,
-            'admin' => false
+            'admin' => $admin,
+            'sort' => $_GET['sort'] ?? 'name',
+            'dir' => $_GET['dir'] ?? 'asc'
         ]);
     }
     /**
-     * @Route("/list/admin", name="user_admin", methods={"GET"})
+     * @Route("/admin", name="user_admin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function admin(UserRepository $userRepository): Response
     {
+        return $this->index($userRepository, true);
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
             'admin' => true
