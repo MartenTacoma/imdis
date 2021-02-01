@@ -21,10 +21,12 @@ class PageController extends AbstractController
         'video' => 'Making a video presentation'
     ];
     /**
+     * @Route("/", name="index")
      */
     public function index(): Response
     {
-        return $this->render('page/index.html.twig');
+        return $this->redirectToRoute('program_index');
+        // return $this->render('page/index.html.twig');
     }
     
     /**
