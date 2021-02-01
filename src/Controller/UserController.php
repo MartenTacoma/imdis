@@ -28,11 +28,13 @@ class UserController extends AbstractController
         } else {
             $users = $userRepository->findBy([], [$_GET['sort']=>$_GET['dir'], 'name'=>$_GET['dir'], 'email'=>$_GET['dir']]);
         }
+        
         return $this->render('user/index.html.twig', [
             'users' => $users,
             'admin' => $admin,
             'sort' => $_GET['sort'] ?? 'name',
-            'dir' => $_GET['dir'] ?? 'asc'
+            'dir' => $_GET['dir'] ?? 'asc',
+            'stats' => $userRepository->findAllStatistics()
         ]);
     }
     /**
@@ -42,10 +44,18 @@ class UserController extends AbstractController
     public function admin(UserRepository $userRepository): Response
     {
         return $this->index($userRepository, true);
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-            'admin' => true
-        ]);
+    }
+    
+    /**
+     * @Route("/registrations.csv", name="user_csv")
+     */
+    public function csv(UserRepository $userRepository): Response
+    {
+        $users = $userRepository->findAll();
+        $response = $this->render('user/export.csv.twig', ['users'=>$users]);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_registration_v'.date('Ymd_His').'.csv"');
+        return $response;
     }
     
     /**

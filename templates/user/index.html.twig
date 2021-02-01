@@ -63,6 +63,23 @@
         <div><a href="{{path('user_self')}}">My registration</a>{% if app.user.ShowInList == 'hide' %}<br/><em>As you have requested not to be included in the registration list your are not included in the list on this page</em>{% endif %}</div>
     {% endif %}
 {% endif %}
-<div>There are {{users|length}} registrations for IMDIS 2021.</div></div>
+<div>
+{% if admin %}
+<a href="{{path('user_csv')}}">Download as csv</a>
+</div>
+<div>
+<h2>Statistics</h2>
+<table class="table" style="width:100%">
+    <tr><th>Number of registrations</th><td>{{ stats.total }}</td></tr>
+    <tr><th>Public visibile registrations</th><td>{{ stats.public}}</td></tr>
+    <tr><th>Registration only visible when logged in</th><td>{{ stats.login}}</td></tr>
+    <tr><th>Hidden registrations</th><td>{{ stats.hide}}</td></tr>
+    <tr><th>Countries</th><td>{{ stats.countries }}</td></tr>
+    <tr><th>Registrations without country</th><td>{{ stats.no_country }}</td></tr>
+</table>
+{% else %}
+There are {{stats.total}} registrations for IMDIS 2021. So far we expect participants from {{stats.countries}} different countries.
+{% endif %}
+</div></div>
 {% endblock %}
 
