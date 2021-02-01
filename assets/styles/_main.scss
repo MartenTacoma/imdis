@@ -323,7 +323,10 @@ table.table {
         }
     }
     tbody {
-        td {
+        th {
+            text-align: left;
+        }
+        th, td {
             border-top: solid 1px $grey;
             padding: 2px;
         }
