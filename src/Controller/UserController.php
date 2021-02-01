@@ -22,8 +22,14 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
+        $options = [];
+        if(empty($_GET['sort'])){
+            $users = $userRepository->findAll();
+        } else {
+            $users = $userRepository->findBy([], [$_GET['sort']=>$_GET['dir']]);
+        }
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
             'admin' => false
         ]);
     }
