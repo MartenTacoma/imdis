@@ -53,6 +53,9 @@
         <li><a href="{{path('user_admin')}}">Manage registrations</a> (and view hidden info)</li>
         </ul></div>
     {% endif %}
+{% if is_granted('ROLE_USER') %}
+    <div><a href="{{path('user_self')}}">My registration</a>{% if app.user.ShowInList == 'hide' %}<br/><em>As you have requested not to be included in the registration list your are not included in the list on this page</em>{% endif %}</div>
+{% endif %}
 <div>There are {{users|length}} registrations for IMDIS 2021.</div></div>
 {% endblock %}
 
