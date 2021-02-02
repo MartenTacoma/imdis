@@ -172,6 +172,6 @@ class ImdisAbstract
     }
     
     public function getUrl(): ?string{
-        return null;
+        return "javascript:alert('This will give a pdf of the abstract')";
     }
 }

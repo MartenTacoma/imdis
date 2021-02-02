@@ -8,7 +8,6 @@
             <tr>
                 <th>Id</th>
                 <th>Title</th>
-                <th>Abstract</th>
                 <th>ImdisId</th>
                 <th>actions</th>
             </tr>
@@ -18,7 +17,6 @@
             <tr>
                 <td>{{ imdis_abstract.id }}</td>
                 <td>{{ imdis_abstract.title }}</td>
-                <td>{{ imdis_abstract.abstract }}</td>
                 <td>{{ imdis_abstract.imdisId }}</td>
                 <td>
                 <button onclick="window.location.href='{{ path('imdis_abstract_show', {'id': imdis_abstract.id}) }}'">view</button>

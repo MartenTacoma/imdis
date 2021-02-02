@@ -45,7 +45,7 @@ class PageController extends AbstractController
     }
     
     /**
-     * @Route("/help/{help}", name="help")
+     * @Route("/guidelines/{help}", name="help")
      */
     public function help($help): Response
     {
@@ -60,15 +60,14 @@ class PageController extends AbstractController
     }
     
     /**
-     * @Route("/help", name="help_index")
+     * @Route("/guidelines", name="help_index")
      */
     public function help_index(): Response
     {
         return $this->render(
             'page/menu.html.twig',
             [
-                'pagetitle' => 'Help',
-                'menu' => ['main', 'Conference info', 'Help']
+                'pagetitle' => 'Guidelines'
             ]
         );
     }

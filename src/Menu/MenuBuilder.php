@@ -42,8 +42,8 @@ class MenuBuilder
     private function doCreateMenu(array $options, $last_empty = false): ItemInterface
     {
         $menu = $this->factory->createItem('root');
-        $menu->addChild('Imdis', ['uri' => 'https://imdis.seadatanet.org/']);
-        $menu['Imdis']->setLinkAttribute('target', '_blank');
+        $menu->addChild('Home', ['uri' => 'https://imdis.seadatanet.org/']);
+        $menu['Home']->setLinkAttribute('target', '_blank');
         
         $menu->addChild('Programme', ['route' => 'program_index']);
         $uri = $this->router->generate('program_index');
