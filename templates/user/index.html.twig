@@ -10,7 +10,7 @@
 <div class="sticky">
 {% if not admin %}
     {% if is_granted('ROLE_ADMIN') %}
-            <div><h3>Maintainance <span class="icon-lock"></span></h3><ul>
+            <div class="admin"><h3>Maintainance <span class="icon-lock"></span></h3><ul>
             <li><a href="{{path('user_admin')}}">Manage registrations</a> (and view hidden info)</li>
             </ul></div>
         {% endif %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Poster rooms ' ~ session %}
+
+{% block body %}
+<table class="table">
+{% for poster in session.posters %}
+{% set title = poster.abstract.ImdisId ~ '. ' ~ poster.abstract.title %}
+{% if title|length > 32 %}
+    {% set title = title|slice(0,29) ~ '...' %}
+{% endif %}
+<tr><td>{{title}}</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

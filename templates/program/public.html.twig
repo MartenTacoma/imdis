@@ -9,7 +9,7 @@
 {% block side %}
     <div class="sticky">
     {% if is_granted('ROLE_MANAGER') %}
-        <div><h3>Maintainance <span class="icon-lock"></span></h3><ul>
+        <div class="admin"><h3>Maintainance <span class="icon-lock"></span></h3><ul>
         <li><a href="{{path('program_block_index')}}">Edit programme</a></li>
         </ul></div>
     {% endif %}

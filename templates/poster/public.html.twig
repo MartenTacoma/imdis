@@ -9,11 +9,17 @@
 {% block side %}
     <div class="sticky">
     {% if is_granted('ROLE_MANAGER') %}
-        <div><h3>Maintainance <span class="icon-lock"></span></h3><ul>
+        <div class="admin"><h3>Maintainance <span class="icon-lock"></span></h3><ul>
         <li><a href="{{path('poster_manage')}}">Edit posters</a></li>
         {% if is_granted('ROLE_MANAGER') %}
         <li><a href="{{path('poster_session_index')}}">Edit poster sessions</a></li>
         {% endif %}
+        </ul></div>
+        
+        <div class="admin"><h3>Room list</h3>
+        <ul>{% for block in posters %}
+            <li><a href="{{ path('poster_session_room', {'id': block.id}) }}">{{ block }}</a></li>
+        {% endfor %}
         </ul></div>
     {% endif %}
         <div><h3>Blocks</h3><ul>
@@ -21,6 +27,7 @@
             <li><a href="#{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}">{{ block }}</a></li>
         {% endfor %}
         </ul></div>
+        
 
         <div><span class="mobile">When an icon is dark a link is available, you can click the icon to open the link. If the icon is light no link is available.<br/></span><span class="icon-video-camera"></span> All authors have been given the option to record a video to present their poster.<br/>
             <span class="icon-bubble"></span> Using this link you can leave comments on the poster on Google Drive. Please leave your name with your comments.<br/>
