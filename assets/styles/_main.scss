@@ -18,16 +18,12 @@
         display: block;
     }
 }
-.abstracts,
 .poster {
     .title {
-        font-weight: bold;
-        font-size: 1.2em;
         display: block;
     }
     
 }
-.abstracts,
 .talk,
 .poster {
     .authors {
@@ -69,11 +65,15 @@
     }
 }
 
-.abstracts,
 .program {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
+    
+    .id {
+        float: right;
+        margin-left: 10px;
+    }
     tr {
         border-top: solid 1px $grey;
         &.session {
@@ -199,14 +199,12 @@
         padding-top: 15px;
         display: flex;
         gap: 30px;
-        .abstract {
-            margin-top: 10px;
-        }
         img {
             max-width: 100%;
         }
         .id {
             float: right;
+            margin-left: 10px;
         }
         
         .main {

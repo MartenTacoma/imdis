@@ -42,16 +42,16 @@ class MenuBuilder
     private function doCreateMenu(array $options, $last_empty = false): ItemInterface
     {
         $menu = $this->factory->createItem('root');
-        $menu->addChild('IMDIS', ['uri' => 'https://imdis.seadatanet.org/']);
-        $menu['IMDIS']->setLinkAttribute('target', '_blank');
+        $menu->addChild('Imdis', ['uri' => 'https://imdis.seadatanet.org/']);
+        $menu['Imdis']->setLinkAttribute('target', '_blank');
         
-        $menu->addChild('Program', ['route' => 'program_index']);
+        $menu->addChild('Programme', ['route' => 'program_index']);
         $uri = $this->router->generate('program_index');
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $title = $block->__toString();
             $anchor = $block->getDate()->format('Ymd') . 
                 $block->getTimeStart()->format('Hi');
-            $menu['Program']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
+            $menu['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
         
         $menu->addChild('Posters', ['route' => 'poster_index']);
@@ -64,21 +64,15 @@ class MenuBuilder
         };
         
         $infoLabel = 'Conference info';
-        $menu->addChild($infoLabel, ['route'=>'conference_info']);
+        $menu->addChild($infoLabel, ['uri'=>'https://imdis.seadatanet.org/Conference-information']);
+        $menu[$infoLabel]->setLinkAttribute('target', '_blank');
         
-        $menu[$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
-        
-        $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
-        
-        $menu[$infoLabel]->addChild('Help', ['route'=>'help_index']);
+        $helpName = 'Guidelines';
+        $menu->addChild($helpName, ['route'=>'help_index']);
         foreach(PageController::$helppages as $id=>$label){
-            $menu[$infoLabel]['Help']->addChild($label, ['route'=>'help', 'routeParameters' => ['help' => $id]]);
+            $menu[$helpName]->addChild($label, ['route'=>'help', 'routeParameters' => ['help' => $id]]);
         
         }
-        
-        $menu[$infoLabel]->addChild('Previous editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
-        
-        $menu[$infoLabel]['Previous editions']->setLinkAttribute('target', '_blank');
         
         $menu->addChild('Registrations', ['route'=>'user_index']);
         if ($this->auth->isGranted('ROLE_USER')) {

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set pagetitle = 'Program' %}
+{% set pagetitle = 'Programme' %}
 
 {% block head %}
     <div class="timezone"><span class="icon-clock"></span> All times are listed in CEST (UTC+2)</div>
@@ -10,7 +10,7 @@
     <div class="sticky">
     {% if is_granted('ROLE_MANAGER') %}
         <div><h3>Maintainance <span class="icon-lock"></span></h3><ul>
-        <li><a href="{{path('program_block_index')}}">Edit program</a></li>
+        <li><a href="{{path('program_block_index')}}">Edit programme</a></li>
         </ul></div>
     {% endif %}
         <div><h3>Sessions</h3><ul>
@@ -48,12 +48,13 @@
             {% else %}
                 <tr class="talk {% if talk.type == 'keynote' %}keynote{% endif %}">
                     <td><span class="time">{{ talk.TimeStart|date('H:i') }}</span>
-                        {% if talk.VideoUrl %}
+                        {% if talk.VideoUrl and is_granted('ROLE_USER') %}
                             <div class="video"><a href="{{ talk.VideoUrl }}" title="Watch full presentation"><span class="icon-video-camera"></span></a></div>
                         {% endif %}
                     </td>
                     <td>
-                        <span class="title">{{ talk.abstract.title ?? talk.title }}</span>
+                        <span class="id">{% if talk.abstract %}{{talk.abstract.ImdisId}}{% endif %}</span>
+                        <span class="title">{% if talk.abstract and talk.abstract.url %}<a href="{{talk.abstract.url}}">{{ talk.abstract.title ?? talk.title }}</a>{% else %}{{ talk.abstract.title ?? talk.title }}{% endif %}</span>
                         {# <span class="teaser">{{ talk.teaser }}</span> #}
                     <span class="authors">{% apply spaceless %}
                     {% if talk.abstract %}
