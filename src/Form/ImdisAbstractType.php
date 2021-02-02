@@ -14,7 +14,6 @@ class ImdisAbstractType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('abstract')
             ->add('imdisId')
             ->add('theme')
             ->add(

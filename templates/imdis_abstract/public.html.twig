@@ -33,9 +33,9 @@
             <tr class="spacer"><td colspan="3"><a name="{{ theme.title }}"></a>&nbsp;</td></tr>
         {% endif %}
         
-        <tr class="day"><td colspan="3"><h2>{{theme.title}}: {{theme.tagline}}</h2>{{theme.abstracts|filter((a) => a.presentation)|length}} orals, {{theme.abstracts|filter((a) => a.poster)|length}} posters</td></tr>
+        <tr class="day"><td colspan="4"><h2>{{theme.title}}: {{theme.tagline}}</h2>{{theme.abstracts|filter((a) => a.presentation)|length}} orals, {{theme.abstracts|filter((a) => a.poster)|length}} posters</td></tr>
         {% for abstract in theme.abstracts %}
-            <tr>{#<td>{{abstract.theme.id}}-{{ abstract.ImdisId}}</td>#}<td><a href="{{path('imdis_abstract_show', {'id':abstract.id}) }}">{{abstract.title}}</a></td><td class="authors">{%- for person in abstract.people %}{%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}</td><td>
+            <tr><td>{{abstract.theme.id}}-{{ abstract.ImdisId}}</td><td><a href="{{path('imdis_abstract_show', {'id':abstract.id}) }}">{{abstract.title}}</a></td><td class="authors">{%- for person in abstract.people %}{%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}</td><td>
                         {% if abstract.presentation %}
                             Oral | {{abstract.presentation.ProgramSession.block.date|date('l d F')}} {{abstract.presentation.TimeStart|date('H:i')}}
                         {% elseif abstract.poster %}

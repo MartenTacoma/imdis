@@ -31,11 +31,6 @@ class ImdisAbstract
     private $theme;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $abstract;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $imdisId;
@@ -87,18 +82,6 @@ class ImdisAbstract
     public function setTheme(?Theme $theme): self
     {
         $this->theme = $theme;
-
-        return $this;
-    }
-
-    public function getAbstract(): ?string
-    {
-        return $this->abstract;
-    }
-
-    public function setAbstract(?string $abstract): self
-    {
-        $this->abstract = $abstract;
 
         return $this;
     }
@@ -186,5 +169,9 @@ class ImdisAbstract
         $this->poster = $poster;
 
         return $this;
+    }
+    
+    public function getUrl(): ?string{
+        return null;
     }
 }
