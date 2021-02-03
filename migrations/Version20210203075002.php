@@ -20,7 +20,7 @@ final class Version20210203075002 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE poster ADD updated_at DATETIME NOT NULL, ADD preview_name VARCHAR(255) DEFAULT NULL, ADD preview_original_name VARCHAR(255) DEFAULT NULL, ADD preview_mime_type VARCHAR(255) DEFAULT NULL, ADD preview_size INT DEFAULT NULL, ADD preview_dimensions LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:simple_array)\', DROP session_url, DROP preview_url');
+        $this->addSql('ALTER TABLE poster ADD updated_at DATETIME DEFAULT NULL, ADD preview_name VARCHAR(255) DEFAULT NULL, ADD preview_original_name VARCHAR(255) DEFAULT NULL, ADD preview_mime_type VARCHAR(255) DEFAULT NULL, ADD preview_size INT DEFAULT NULL, ADD preview_dimensions LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:simple_array)\', DROP session_url, DROP preview_url');
     }
 
     public function down(Schema $schema) : void
