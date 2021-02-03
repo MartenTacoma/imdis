@@ -4,9 +4,14 @@ namespace App\Entity;
 
 use App\Repository\PosterRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=PosterRepository::class)
+ * @Vich\Uploadable
  */
 class Poster
 {
@@ -39,20 +44,61 @@ class Poster
     private $download_url;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $session_url;
-
-    /**
      * @ORM\OneToOne(targetEntity=ImdisAbstract::class, inversedBy="poster", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $abstract;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
      */
-    private $PreviewUrl;
+    private $preview;
+    
+    /**
+     * @Vich\UploadableField(mapping="poster_thumb", fileNameProperty="preview.name", size="preview.size", mimeType="preview.mimeType", originalName="preview.originalName", dimensions="preview.dimensions")
+     * @var File
+     */
+    private $previewFile;
+    
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
+    
+    private function __construct(){
+        $this->preview = new EmbeddedFile();
+    }
+    
+    public function setPreviewFile(?File $previewFile = null)
+    {
+        $this->previewFile = $previewFile;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($previewFile ==! null) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function setPreview(EmbeddedFile $preview): self
+    {
+        $this->preview = $preview;
+        
+        return $this;
+    }
+    
+    public function getPreview(): ?EmbeddedFile
+    {
+        return $this->preview;
+    }
+    
+    public function getpreviewFile()
+    {
+        return $this->previewFile;
+    }
 
     public function getId(): ?int
     {
@@ -107,18 +153,6 @@ class Poster
         return $this;
     }
 
-    public function getSessionUrl(): ?string
-    {
-        return $this->session_url;
-    }
-
-    public function setSessionUrl(?string $session_url): self
-    {
-        $this->session_url = $session_url;
-
-        return $this;
-    }
-
     public function getAbstract(): ?ImdisAbstract
     {
         return $this->abstract;
@@ -130,16 +164,13 @@ class Poster
 
         return $this;
     }
-
-    public function getPreviewUrl(): ?string
+    
+    public function getRoomName(): ?String
     {
-        return $this->PreviewUrl;
-    }
-
-    public function setPreviewUrl(string $PreviewUrl): self
-    {
-        $this->PreviewUrl = $PreviewUrl;
-
-        return $this;
+        $title = $this->abstract->getImdisId() . '. ' . $this->abstract->getTitle();
+        if(strlen($title) > 32){
+            $title = substr($title, 0, 29) . '...';
+        }
+        return $title;
     }
 }

@@ -180,7 +180,7 @@ class PosterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('poster_index');
+            return $this->redirectToRoute('poster_manage');
         }
 
         return $this->render('poster/edit.html.twig', [

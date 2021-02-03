@@ -6,6 +6,7 @@ use App\Entity\Poster;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PosterType extends AbstractType
 {
@@ -14,9 +15,10 @@ class PosterType extends AbstractType
         $builder
             ->add('video_url')
             ->add('comment_url')
-            ->add('preview_url')
+            ->add('previewFile', VichImageType::class, [
+                'required' => false
+            ])
             ->add('download_url')
-            ->add('session_url')
             ->add('abstract')
             ->add('poster_session')
         ;

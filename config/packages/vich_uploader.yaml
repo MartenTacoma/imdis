@@ -1,0 +1,10 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        poster_thumb:
+            uri_prefix: /img/poster/thumbs
+            upload_destination: '%kernel.project_dir%/public/img/poster/thumbs'
+            namer:
+                service: Vich\UploaderBundle\Naming\PropertyNamer
+                options: { property: 'abstract.ImdisId' } # supposing that the object contains a "slug" attribute or a "getSlug" method

@@ -80,12 +80,12 @@
             {% endif %}
         </div>
             </div>
-            {% if not (poster.PreviewUrl or poster.DownloadUrl) %}
+            {% if not (poster.preview.name or poster.DownloadUrl) %}
                 <div class="preview noposter"></div>
             {% else %}
                 <div class="preview">
-                {% if poster.PreviewUrl %}
-                    <img src="{{ poster.PreviewUrl }}" />
+                {% if poster.preview.name %}
+                    <img src="{{ vich_uploader_asset(poster, 'previewFile') }}" />
                 {% else %}
                     No preview available
                 {% endif %}
