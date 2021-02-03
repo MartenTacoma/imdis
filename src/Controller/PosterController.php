@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Intervention\Image\ImageManager;
 
 /**
  * @Route("/poster")
@@ -179,7 +180,7 @@ class PosterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->resizeImage('img/poster/thumbs/'.$poster->getPreview()->getName());
             return $this->redirectToRoute('poster_manage');
         }
 
@@ -187,6 +188,14 @@ class PosterController extends AbstractController
             'poster' => $poster,
             'form' => $form->createView(),
         ]);
+    }
+    
+    private function resizeImage($img){
+        $manager = new ImageManager(['driver' => 'gd']);
+        $manager
+            ->make($img)
+            ->widen(300, function($constraint){$constraint->upsize();})
+            ->save($img);
     }
 
     /**
