@@ -1,0 +1,6 @@
+{% extends 'bundles/TwigBundle/Exception/error.html.twig' %}
+
+{% set title='Page not found' %}
+{% block message %}
+The requested page couldn't be located. Check for any URL misspelling or <a href="{{ path('index') }}">return to the homepage</a>
+{% endblock %}
