@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="noindex,nofollow,noarchive" />
-    <title>{{title ?? 'An error occurred'}}</title>
+    <title>{{status_code ~ ' - ' ~ status_text}}</title>
     <style>
         body {
             background-color: #fff;
@@ -26,8 +26,15 @@ a{ color: #3791C6}</style>
 <body>
 <div class="container">
 <div class="top"><img src="/img/logo.png" /></div>
-<div class="main"><h1>{{title ?? 'An error occurred'}}</h1>
-    <p>{% block message %}{% endblock %}</p></div>
+<div class="main"><h1>{{status_code ~ ' - ' ~ status_text}}</h1>
+{% block message %}
+{% if status_code|slice(0,1) == 4 %}
+    We can't show you this page, however, the server is working like it should.<br/>Check for any URL misspelling or <a href="{{ path('index') }}">return to the homepage</a>
+{% elseif status_code|slice(0,1) == 5 %}
+    The server isn't feeling well, please try again later.<br/>If you need urgent information please contact us <a href="https://imdis.seadatanet.org/sendform/contact">here</a>
+{% endif %}
+{% endblock %}
+</div>
 </div>
 </body>
 </html>
