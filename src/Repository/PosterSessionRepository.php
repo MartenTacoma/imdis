@@ -19,6 +19,13 @@ class PosterSessionRepository extends ServiceEntityRepository
         parent::__construct($registry, PosterSession::class);
     }
 
+    public function findAll(){
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.date, p.time_start')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return PosterSession[] Returns an array of PosterSession objects
     //  */

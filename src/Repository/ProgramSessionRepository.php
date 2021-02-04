@@ -18,6 +18,13 @@ class ProgramSessionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ProgramSession::class);
     }
+    
+    public function findAll(){
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.date, p.time_start', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return ProgramSession[] Returns an array of ProgramSession objects
