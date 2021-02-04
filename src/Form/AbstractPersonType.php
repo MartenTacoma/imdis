@@ -6,6 +6,7 @@ use App\Entity\AbstractPerson;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AbstractPersonType extends AbstractType
 {
@@ -14,7 +15,12 @@ class AbstractPersonType extends AbstractType
         $builder
             ->add('name')
             ->add('sort')
-            ->add('isPresenter')
+            ->add('isPresenter', ChoiceType::class, [
+                'choices' => [
+                    'Co-Author' => 0,
+                    'Presenter' => 1
+                ]
+            ])
         ;
     }
 
