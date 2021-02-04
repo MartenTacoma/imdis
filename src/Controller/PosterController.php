@@ -180,7 +180,7 @@ class PosterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            if(!empty('img/poster/thumbs/'.$poster->getPreview()->getName())){
+            if(!empty($poster->getPreview()->getName())){
                 $this->resizeImage('img/poster/thumbs/'.$poster->getPreview()->getName());
             }
             return $this->redirectToRoute('poster_manage');
