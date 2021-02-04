@@ -61,16 +61,7 @@
                     {% if talk.abstract %}
                         {%- for person in talk.abstract.people %}{%- if not loop.first %}{%- if loop.last %} and {% else %}, {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}
                     {% else %}
-                    {%- for person in talk.presentationPeople %}
-                        {%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}
-                            {%- if person.presenter %}
-                                <span class="speaker">
-                            {%- endif %}
-                            {{ person.name }}
-                            {%- if person.presenter %}
-                                </span>
-                            {%- endif %}
-                        {% endfor %}
+                    {%- for person in talk.presentationPeople %}{%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}{%- if person.presenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.presenter %}</span>{%- endif %}{% endfor %}
                     {% endif %}
                         {% endapply %}
                         </span>
