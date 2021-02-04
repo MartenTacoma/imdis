@@ -80,7 +80,7 @@ class PageController extends AbstractController
         return $this->render(
             'page/menu.html.twig',
             [
-                'pagetitle' => 'Conference info'
+                'pagetitle' => 'Conference information'
             ]
         );
     }
