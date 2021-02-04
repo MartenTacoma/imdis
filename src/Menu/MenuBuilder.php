@@ -63,14 +63,14 @@ class MenuBuilder
             $menu['Posters']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
         
-        $infoLabel = 'Conference information';
+        $infoLabel = 'Conference Information';
         $menu->addChild($infoLabel, ['route'=>'conference_info']);
         // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
         $menu[$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
         $menu[$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
-        $menu[$infoLabel]->addChild('Previous editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
+        $menu[$infoLabel]->addChild('Previous Editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
 
-        $menu[$infoLabel]['Previous editions']->setLinkAttribute('target', '_blank');
+        $menu[$infoLabel]['Previous Editions']->setLinkAttribute('target', '_blank');
         // $menu->addChild($infoLabel, ['uri'=>'https://imdis.seadatanet.org/Conference-information']);
         // $menu[$infoLabel]->setLinkAttribute('target', '_blank');
         

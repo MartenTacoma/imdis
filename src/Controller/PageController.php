@@ -16,9 +16,9 @@ class PageController extends AbstractController
     ];
     public static $helppages = [
         'zoom' => 'Zoom',
-        'poster' => 'Poster presentations',
-        'oral' => 'Oral presentations',
-        'video' => 'Making a video presentation'
+        'poster' => 'Poster Presentations',
+        'oral' => 'Oral Presentations',
+        'video' => 'Making a Video Presentation'
     ];
     /**
      * @Route("/", name="index")
@@ -80,7 +80,7 @@ class PageController extends AbstractController
         return $this->render(
             'page/menu.html.twig',
             [
-                'pagetitle' => 'Conference information'
+                'pagetitle' => 'Conference Information'
             ]
         );
     }
