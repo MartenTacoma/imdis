@@ -42,8 +42,8 @@ class MenuBuilder
     private function doCreateMenu(array $options, $last_empty = false): ItemInterface
     {
         $menu = $this->factory->createItem('root');
-        $menu->addChild('Home', ['uri' => 'https://imdis.seadatanet.org/']);
-        $menu['Home']->setLinkAttribute('target', '_blank');
+        // $menu->addChild('Home', ['uri' => 'https://imdis.seadatanet.org/']);
+        // $menu['Home']->setLinkAttribute('target', '_blank');
         
         $menu->addChild('Programme', ['route' => 'program_index']);
         $uri = $this->router->generate('program_index');
@@ -63,9 +63,16 @@ class MenuBuilder
             $menu['Posters']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
         
-        $infoLabel = 'Conference info';
-        $menu->addChild($infoLabel, ['uri'=>'https://imdis.seadatanet.org/Conference-information']);
-        $menu[$infoLabel]->setLinkAttribute('target', '_blank');
+        $infoLabel = 'Conference information';
+        $menu->addChild($infoLabel, ['route'=>'conference_info']);
+        // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
+        $menu[$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
+        $menu[$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
+        $menu[$infoLabel]->addChild('Previous editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
+
+        $menu[$infoLabel]['Previous editions']->setLinkAttribute('target', '_blank');
+        // $menu->addChild($infoLabel, ['uri'=>'https://imdis.seadatanet.org/Conference-information']);
+        // $menu[$infoLabel]->setLinkAttribute('target', '_blank');
         
         $helpName = 'Guidelines';
         $menu->addChild($helpName, ['route'=>'help_index']);

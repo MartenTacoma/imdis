@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'New Committee' %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+
+{% block body %}
+    <a href="{{ path('committee_index') }}">back to list</a>
+    {{ include('committee/_form.html.twig') }}
+{% endblock %}

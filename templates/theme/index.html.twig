@@ -5,6 +5,7 @@
 {% block main %}
     {% for theme in themes %}
         <a name="{{theme.title}}"></a><h2>{{theme.title}}: {{theme.tagline}}</h2>
+        {{theme.abstracts|filter((a) => a.presentation)|length}} orals, {{theme.abstracts|filter((a) => a.poster)|length}} posters
         {{theme.description|raw}}
     {% endfor %}
 {% endblock %}

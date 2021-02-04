@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Committees' %}
+
+{% block body %}
+<div class="committees">
+    {% for committee in committees %}
+    <div>
+    <h3>{{committee.name}}</h3>
+    <ul>
+    {% for person in committee.people %}
+    <li>{{person.name}}</li>
+    {% endfor %}
+    </ul>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
