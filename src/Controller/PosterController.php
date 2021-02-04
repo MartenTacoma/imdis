@@ -146,11 +146,12 @@ class PosterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($poster);
+            $entityManager->flush();
             if(!empty($poster->getPreview()->getName())){
                 $this->resizeImage('img/poster/thumbs/'.$poster->getPreview()->getName());
             }
-            $entityManager->persist($poster);
-            $entityManager->flush();
+            
 
             return $this->redirectToRoute('poster_index');
         }

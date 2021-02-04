@@ -25,7 +25,7 @@ class PosterSession
     private $theme;
 
     /**
-     * @ORM\OneToMany(targetEntity=Poster::class, mappedBy="poster_session")
+     * @ORM\OneToMany(targetEntity=Poster::class, mappedBy="poster_session", cascade={"persist", "remove"})
      */
     private $posters;
 
