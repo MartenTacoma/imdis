@@ -66,7 +66,7 @@ class Poster
      */
     private $updatedAt;
     
-    private function __construct(){
+    public function __construct(){
         $this->preview = new EmbeddedFile();
     }
     
