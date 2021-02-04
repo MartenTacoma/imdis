@@ -40,7 +40,7 @@ class ProgramBlock
     private $session_url;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProgramSession::class, mappedBy="block")
+     * @ORM\OneToMany(targetEntity=ProgramSession::class, mappedBy="block", cascade={"persist", "remove"})
      * @ORM\OrderBy({"time_start" = "ASC"})
      */
     private $session;

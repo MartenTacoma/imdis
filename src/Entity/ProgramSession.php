@@ -42,7 +42,7 @@ class ProgramSession
     private $chair;
 
     /**
-     * @ORM\OneToMany(targetEntity=Presentation::class, mappedBy="program_session")
+     * @ORM\OneToMany(targetEntity=Presentation::class, mappedBy="program_session", cascade={"persist", "remove"})
      * @ORM\OrderBy({"time_start" = "ASC"})
      */
     private $presentations;

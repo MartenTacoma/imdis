@@ -35,18 +35,18 @@ class Theme
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=ImdisAbstract::class, mappedBy="theme", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ImdisAbstract::class, mappedBy="theme", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"imdisId" = "ASC"})
      */
     private $abstracts;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProgramSession::class, mappedBy="theme")
+     * @ORM\OneToMany(targetEntity=ProgramSession::class, mappedBy="theme", cascade={"persist", "remove"})
      */
     private $session;
 
     /**
-     * @ORM\ManyToMany(targetEntity=PosterSession::class, mappedBy="theme")
+     * @ORM\ManyToMany(targetEntity=PosterSession::class, mappedBy="theme", cascade={"persist", "remove"})
      */
     private $posterSessions;
 
