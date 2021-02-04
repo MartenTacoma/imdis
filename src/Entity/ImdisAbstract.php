@@ -172,6 +172,6 @@ class ImdisAbstract
     }
     
     public function getUrl(): ?string{
-        return "javascript:alert('This will give a pdf of the abstract')";
+        return 'https://imdis.seadatanet.org/files/IMDIS2021_' . $this->imdisId . '_abstract.pdf';
     }
 }
