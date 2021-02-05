@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ pagetitle ?? 'Welcome' }} - IMDIS 2021 - Online, 12-14 April</title>
+        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ pagetitle ?? 'Welcome' }}{% if pagetitle is not defined or pagetitle != '' %} - {% endif %}IMDIS 2021 - Online, 12-14 April</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Marten Tacoma, NIOZ Royal Netherlands Institute for Sea Research">
         {% block stylesheets %}
