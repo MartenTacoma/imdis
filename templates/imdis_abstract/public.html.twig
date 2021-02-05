@@ -35,11 +35,11 @@
         
         <tr class="day"><td colspan="4"><h2>{{theme.title}}: {{theme.tagline}}</h2>{{theme.abstracts|filter((a) => a.presentation)|length}} orals, {{theme.abstracts|filter((a) => a.poster)|length}} posters</td></tr>
         {% for abstract in theme.abstracts %}
-            <tr><td>{{abstract.theme.id}}-{{ abstract.ImdisId}}</td><td><a href="{{path('imdis_abstract_show', {'id':abstract.id}) }}">{{abstract.title}}</a></td><td class="authors">{%- for person in abstract.people %}{%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}</td><td>
+            <tr><td>{{ abstract.ImdisId}}</td><td><a href="{{path('imdis_abstract_show', {'id':abstract.id}) }}">{{abstract.title}}</a><div class="authors">{%- for person in abstract.people %}{%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}</div></td><td style="white-space:nowrap">
                         {% if abstract.presentation %}
-                            Oral | {{abstract.presentation.ProgramSession.block.date|date('l d F')}} {{abstract.presentation.TimeStart|date('H:i')}}
+                            {{abstract.presentation.ProgramSession.block.date|date('l d F')}}<br/>{{abstract.presentation.TimeStart|date('H:i')}} | Oral
                         {% elseif abstract.poster %}
-                            Poster | {{abstract.poster.PosterSession.date|date('l d F')}} {{abstract.poster.PosterSession.TimeStart|date('H:i')}}
+                            {{abstract.poster.PosterSession.date|date('l d F')}}<br/>{{abstract.poster.PosterSession.TimeStart|date('H:i')}} | Poster
                         {% else %}
                             Not scheduled yet
                         {% endif%}</td></tr>
