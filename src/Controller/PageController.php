@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Repository\UserRepository;
+use App\Repository\ThemeRepository;
+use App\Repository\ImdisAbstractRepository;
 
 class PageController extends AbstractController
 {
@@ -23,10 +26,14 @@ class PageController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(): Response
+    public function index(UserRepository $users, ThemeRepository $themes, ImdisAbstractRepository $abstracts): Response
     {
-        return $this->redirectToRoute('program_index');
-        // return $this->render('page/index.html.twig');
+        // return $this->redirectToRoute('program_index');
+        return $this->render('page/index.html.twig', [
+            'users' => $users->findAllStatistics(),
+            'themes' => $themes->findAll(),
+            'abstracts' => $abstracts->findAll()
+        ]);
     }
     
     /**

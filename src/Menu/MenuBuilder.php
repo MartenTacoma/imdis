@@ -44,6 +44,7 @@ class MenuBuilder
         $menu = $this->factory->createItem('root');
         // $menu->addChild('Home', ['uri' => 'https://imdis.seadatanet.org/']);
         // $menu['Home']->setLinkAttribute('target', '_blank');
+        $menu->addChild('Home', ['route' => 'index']);
         
         $menu->addChild('Programme', ['route' => 'program_index']);
         $uri = $this->router->generate('program_index');
@@ -81,9 +82,9 @@ class MenuBuilder
             $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
         }
         
-        $menu->addChild('Previous Editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
-
-        $menu['Previous Editions']->setLinkAttribute('target', '_blank');
+        $menu[$infoLabel]->addChild('Previous Editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
+        $menu[$infoLabel]['Previous Editions']->setLinkAttribute('target', '_blank');
+        
         if ($this->auth->isGranted('ROLE_MANAGER') && false) {
             $menu->addChild('Admin', ['route'=>'admin']);
             $menu['Admin']->addChild('Registrations', ['route'=>'user_index']);

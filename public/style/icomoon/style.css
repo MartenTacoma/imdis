@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?yoweys');
-  src:  url('fonts/icomoon.eot?yoweys#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?yoweys') format('truetype'),
-    url('fonts/icomoon.woff?yoweys') format('woff'),
-    url('fonts/icomoon.svg?yoweys#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?v1jsk8');
+  src:  url('fonts/icomoon.eot?v1jsk8#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?v1jsk8') format('truetype'),
+    url('fonts/icomoon.woff?v1jsk8') format('woff'),
+    url('fonts/icomoon.svg?v1jsk8#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -32,8 +32,14 @@
 .icon-pencil:before {
   content: "\e905";
 }
+.icon-image:before {
+  content: "\e90d";
+}
 .icon-video-camera:before {
   content: "\e914";
+}
+.icon-file-text:before {
+  content: "\e922";
 }
 .icon-clock:before {
   content: "\e94e";
@@ -41,14 +47,23 @@
 .icon-clock2:before {
   content: "\e94f";
 }
+.icon-display:before {
+  content: "\e956";
+}
 .icon-floppy-disk:before {
   content: "\e962";
 }
 .icon-bubble:before {
   content: "\e96b";
 }
+.icon-bubbles:before {
+  content: "\e96c";
+}
 .icon-users:before {
   content: "\e972";
+}
+.icon-user-plus:before {
+  content: "\e973";
 }
 .icon-key:before {
   content: "\e98d";
@@ -58,6 +73,9 @@
 }
 .icon-download3:before {
   content: "\e9c7";
+}
+.icon-earth:before {
+  content: "\e9ca";
 }
 .icon-link:before {
   content: "\e9cb";

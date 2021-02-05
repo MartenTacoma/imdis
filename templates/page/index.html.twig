@@ -4,4 +4,41 @@
 
 {% block body %}
 Welcome to IMDIS 2021 online!
+
+<div class="stats">
+    <div>
+        <span class="icon icon-bubbles"></span>
+        <span class="value">{{themes|length}}</span>
+        <span class="label">Sessions</span>
+    </div>
+    <div>
+        <span class="icon icon-file-text"></span>
+        <span class="value">{{abstracts|length}}</span>
+        <span class="label">Abstracts</span>
+    </div>
+    <div>
+        <span class="icon icon-display"></span>
+        <span class="value">{{abstracts|filter((a) => a.presentation)|length}}</span>
+        <span class="label">Oral presentations</span>
+    </div>
+    <div>
+        <span class="icon icon-image"></span>
+        <span class="value">{{abstracts|filter((a) => a.poster)|length}}</span>
+        <span class="label">Posters</span>
+    </div>
+</div>
+<div class="stats {% if app.user %}user{% endif%}">
+    <div>
+        <span class="icon icon-users"></span>
+        <span class="value">{{users.total}}</span>
+        <span class="label">Registrations</span>
+    </div>
+    <div style="float:right">
+        <span class="icon icon-earth"></span>
+        <span class="value">{{users.countries}}</span>
+        <span class="label">Countries</span>
+    </div>
+    {% if not app.user %}<div class="register" onclick="window.location='{{path('app_register')}}';"><span class="icon-user-plus"></span> Register now</div>{% endif %}
+</div>
+<div style="clear:both"></div>
 {% endblock %}
