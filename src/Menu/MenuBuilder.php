@@ -68,11 +68,6 @@ class MenuBuilder
         // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
         $menu[$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
         $menu[$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
-        $menu[$infoLabel]->addChild('Previous Editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
-
-        $menu[$infoLabel]['Previous Editions']->setLinkAttribute('target', '_blank');
-        // $menu->addChild($infoLabel, ['uri'=>'https://imdis.seadatanet.org/Conference-information']);
-        // $menu[$infoLabel]->setLinkAttribute('target', '_blank');
         
         $helpName = 'Guidelines';
         $menu->addChild($helpName, ['route'=>'help_index']);
@@ -86,6 +81,9 @@ class MenuBuilder
             $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
         }
         
+        $menu->addChild('Previous Editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
+
+        $menu['Previous Editions']->setLinkAttribute('target', '_blank');
         if ($this->auth->isGranted('ROLE_MANAGER') && false) {
             $menu->addChild('Admin', ['route'=>'admin']);
             $menu['Admin']->addChild('Registrations', ['route'=>'user_index']);
