@@ -328,9 +328,38 @@ table.table {
         th {
             text-align: left;
         }
-        th, td {
+        tr {
             border-top: solid 1px $grey;
+        }
+        th, td {
             padding: 2px;
+            span {
+                white-space: nowrap;
+            }
+        }
+    }
+    @media screen and (max-width: $mobile){
+        &.registration {
+            thead {
+                display: none;
+            }
+            tr, th, td{
+                display: block;
+            }
+            .edit,
+            .registered,
+            .roles {
+                display: none;
+            }
+            .name {
+                font-weight: bold;
+            }
+            .affiliation {
+                float: left;
+                &::after {
+                    content: ', ';
+                }
+            }
         }
     }
 }

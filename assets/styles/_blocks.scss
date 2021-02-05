@@ -1,3 +1,15 @@
+.mobile {
+    @media screen and (min-width: $desktop){
+        display: none;
+    }
+}
+
+.desktop {
+    @media screen and (max-width: $mobile){
+        display: none
+    }
+}
+
 .content {
     max-width: 1400px;
     margin: 0px auto;
@@ -23,11 +35,6 @@
                         li {
                             list-style: none;
                         }
-                    }
-                }
-                .mobile {
-                    @media screen and (min-width: $desktop){
-                        display: none;
                     }
                 }
                 .admin {

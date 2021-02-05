@@ -44,8 +44,8 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
 {% if admin %}
 <p>You are now in the admin view. Be aware that you can now see all details, even of participants who have opted to not be listed in the online participants list. The records/fields that are not available for all participants are indicated <span class="adminOnly">like this</span></p>
 {% endif %}
-    <p>To sort on a column click the column header, to sort descending click the header again.</p>
-    <table class="table" style="width:100%">
+    <p class="desktop">To sort on a column click the column header, to sort descending click the header again.</p>
+    <table class="table registration" style="width:100%">
         <thead>
             <tr>
                 <th><a href="?sort=name&amp;dir={% if sort=='name' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='name' %} class="sort-{{dir}}"{% endif %}>Name</a></th>
@@ -64,19 +64,19 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
         {% for user in users %}
             {% if admin or user.showInList == 'public' or (user.showInList == 'login' and is_granted('ROLE_USER')) %}
                 <tr {% if not (user.showInList == 'public' or (user.showInList == 'login' and is_granted('ROLE_USER'))) %} class="adminOnly" {% endif %}>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.affiliation }}</td>
-                    <td>{{ user.CountryName }}</td>
+                    <td class="name">{{ user.name }}</td>
+                    <td class="affiliation">{{ user.affiliation }}</td>
+                    <td class="country">{{ user.CountryName }}</td>
                     {% if is_granted('ROLE_USER') %}
-                        <td {% if admin and not user.ShowEmail %} class="adminOnly" {% endif %}>{% if admin or user.ShowEmail %}{{user.email}}{% endif %}</td>
+                        <td class="email {% if admin and not user.ShowEmail %} adminOnly{% endif %}">{% if admin or user.ShowEmail %}{{user.email}}{% endif %}</td>
                         {% if admin %}
-                            <td>
+                            <td class="roles">
                                 {%- if 'ROLE_ADMIN' in user.roles %}Admin
                                 {% elseif 'ROLE_MANAGER' in user.roles %}Manager{% endif %}
                             </td>
-                            <td>{{ user.registrationTime ? user.registrationTime|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="registered">{{ user.registrationTime ? user.registrationTime|date('Y-m-d H:i:s') : '' }}</td>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <td><a href="{{ path('user_edit', {'id': user.id}) }}"><span class="icon-pencil"></span></a></td>
+                                <td class="edit"><a href="{{ path('user_edit', {'id': user.id}) }}"><span class="icon-pencil"></span></a></td>
                             {% endif %}
                         {% endif %}
                     {% endif %}
