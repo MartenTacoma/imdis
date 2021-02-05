@@ -6,34 +6,34 @@
 Welcome to IMDIS 2021 online!
 
 <div class="stats">
-    <div>
+    <div onclick="window.location='{{path('theme_index')}}'">
         <span class="icon icon-bubbles"></span>
         <span class="value">{{themes|length}}</span>
         <span class="label">Sessions</span>
     </div>
-    <div>
+    <div onclick="window.location='{{path('imdis_abstract_index')}}'">
         <span class="icon icon-file-text"></span>
         <span class="value">{{abstracts|length}}</span>
         <span class="label">Abstracts</span>
     </div>
     <div>
-        <span class="icon icon-display"></span>
+        <span class="icon icon-display" onclick="window.location='{{path('program_index')}}'"></span>
         <span class="value">{{abstracts|filter((a) => a.presentation)|length}}</span>
         <span class="label">Oral presentations</span>
     </div>
-    <div>
+    <div onclick="window.location='{{path('poster_index')}}'">
         <span class="icon icon-image"></span>
         <span class="value">{{abstracts|filter((a) => a.poster)|length}}</span>
         <span class="label">Posters</span>
     </div>
 </div>
 <div class="stats {% if app.user %}user{% endif%}">
-    <div>
+    <div onclick="window.location='{{path('user_index')}}'">
         <span class="icon icon-users"></span>
         <span class="value">{{users.total}}</span>
         <span class="label">Registrations</span>
     </div>
-    <div style="float:right">
+    <div style="float:right" onclick="window.location='{{path('user_index')}}'">
         <span class="icon icon-earth"></span>
         <span class="value">{{users.countries}}</span>
         <span class="label">Countries</span>

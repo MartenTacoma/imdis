@@ -170,8 +170,6 @@
 }
 
 .stats {
-    // display: flex;
-    // flex-wrap: wrap;
     div {
         width: calc(25% - 20px);
         background: $grey;
@@ -182,6 +180,10 @@
         float: left;
         height: 135px;
         padding-top: 20px;
+        cursor: pointer;
+        &:hover {
+            background-color: $lightGrey;
+        }
         .label {
             display: block;
         }
@@ -200,7 +202,6 @@
             padding-top: 45px;
             font-size: 2em;
             text-transform: uppercase;
-            cursor: pointer;
             &:hover {
                 background-color: $darkblue;
             }
