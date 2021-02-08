@@ -34,6 +34,9 @@
 </table>
 {% else %}
 There are {{stats.total}} registrations for IMDIS 2021. So far we expect participants from {{stats.countries}} different countries.
+
+{% if stats.hide > 0 or (stats.login > 0 and not is_granted('ROLE_USER')) %}</div><div>
+    Not all registrations are displayed as some participants have chosen not to be listed.{% endif %}
 {% endif %}
 </div></div>
 {% endblock %}
@@ -42,7 +45,7 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
 
 {% block main %}
 {% if admin %}
-<p>You are now in the admin view. Be aware that you can now see all details, even of participants who have opted to not be listed in the online participants list. The records/fields that are not available for all participants are indicated <span class="adminOnly">like this</span></p>
+<p>You are now in the admin view. Be aware that you can now see all details, even of participants who have opted to not be listed in the online participants list. The records/fields that are not available for all participants are indicated <span class="adminOnly">like this</span>.</p> Also keep in mind that only the people wo have set their visibility to public can be included in the participants list in the archive at the main IMDIS site, you can get the list as csv.
 {% endif %}
     <p class="desktop">To sort on a column click the column header, to sort descending click the header again.</p>
     <table class="table registration" style="width:100%">
