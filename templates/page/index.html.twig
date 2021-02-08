@@ -15,8 +15,8 @@
         <span class="value">{{abstracts|length}}</span>
         <span class="label">Abstracts</span>
     </div>
-    <div>
-        <span class="icon icon-display" onclick="window.location='{{path('program_index')}}'"></span>
+    <div onclick="window.location='{{path('program_index')}}'">
+        <span class="icon icon-display"></span>
         <span class="value">{{abstracts|filter((a) => a.presentation)|length}}</span>
         <span class="label">Oral presentations</span>
     </div>
