@@ -50,20 +50,20 @@
                     
                 {% endapply %}</div>
                 <div class="interactive">
-            {% if poster.VideoUrl %}
-                <div class="video">
-                    <a href="{{ poster.VideoUrl }}">
+            {% if is_granted('ROLE_USER') %}
+                {% if poster.VideoUrl %}
+                    <div class="video">
+                        <a href="{{ poster.VideoUrl }}">
+                            <span class="icon-video-camera"></span>
+                            <span class="label">Video presentation</span>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="video none">
                         <span class="icon-video-camera"></span>
                         <span class="label">Video presentation</span>
-                    </a>
-                </div>
-            {% else %}
-                <div class="video none">
-                    <span class="icon-video-camera"></span>
-                    <span class="label">Video presentation</span>
-                </div>
-            {% endif %}
-            {% if is_granted('ROLE_USER') %}
+                    </div>
+                {% endif %}
                 {% if poster.CommentUrl %}
                     <div class="comment">
                         <a href="{{ poster.CommentUrl }}">
