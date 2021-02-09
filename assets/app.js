@@ -13,5 +13,7 @@ import './styles/style.scss';
 import './bootstrap';
 
 const $ = require('jquery');
-
-global.$ = global.jQuery = $;
+$(function() {
+    console.log('start');
+    $('a[href^="https://"]').attr('target','_blank');
+});

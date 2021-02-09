@@ -8,7 +8,7 @@
         {% block stylesheets %}
             <link rel="stylesheet" type="text/css" href="/style/icomoon/style.css?v20210205" media="screen"/>
             {{ encore_entry_link_tags('app') }}{% endblock %}
-{#}        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>#}
+        {{ encore_entry_script_tags('app') }}
         {% block javascripts %}{% endblock %}
         {% if app.environment == 'dev' %}<style>#top, #menu {background-color: darkorange}</style>{% endif %}
     </head>
