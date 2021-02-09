@@ -96,7 +96,7 @@ class ProgramBlock
         return $this->session_url;
     }
 
-    public function setSessionUrl(string $session_url): self
+    public function setSessionUrl(?string $session_url = null): self
     {
         $this->session_url = $session_url;
 
