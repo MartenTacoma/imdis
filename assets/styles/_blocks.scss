@@ -15,8 +15,10 @@
     margin: 0px auto;
     .cols {
         display: flex;
-        flex-flow: row-reverse;
         gap: 15px;
+        &.reverse {
+            flex-flow: row-reverse;
+        }
         .side {
             .sticky {
                 position: sticky;
