@@ -1,17 +1,38 @@
 #!/bin/bash
 
-# fetch code
-git pull
+full=false
+run=true
 
-# check for new requirements
-composer install
-npm install --force
+#lees parameters in
+until [ -z "$1" ]  # Until all parameters used up...
+do
+   case "$1" in
+        --full|-f) full=true;;
+        -h) echo "usage: $0 [--full|-f]
+    -full|-f     Perform composer and npm install"
+	    run=false;;
+    esac
+    shift
+done
 
-# run migrations
-php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+if [ "$run" = true ]
+then
+    # fetch code
+    git pull
 
-# make stylesheets
-npm run build
+    if [ "$full" = true ]
+    then
+        # check for new requirements
+        composer install
+        npm install --force
+    fi
 
-# clear cache
-php bin/console cache:clear
+    # run migrations
+    php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+
+    # make stylesheets
+    npm run build
+
+    # clear cache
+    php bin/console cache:clear
+fi
