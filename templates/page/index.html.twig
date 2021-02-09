@@ -2,41 +2,26 @@
 
 {% set pagetitle = '' %}
 
+{% macro frontblock(icon, label, link, value, style) %}
+    <div onclick="window.location='{{ link }}'"{% if style %} style="{{style}}"{% endif %}>
+        <span class="icon icon-{{ icon }}"></span>
+        <span class="value">{{ value }}</span>
+        <span class="label">{{ label }}</span>
+    </div>
+{% endmacro %}
+
 {% block body %}
 
 <div class="stats">
-    <div onclick="window.location='{{path('theme_index')}}'">
-        <span class="icon icon-bubbles"></span>
-        <span class="value">{{themes|length}}</span>
-        <span class="label">Sessions</span>
-    </div>
-    <div onclick="window.location='{{path('imdis_abstract_index')}}'">
-        <span class="icon icon-file-text"></span>
-        <span class="value">{{abstracts|length}}</span>
-        <span class="label">Abstracts</span>
-    </div>
-    <div onclick="window.location='{{path('program_index')}}'">
-        <span class="icon icon-display"></span>
-        <span class="value">{{abstracts|filter((a) => a.presentation)|length}}</span>
-        <span class="label">Oral presentations</span>
-    </div>
-    <div onclick="window.location='{{path('poster_index')}}'">
-        <span class="icon icon-image"></span>
-        <span class="value">{{abstracts|filter((a) => a.poster)|length}}</span>
-        <span class="label">Posters</span>
-    </div>
+    {{ _self.frontblock('bubbles', 'Sessions', path('theme_index'), themes|length) }}
+    {{ _self.frontblock('file-text', 'Abstracts', path('imdis_abstract_index'), abstracts|length) }}
+    {{ _self.frontblock('display', 'Oral Presentations', path('program_index'), abstracts|filter((a) => a.presentation)|length) }}
+    {{ _self.frontblock('image', 'Posters', path('poster_index'), abstracts|filter((a) => a.poster)|length) }}
 </div>
 <div class="stats {% if app.user %}user{% endif%}">
-    <div onclick="window.location='{{path('user_index')}}'">
-        <span class="icon icon-users"></span>
-        <span class="value">{{users.total}}</span>
-        <span class="label">Registrations</span>
-    </div>
-    <div style="float:right" onclick="window.location='{{path('user_index')}}'">
-        <span class="icon icon-earth"></span>
-        <span class="value">{{users.countries}}</span>
-        <span class="label">Countries</span>
-    </div>
+    {{ _self.frontblock('users', 'Registrations', path('user_index'), users.total, 'float:left') }}
+    {{ _self.frontblock('earth', 'Countries', path('user_index'), users.countries, 'float:right') }}
+
     {% if not app.user %}<div class="register" onclick="window.location='{{path('app_register')}}';"><span class="icon-user-plus"></span> Register now</div>{% endif %}
 </div>
 <div style="clear:both"></div>

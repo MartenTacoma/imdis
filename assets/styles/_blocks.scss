@@ -21,6 +21,9 @@
             .sticky {
                 position: sticky;
                 top: 61px;
+                h3 {
+                    margin-top: 0px;
+                }
                 > div {
                     padding: 10px;
                     background: $grey;
