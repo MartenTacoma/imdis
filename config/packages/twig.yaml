@@ -4,3 +4,4 @@ twig:
     globals:
       imdis: 
           registration_status: '%app.registration_status%'
+          presentation_submission: '%app.presentation_submission%'

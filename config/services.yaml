@@ -4,8 +4,10 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    env(REGISTRATION_STATUS): "open"
+    env(REGISTRATION_STATUS): 'open'
     app.registration_status: '%env(REGISTRATION_STATUS)%'
+    env(PRESENTATION_SUBMISSION): 'TO BE DETERMINED'
+    app.presentation_submission: '%env(PRESENTATION_SUBMISSION)%'
 
 
 services:
