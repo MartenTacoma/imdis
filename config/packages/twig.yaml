@@ -1,3 +1,6 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
     form_themes: ['base/form/imdis.html.twig']
+    globals:
+      imdis: 
+          registration_status: '%app.registration_status%'

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = imdis.registration_status == 'future' ? 'Registration not yet opened' : 'Registration closed' %}
+
+{% block body %}
+{% if imdis.registration_status == 'future' %}
+Registration is not yet possible.
+{% else %}
+Registration is no longer possible.
+{% endif %}
+{% endblock %}

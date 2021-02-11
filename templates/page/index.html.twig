@@ -18,11 +18,13 @@
     {{ _self.frontblock('display', 'Oral Presentations', path('program_index'), abstracts|filter((a) => a.presentation)|length) }}
     {{ _self.frontblock('image', 'Posters', path('poster_index'), abstracts|filter((a) => a.poster)|length) }}
 </div>
-<div class="stats {% if app.user %}user{% endif%}">
-    {{ _self.frontblock('users', 'Registrations', path('user_index'), users.total, 'float:left') }}
-    {{ _self.frontblock('earth', 'Countries', path('user_index'), users.countries, 'float:right') }}
+{% if imdis.registration_status != 'future' %}
+    <div class="stats {% if app.user or imdis.registration_status == 'closed'%}user{% endif%}">
+        {{ _self.frontblock('users', 'Registrations', path('user_index'), users.total, 'float:left') }}
+        {{ _self.frontblock('earth', 'Countries', path('user_index'), users.countries, 'float:right') }}
 
-    {% if not app.user %}<div class="register" onclick="window.location='{{path('app_register')}}';"><span class="icon-user-plus"></span> Register now</div>{% endif %}
-</div>
+        {% if not app.user and imdis.registration_status == 'open' %}<div class="register" onclick="window.location='{{path('app_register')}}';"><span class="icon-user-plus"></span> Register now</div>{% endif %}
+    </div>
+{% endif %}
 <div style="clear:both"></div>
 {% endblock %}

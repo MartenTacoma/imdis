@@ -31,7 +31,9 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
-        if($this->isGranted('ROLE_USER')){
+        if($this->getParameter('app.registration_status') !== 'open') {
+            return $this->render('registration/closed.html.twig');
+        } elseif($this->isGranted('ROLE_USER')){
             return $this->render('registration/existing.html.twig');
         } else {
             $user = new User();
