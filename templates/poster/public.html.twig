@@ -1,5 +1,7 @@
 {% extends "base.html.twig" %}
 
+{% from "base/blocks/shareButtons.twig" import shareButtons %}
+
 {% set pagetitle = 'Posters' %}
 
 {% block head %}
@@ -41,8 +43,11 @@
     {% for block in posters %}
     <div class="anchor{% if loop.first %} first{%endif%}"><a name="{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}"></div></a><div class="day"><h2>{{ block.date|date('l d F') }} | {% for theme in block.theme %}{% if not loop.first %} / {% endif %}{{theme}}{% endfor %}</h2><span class="time">{{ block.TimeStart|date('H:i') }}</span> - <span class="time">{{ block.TimeEnd|date('H:i') }}</span></div>
     {% for poster in block.posters %}
+    <section id="poster{{poster.abstract.ImdisId}}">
+        <a class="anchor" name="{{poster.abstract.ImdisId}}"></a>
         <div class="poster">
             <div class="main">
+                {{ shareButtons(url('poster_index') ~ '#' ~ poster.abstract.ImdisId, poster.abstract.title) }}
                 <div class="id">{{ poster.abstract.ImdisId }}</div>
                 <div class="title">{% if poster.abstract.url %}<a href="{{poster.abstract.url}}">{{ poster.abstract.title }}</a>{% else %}{{ poster.abstract.title }}{% endif %}</div>
                 <div class="authors">{% apply spaceless %}
@@ -98,7 +103,7 @@
                 </div>
             {% endif %}
         </div>
-        
+        </section>
     {% endfor %}
     {% endfor %}
     </div>

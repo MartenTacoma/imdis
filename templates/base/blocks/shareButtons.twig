@@ -1,0 +1,11 @@
+{% macro sharebuttons(link, text) %}
+    <div class="share">
+        <span class="icon-share2"></span>
+        <div class="services">
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ link|url_encode }}"><span class="icon-linkedin"></span></a>
+            <a href="https://twitter.com/intent/tweet?text={{ text|url_encode }} %23IMDIS2021&url={{ link|url_encode }}"><span class="icon-twitter1"></span></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ link|url_encode }}"><span class="icon-facebook2"></span></a>
+            <a href="mailto:?subject={{ text|url_encode }}&body={{ link|url_encode }}"><span class="icon-envelop"></span></a>
+        </div>
+    </div>
+{% endmacro %}

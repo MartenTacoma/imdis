@@ -1,3 +1,12 @@
+tr.talk,
+section {
+    position: relative;
+    a.anchor {
+        position: absolute;
+        top: -140px;
+    }
+}
+
 .anchor {
     position: relative;
     a {
@@ -51,6 +60,7 @@
     margin-top: 15px;
     color: white;
     position: sticky;
+    z-index: 2;
     top: 61px;
     h2 {
         margin: 0px;

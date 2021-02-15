@@ -2,6 +2,8 @@
 
 {% set pagetitle = 'Programme' %}
 
+{% from "base/blocks/shareButtons.twig" import shareButtons %}
+
 {% block head %}
     <div class="timezone"><span class="icon-clock"></span> All times are listed in CEST (UTC+2)</div>
 {% endblock %}
@@ -18,7 +20,7 @@
             <li><a href="#{{ block.date|date('Ymd') }}{{ block.TimeStart|date('Hi') }}">{{ block }}</a></li>
         {% endfor %}
         </ul></div>
-        <div>As IMDIS 2021 is online we have reduced the length of each talk. Authors have been given the option to record a longer version of their talk. If a recording is available this can be accessed through the camera icon (<span class="icon-video-camera"></span>).</div>
+        <div>As IMDIS 2021 is online we have reduced the length of each talk. All talks are pre-recorded. After each presentation there will be a few minutes for Q&amp;A. We use the Zoom chat for this. After the session the recording can be accessed through the camera icon (<span class="icon-video-camera"></span>). The slides (with additional slides) wil be available after the session through the slides icon (<span class="icon-image"></span>).</div>
     </div>
 {% endblock %}
 
@@ -48,12 +50,14 @@
                 <tr class="postersession"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td>Poster session {{ talk.PosterSession.theme|join(' / ') }}, <nobr><a href="{{path('poster_index')}}#{{ block.date|date('Ymd') }}{{ talk.PosterSession.TimeStart|date('Hi') }}">view posters here</a></nobr></td></tr>
             {% else %}
                 <tr class="talk {% if talk.type == 'keynote' %}keynote{% endif %}">
-                    <td><span class="time">{{ talk.TimeStart|date('H:i') }}</span>
+                {% set anchor = talk.abstract.ImdisId ?? (block.date|date('d') ~ talk.timeStart|date('Hi')) %}
+                    <td><a class="anchor" name="{{anchor}}"></a><span class="time">{{ talk.TimeStart|date('H:i') }}</span>
                         {% if talk.VideoUrl and is_granted('ROLE_USER') and block.status == 'past' %}
                             <div class="video"><a href="{{ talk.VideoUrl }}" title="Watch full presentation"><span class="icon-video-camera"></span></a></div>
                         {% endif %}
                     </td>
                     <td>
+                        {{ shareButtons(url('program_index') ~ '#' ~ anchor, talk.abstract.title ?? talk.title) }}
                         <span class="id">{% if talk.abstract %}{{talk.abstract.ImdisId}}{% endif %}</span>
                         <span class="title">{% if talk.abstract and talk.abstract.url %}<a href="{{talk.abstract.url}}">{{ talk.abstract.title ?? talk.title }}</a>{% else %}{{ talk.abstract.title ?? talk.title }}{% endif %}</span>
                         {# <span class="teaser">{{ talk.teaser }}</span> #}

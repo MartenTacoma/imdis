@@ -181,56 +181,149 @@
     }
 }
 
-.stats {
-    div {
-        width: calc(25% - 20px);
-        background: $grey;
-        text-align: center;
-        margin: 10px;
-        padding: 10px;
-        max-width: 330px;
+.video {
+    margin: 10px;
+    line-height: 0;
+    width: calc(100% - 20px);
+    padding-top: calc(100% / 1920 * 1080 - 20px);
+    background: $lightGrey;
+    position: relative;
+    iframe,
+    embed {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        width: 100%;
+        height: 100%;
+    }
+    @media screen and (min-width: $desktop){
         float: left;
-        height: 135px;
-        padding-top: 20px;
-        cursor: pointer;
-        &:hover {
-            background-color: $lightGrey;
+        width: calc(50% - 20px);
+        padding-top: calc(50% / 1920 * 1080 - 20px);
+    
+    }
+}
+.stats {
+    div.statblock {
+        width: calc(25% - 20px);
+        max-width: 330px;
+        padding-top: calc(25% / 1920 * 1080 - 20px);
+        position: relative;
+        margin: 10px;
+        float: left;
+        div {
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            background: $grey;
+            text-align: center;
+            padding: 10px;
+            padding-top: calc(22% - 40px);
+            overflow: hidden;
+            cursor: pointer;
+            &:hover {
+                background-color: $lightGrey;
+            }
+            .label {
+                display: block;
+            }
+            .icon {
+                font-size: 2em;
+            }
+            .value {
+                font-size: 2em;
+                display: block;
+            }
+            @media screen and (max-width: 1000px){
+                padding-top: calc(25% - 31px);
+                .value {
+                    display: inline-block;
+                    margin-left: 10px;
+                }
+            }
         }
-        .label {
-            display: block;
-        }
-        .icon {
-            font-size: 2em;
-        }
-        .value {
-            font-size: 2em;
-            display: block;
+        @media screen and (max-width: $mobile){
+            width: calc(50% - 20px);
+            padding-top: calc(50% / 1920 * 1080 - 20px);
+            max-width: 680px;
         }
         &.register {
             width: calc(50% - 20px);
             max-width: 680px;
-            background: $blue;
-            color: white;
-            padding-top: 45px;
-            font-size: 2em;
-            text-transform: uppercase;
-            &:hover {
-                background-color: $darkblue;
+            div {
+                background: $blue;
+                color: white;
+                padding-top: calc(11% - 15px);
+                font-size: 2em;
+                text-transform: uppercase;
+                &:hover {
+                    background-color: $darkblue;
+                }
+                
             }
             @media screen and (max-width: $mobile){
                 width: calc(100% - 20px);
                 max-width: 100%;
             }
         }
-        @media screen and (max-width: $mobile){
-            width: calc(50% - 20px);
-            max-width: 680px;
-        }
     }
     &.user {
         div {
             width: calc(50% - 20px);
             max-width: 680px;
+        }
+    }
+}
+
+.share {
+    position: relative;
+    float: right;
+    margin-left: 5px;
+    a {
+        text-decoration: none;
+        color: $text-color;
+        .icon-linkedin {
+            color: #0073b1;
+        }
+        .icon-facebook2 {
+            color: #3b5998;
+        }
+        .icon-twitter1 {
+            color: #1da1f2;
+        }
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+    .services {
+        z-index: 2;
+        position: absolute;
+        right: 0px;
+        background: $lightGrey;
+        padding: 2px;
+        padding-left: 4px;
+        padding-bottom:0px;
+        line-height: 1;
+        border-radius: 6px;
+        font-size: 2em;
+        min-width: 162px;
+        transition-property: opacity,visibility;
+        transition-duration: .25s,0s;
+        transition-delay: 0s,.5s;
+        opacity: 0;
+        visibility: hidden;
+    }
+    &:hover {
+        .services {
+            visibility: visible;
+            transition-property: visibility,opacity;
+            transition-duration: 0s,.25s;
+            transition-delay: 0s,0s;
+            opacity: 1;
         }
     }
 }
