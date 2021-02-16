@@ -67,6 +67,7 @@ class MenuBuilder
         // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
         $menu[$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
         $menu[$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
+        $menu[$infoLabel]->addChild('Contact', ['route'=>'contact']);
         
         $helpName = 'Guidelines';
         $menu->addChild($helpName, ['route'=>'help_index']);
