@@ -34,7 +34,7 @@ class ImdisAbstractController extends AbstractController
     public function manage(ImdisAbstractRepository $imdisAbstractRepository): Response
     {
         return $this->render('imdis_abstract/index.html.twig', [
-            'imdis_abstracts' => $imdisAbstractRepository->findAll(),
+            'imdis_abstracts' => $imdisAbstractRepository->findBy([], ['imdisId'=>'ASC']),
         ]);
     }
 

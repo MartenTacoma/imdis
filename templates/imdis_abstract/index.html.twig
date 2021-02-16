@@ -8,16 +8,14 @@
             <tr>
                 <th>Id</th>
                 <th>Title</th>
-                <th>ImdisId</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for imdis_abstract in imdis_abstracts %}
             <tr>
-                <td>{{ imdis_abstract.id }}</td>
-                <td>{{ imdis_abstract.title }}</td>
                 <td>{{ imdis_abstract.imdisId }}</td>
+                <td>{{ imdis_abstract.title }}</td>
                 <td>
                 <button onclick="window.location.href='{{ path('imdis_abstract_show', {'id': imdis_abstract.id}) }}'">view</button>
                     <button onclick="window.location.href='{{ path('imdis_abstract_edit', {'id': imdis_abstract.id}) }}'"><span class="icon-pencil"></span> edit</button>
