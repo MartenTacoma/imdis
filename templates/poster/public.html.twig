@@ -31,9 +31,10 @@
         </ul></div>
         
 
-        <div><span class="mobile">When an icon is dark a link is available, you can click the icon to open the link. If the icon is light no link is available.<br/></span><span class="icon-video-camera"></span> All authors have been given the option to record a video to present their poster.<br/>
-            <span class="icon-bubble"></span> Using this link you can leave comments on the poster on Google Drive. Please leave your name with your comments.<br/>
-            {# <span class="icon-users"></span> At the timeslot indicated there will be a dedicated online meeting room per poster. #}
+        <div><span class="mobile">When an icon is dark a link is available, you can click the icon to open the link. If the icon is light no link is available.<br/></span>
+            During the poster session each poster will have a breakout room in zoom. You will be able to select breakout rooms yourself and move between rooms. The room name will be the id (the number on the right) and the start of the title of the poster.<br/>
+            <span class="icon-video-camera"></span> All authors have been given the option to record a pitch video to present their poster.<br/>
+            <span class="icon-bubble"></span> Using this link you can leave comments on the poster on Google Drive. Please leave your name with your comments.
             </div>
     </div>
 {% endblock %}
@@ -60,13 +61,13 @@
                     <div class="video">
                         <a href="{{ poster.VideoUrl }}">
                             <span class="icon-video-camera"></span>
-                            <span class="label">Video presentation</span>
+                            <span class="label">Pitch video</span>
                         </a>
                     </div>
                 {% else %}
                     <div class="video none">
                         <span class="icon-video-camera"></span>
-                        <span class="label">Video presentation</span>
+                        <span class="label">Pitch video</span>
                     </div>
                 {% endif %}
                 {% if poster.CommentUrl %}
