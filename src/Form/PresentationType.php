@@ -19,6 +19,7 @@ class PresentationType extends AbstractType
             ->add('time_start', TimeType::class, ['widget'=> 'single_text'])
             ->add('title')
             ->add('video_url')
+            ->add('slides_url')
             ->add('abstract')
             ->add('poster_session')
             ->add(

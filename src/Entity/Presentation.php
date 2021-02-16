@@ -62,6 +62,11 @@ class Presentation
      */
     private $presentationPeople;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $slides_url;
+
     public function __construct()
     {
         $this->presentationPeople = new ArrayCollection();
@@ -195,5 +200,17 @@ class Presentation
         } else {
             return $this->title;
         }
+    }
+
+    public function getSlidesUrl(): ?string
+    {
+        return $this->slides_url;
+    }
+
+    public function setSlidesUrl(?string $slides_url): self
+    {
+        $this->slides_url = $slides_url;
+
+        return $this;
     }
 }
