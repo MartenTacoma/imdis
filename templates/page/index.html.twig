@@ -12,7 +12,17 @@
 
 {% block body %}
 
-<div class="frontvideo"><iframe src="https://www.youtube.com/embed/CmzKQ3PSrow" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></embed></div>
+<div class="frontvideo"><video poster="//embed.ifremer.fr/videos/2/a/2a95989a27294c93af77f375a91e4e09/b878a5e094d64b5299334f2ef2bde377.jpg" preload="none" controls="controls">
+            <source src="//embed.ifremer.fr/videos/2/a/2a95989a27294c93af77f375a91e4e09/d4a41f22cfb34ff485e13f6965f45cac.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
+            <source src="//embed.ifremer.fr/videos/2/a/2a95989a27294c93af77f375a91e4e09/745e66694cc34a1ba8ea22ae0187552a.webm" type="video/webm; codecs=vp8,vorbis">
+        <object type="application/x-shockwave-flash" data="//static.ifremer.fr/libs/flowplayer/flash/v3.x/flowplayer.swf">
+        <param name="allowfullscreen" value="true">
+        <param name="allowscriptaccess" value="always">
+        <param name="flashvars" value="config={'playlist':[{'url':'http://embed.ifremer.fr/videos/2/a/2a95989a27294c93af77f375a91e4e09/b878a5e094d64b5299334f2ef2bde377.jpg'},{'url':'http://embed.ifremer.fr/videos/2/a/2a95989a27294c93af77f375a91e4e09/d4a41f22cfb34ff485e13f6965f45cac.mp4','autoPlay':false}],'plugins':{'controls':{'url':'//static.ifremer.fr/libs/flowplayer/flash/v3.x/flowplayer.controls.swf','backgroundGradient':'none','opacity':'.5'}}}">
+        <p style="text-align: center;">Your browser can't play HTML5 video or Flash player...<br>
+            <a href="http://videojs.com/html5-video-support/" target="_blank"><img src="//static.ifremer.fr/img/logo-html5-flash.png" style="max-width:100%; max-height:100%;"></a><br>            <a href="//embed.ifremer.fr/videos/2/a/2a95989a27294c93af77f375a91e4e09/d4a41f22cfb34ff485e13f6965f45cac.mp4">Download the video</a> instead.</p>
+    </object>
+</video></div>
 
 <div class="stats">
     {{ _self.frontblock('bubbles', 'Sessions', path('theme_index'), themes|length) }}

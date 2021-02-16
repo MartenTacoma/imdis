@@ -188,6 +188,7 @@
     padding-top: calc(100% / 1920 * 1080 - 20px);
     background: $lightGrey;
     position: relative;
+    video,
     iframe,
     embed {
         position: absolute;
