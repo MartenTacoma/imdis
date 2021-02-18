@@ -2,8 +2,8 @@
 
 {% set pagetitle = '' %}
 
-{% macro frontblock(icon, label, link, value, style) %}
-    <div class="statblock"{% if style %} style="{{style}}"{% endif %}title="{{label}}"><div onclick="window.location='{{ link }}'">
+{% macro frontblock(icon, label, link, value) %}
+    <div class="statblock" title="{{label}}"><div onclick="window.location='{{ link }}'">
         <span class="icon icon-{{ icon }}"></span>
         <span class="value">{{ value }}</span>
         <span class="label">{{ label }}</span>
@@ -11,6 +11,18 @@
 {% endmacro %}
 
 {% block body %}
+
+<div class="row">
+<div class="stats">
+<div class="left">
+    {{ _self.frontblock('bubbles', 'Sessions', path('theme_index'), themes|length, 'float:left') }}
+    {{ _self.frontblock('file-text', 'Abstracts', path('imdis_abstract_index'), abstracts|length, 'float:right') }}
+</div>
+<div class="right">
+    {{ _self.frontblock('display', 'Oral Presentations', path('program_index'), abstracts|filter((a) => a.presentation)|length) }}
+    {{ _self.frontblock('image', 'Posters', path('poster_index'), abstracts|filter((a) => a.poster)|length) }}
+</div>
+</div>
 
 <div class="frontvideo"><video poster="//embed.ifremer.fr/videos/2/a/2a95989a27294c93af77f375a91e4e09/b878a5e094d64b5299334f2ef2bde377.jpg" preload="none" controls="controls">
             <source src="//embed.ifremer.fr/videos/2/a/2a95989a27294c93af77f375a91e4e09/d4a41f22cfb34ff485e13f6965f45cac.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
@@ -23,20 +35,15 @@
             <a href="http://videojs.com/html5-video-support/" target="_blank"><img src="//static.ifremer.fr/img/logo-html5-flash.png" style="max-width:100%; max-height:100%;"></a><br>            <a href="//embed.ifremer.fr/videos/2/a/2a95989a27294c93af77f375a91e4e09/d4a41f22cfb34ff485e13f6965f45cac.mp4">Download the video</a> instead.</p>
     </object>
 </video></div>
-
-<div class="stats">
-    {{ _self.frontblock('bubbles', 'Sessions', path('theme_index'), themes|length) }}
-    {{ _self.frontblock('file-text', 'Abstracts', path('imdis_abstract_index'), abstracts|length) }}
-    {{ _self.frontblock('display', 'Oral Presentations', path('program_index'), abstracts|filter((a) => a.presentation)|length) }}
-    {{ _self.frontblock('image', 'Posters', path('poster_index'), abstracts|filter((a) => a.poster)|length) }}
 </div>
 <div style="clear:both"></div>
 {% if imdis.registration_status != 'future' %}
+<div class="row">
     <div class="stats {% if app.user or imdis.registration_status == 'closed'%}user{% endif%}">
-        {{ _self.frontblock('users', 'Registrations', path('user_index'), users.total, 'float:left') }}
-        {{ _self.frontblock('earth', 'Countries', path('user_index'), users.countries, 'float:right') }}
-
-        {% if not app.user and imdis.registration_status == 'open' %}<div class="statblock register"><div onclick="window.location='{{path('app_register')}}';"><span class="icon-user-plus"></span> Register now</div></div>{% endif %}
+        <div class="left">{{ _self.frontblock('users', 'Registrations', path('user_index'), users.total) }}</div>
+        <div class="right">{{ _self.frontblock('earth', 'Countries', path('user_index'), users.countries, 'float:right') }}</div>
+</div>
+        {% if not app.user and imdis.registration_status == 'open' %}<div class="register"><div onclick="window.location='{{path('app_register')}}';"><span class="icon-user-plus"></span> Register now</div></div>{% endif %}
     </div>
 {% endif %}
 <div style="clear:both"></div>
