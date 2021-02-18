@@ -67,9 +67,15 @@ class Presentation
      */
     private $slides_url;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserPresentation::class, mappedBy="presentation", orphanRemoval=true)
+     */
+    private $users;
+
     public function __construct()
     {
         $this->presentationPeople = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,6 +197,9 @@ class Presentation
         return $this;
     }
     
+    public function __toString(){
+        return empty($this->abstract) ? $this->title : $this->abstract->__toString();
+    }
     
     public function getTheTitle(){
         if(!empty($this->abstract)) {
@@ -210,6 +219,36 @@ class Presentation
     public function setSlidesUrl(?string $slides_url): self
     {
         $this->slides_url = $slides_url;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserPresentation[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(UserPresentation $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setPresentation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(UserPresentation $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getPresentation() === $this) {
+                $user->setPresentation(null);
+            }
+        }
 
         return $this;
     }

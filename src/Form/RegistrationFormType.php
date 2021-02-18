@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\UserPresentation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -14,6 +15,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -83,6 +85,44 @@ class RegistrationFormType extends AbstractType
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+            ])
+            ->add('registrationType', ChoiceType::class, [
+                'mapped' => false,
+                'label' => 'Are you presenter at IMDIS 2021?',
+                    'help' => 'You are presenter if your name is bold on the program or poster list',
+                    'choices' => [
+                        'No'=>'No',
+                        'Yes, I present one or more posters' => 'poster',
+                        'Yes, I have an oral presentation' => 'oral',
+                        'Yes, I have an oral presentation and one or more posters' => 'both'
+                    ],
+                    'expanded' => true
+            ])
+            ->add(
+                'presentations',
+                CollectionType::class,
+                [
+                    'entry_type' => UserPresentationType::class,
+                    'entry_options' => ['label' => false],
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false
+                ]
+            )
+            ->add(
+                'posters',
+                CollectionType::class,
+                [
+                    'entry_type' => UserPosterType::class,
+                    'entry_options' => ['label' => false],
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false
+                ]
+            )
+            ->add('maillist', CheckboxType::class, [
+                'label' => 'Please add me to the IMDIS mailing list to keep me updated on future editions of IMDIS',
+                'required' => false
             ])
         ;
     }

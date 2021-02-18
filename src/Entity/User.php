@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -67,10 +69,27 @@ class User implements UserInterface
      */
     private $show_email=false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserPresentation::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $presentations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserPoster::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $posters;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $maillist;
+
     public function __construct(){
         if(empty($this->registration_time)){
             $this->registration_time = new \DateTime();
         }
+        $this->presentations = new ArrayCollection();
+        $this->posters = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -227,6 +246,78 @@ class User implements UserInterface
     public function setShowEmail(bool $show_email): self
     {
         $this->show_email = $show_email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserPresentation[]
+     */
+    public function getPresentations(): Collection
+    {
+        return $this->presentations;
+    }
+
+    public function addPresentation(UserPresentation $presentation): self
+    {
+        if (!$this->presentations->contains($presentation)) {
+            $this->presentations[] = $presentation;
+            $presentation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePresentation(UserPresentation $presentation): self
+    {
+        if ($this->presentations->removeElement($presentation)) {
+            // set the owning side to null (unless already changed)
+            if ($presentation->getUser() === $this) {
+                $presentation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserPoster[]
+     */
+    public function getPosters(): Collection
+    {
+        return $this->posters;
+    }
+
+    public function addPoster(UserPoster $poster): self
+    {
+        if (!$this->posters->contains($poster)) {
+            $this->posters[] = $poster;
+            $poster->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePoster(UserPoster $poster): self
+    {
+        if ($this->posters->removeElement($poster)) {
+            // set the owning side to null (unless already changed)
+            if ($poster->getUser() === $this) {
+                $poster->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMaillist(): ?bool
+    {
+        return $this->maillist;
+    }
+
+    public function setMaillist(bool $maillist): self
+    {
+        $this->maillist = $maillist;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PosterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -65,9 +67,15 @@ class Poster
      * @var \DateTime
      */
     private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserPoster::class, mappedBy="poster", orphanRemoval=true)
+     */
+    private $users;
     
     public function __construct(){
         $this->preview = new EmbeddedFile();
+        $this->users = new ArrayCollection();
     }
     
     public function setPreviewFile(?File $previewFile = null)
@@ -172,5 +180,39 @@ class Poster
             $title = substr($title, 0, 29) . '...';
         }
         return $title;
+    }
+
+    /**
+     * @return Collection|UserPoster[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(UserPoster $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setPoster($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(UserPoster $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getPoster() === $this) {
+                $user->setPoster(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    public function __toString(){
+        return $this->abstract->__toString();
     }
 }

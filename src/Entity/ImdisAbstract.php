@@ -151,7 +151,7 @@ class ImdisAbstract
     }
     
     public function __toString(){
-        return $this->title;
+        return $this->imdisId . ' - ' . $this->title;
     }
 
     public function getPoster(): ?Poster

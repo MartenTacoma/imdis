@@ -18,6 +18,10 @@ $(function() {
         t = $(e.currentTarget).data('collectionHolderClass');
         addRow(t);
     });
+    
+    if(isRegister){
+        console.log('Hi')
+    }
 });
 
 function setFields(){

@@ -39,6 +39,11 @@ class PresentationType
      */
     private $presentations;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $consent;
+
     public function __construct()
     {
         $this->presentations = new ArrayCollection();
@@ -117,5 +122,17 @@ class PresentationType
     
     public function __toString(){
         return $this->label;
+    }
+
+    public function getConsent(): ?bool
+    {
+        return $this->consent;
+    }
+
+    public function setConsent(bool $consent): self
+    {
+        $this->consent = $consent;
+
+        return $this;
     }
 }

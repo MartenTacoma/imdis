@@ -11,29 +11,53 @@
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
     <p>Welcome to IMDIS 2021. Please fill in the form below. After registration you can login with the details provided below. {# After completion of the form you will receive a link by email to verify your email address.#}</p>
+    <hr/>
     {{ form_start(registrationForm) }}
     <h2>Personal details</h2>
     {{ form_row(registrationForm.name) }}
     {{ form_row(registrationForm.email) }}
     {{ form_row(registrationForm.affiliation) }}
     {{ form_row(registrationForm.country) }}
-    
-    {{ form_row(registrationForm.show_in_list)}}
-<div class="togglefield field_show_email">{{ form_row(registrationForm.show_email)}}</div>
-    <h2>Account</h2>
     <p>The links to join the sessions will only be available to logged in participants. Please set your password below.</p>
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        
+        {{ form_row(registrationForm.plainPassword) }}        
+    <hr/>
     <h2>Terms and Privacy</h2>
     <p>Please read our Privacy &amp; Terms <a href="{{path('terms', {'terms': 'conditions'})}}" target="_blank">here</a> (opens in new window)<br/>
     Please read our Code of Conduct <a href="{{path('terms', {'terms': 'codeofconduct'})}}" target="_blank">here</a> (opens in new window)</p>
         {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_row(registrationForm.show_in_list)}}
+<div class="togglefield field_show_email">{{ form_row(registrationForm.show_email)}}</div>
+<hr/>
+{{ form_row(registrationForm.maillist)}}
+
+<hr/>
         
+<h2>Presenting</h2>
+{{form_row(registrationForm.registrationType)}}
+<div class="togglefield field_presentations">
+<hr/>
+By selecting presentation(s) below, I explicitly agree to the speaker consent form for my presentation(s) as listed below.<br/>
+For more information on this consent form, please click <a href="/speaker_consent.pdf">here</a>
+    <ul class="subform presentation" data-prototype="{{ form_widget(registrationForm.presentations.vars.prototype)|e('html_attr') }}">
+    {% for chair in registrationForm.presentations %}
+    <li>{{ form_row(chair) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="presentation"><span class="icon-plus"></span> Add a presentation</button>
+</div>
     
+<div class="togglefield field_posters">
+<hr/>
+By selecting poster(s) below, I explicitly agree to the poster presentation consent form for my posters(s) listed below and the pitch presentation(s) going along with them.<br/>
+For more information on this consent form, please click <a href="/poster_consent.pdf">here</a>
+    <ul class="subform poster" data-prototype="{{ form_widget(registrationForm.posters.vars.prototype)|e('html_attr') }}">
+    {% for chair in registrationForm.posters %}
+    <li>{{ form_row(chair) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="poster"><span class="icon-plus"></span> Add a poster</button>
+</div>
+<hr/>
         <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        <div class="formEnd">{{ form_end(registrationForm) }}</div>
     <script type="text/javascript">
 var inputField = '[name="registration_form[show_in_list]"]'
 var inputType = 'radio';
@@ -52,5 +76,7 @@ var fields = {
         'set_value': {'#registration_form_show_email_1': 'checked'}
     }
 }
+
+var isRegister = true;
 </script>
 {% endblock %}
