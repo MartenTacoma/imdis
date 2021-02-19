@@ -40,7 +40,8 @@ services:
         arguments: [
           "@knp_menu.factory",
           "@router",
-          "@security.authorization_checker"
+          "@security.authorization_checker",
+          "%app.registration_status%"
         ]
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu

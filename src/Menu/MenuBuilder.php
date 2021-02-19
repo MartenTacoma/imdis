@@ -21,12 +21,13 @@ class MenuBuilder
     /**
      * Add any other dependency you need...
      */
-    public function __construct(FactoryInterface $factory, Router $router, AuthorizationCheckerInterface $auth, ManagerRegistry $registry)
+    public function __construct(FactoryInterface $factory, Router $router, AuthorizationCheckerInterface $auth, $registation_status, ManagerRegistry $registry)
     {
         $this->factory = $factory;
         $this->router = $router;
         $this->registry = $registry;
         $this->auth = $auth;
+        $this->registration_status = $registation_status;
     }
 
     public function createMainMenu(array $options): ItemInterface
@@ -75,10 +76,11 @@ class MenuBuilder
             $menu[$helpName]->addChild($label, ['route'=>'help', 'routeParameters' => ['help' => $id]]);
         
         }
-        
-        $menu->addChild('Registrations', ['route'=>'user_index']);
-        if ($this->auth->isGranted('ROLE_USER')) {
-            $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
+        if($this->registration_status !== 'future'){
+            $menu->addChild('Registrations', ['route'=>'user_index']);
+            if ($this->auth->isGranted('ROLE_USER')) {
+                $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
+            }
         }
         
         $menu[$infoLabel]->addChild('Previous Editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
