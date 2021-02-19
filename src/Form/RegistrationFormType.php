@@ -40,8 +40,8 @@ class RegistrationFormType extends AbstractType
                 ChoiceType::class,
                 [
                     'choices' => [
-                        'My personal details can be included in the public online list of participants'=>'public',
-                        'My personal details can be included in the online list of participants, but only visible for other participants'=>'login',
+                        'My name, affiliation and country can be included in the public online list of participants'=>'public',
+                        'My name, affiliation and country can be included in the online list of participants, but only visible for other participants'=>'login',
                         'I want to be hidden from the online list of participants'=>'hide'
                     ],
                     'expanded' => true,
@@ -51,15 +51,11 @@ class RegistrationFormType extends AbstractType
             )
             ->add(
                 'show_email',
-                ChoiceType::class,
+                CheckboxType::class,
                 [
-                    'label' => 'Do you also want your email address displayed for other participants (when they are logged in)?',
-                    'help' => 'Only applicable if details can be shown, otherwise should be no',
-                    'choices' => [
-                        'Yes'=>'Yes',
-                        'No' => 'No'
-                    ],
-                    'expanded' => true
+                    'label' => 'Include my email address for other participants (when they are logged in)',
+                    'help' => 'Only applicable if details can be shown, otherwise should be unchecked',
+                    'required' => false
                 ]
             )
             ->add('plainPassword', RepeatedType::class, [
@@ -93,8 +89,8 @@ class RegistrationFormType extends AbstractType
                     'choices' => [
                         'No'=>'No',
                         'Yes, I present one or more posters' => 'poster',
-                        'Yes, I have an oral presentation' => 'oral',
-                        'Yes, I have an oral presentation and one or more posters' => 'both'
+                        'Yes, I have one or more oral presentations' => 'oral',
+                        'Yes, I have one or more oral presentations and one or more posters' => 'both'
                     ],
                     'expanded' => true
             ])

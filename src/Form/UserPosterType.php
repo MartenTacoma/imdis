@@ -26,7 +26,8 @@ class UserPosterType extends AbstractType
                             ->join('p.poster_session', 's')
                             ->join('p.abstract', 'a')
                             ->orderBy('s.date, s.time_start, a.imdisId');
-                    }
+                    },
+                    'placeholder' => 'Please select your poster'
                 ])
         ;
     }

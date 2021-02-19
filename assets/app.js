@@ -14,6 +14,5 @@ import './bootstrap';
 
 const $ = require('jquery');
 $(function() {
-    console.log('start');
     $('a[href^="https://"]').attr('target','_blank');
 });

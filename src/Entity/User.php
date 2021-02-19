@@ -70,12 +70,12 @@ class User implements UserInterface
     private $show_email=false;
 
     /**
-     * @ORM\OneToMany(targetEntity=UserPresentation::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=UserPresentation::class, mappedBy="user", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $presentations;
 
     /**
-     * @ORM\OneToMany(targetEntity=UserPoster::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=UserPoster::class, mappedBy="user", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $posters;
 
@@ -320,5 +320,13 @@ class User implements UserInterface
         $this->maillist = $maillist;
 
         return $this;
+    }
+    
+    public function getRegistrationType(){
+        $types = [
+            true => [true => 'both', false => 'oral'],
+            false => [true => 'poster', false => 'no']
+        ];
+        return $types[count($this->presentations) > 0][count($this->posters) > 0];
     }
 }

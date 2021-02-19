@@ -19,8 +19,34 @@ $(function() {
         addRow(t);
     });
     
-    if(isRegister){
-        console.log('Hi')
+    if(typeof isRegister !== 'undefined' && isRegister){
+        var typeField = '[name="registration_form[registrationType]"]';
+        setTypeFields();
+        $(typeField).on('change', function(){
+            setTypeFields();
+        })
+        
+        function setTypeFields(){
+            var typeVal = $(typeField + ":checked").val();
+            if(['oral', 'both'].indexOf(typeVal) == -1){
+                $('.field_presentations').hide();
+                $('.field_presentations ul').children().remove();
+            } else {
+                $('.field_presentations').show();
+                if ($('.field_presentations ul').children().length == 0){
+                    addRow('presentation');
+                }
+            }
+            if(['poster', 'both'].indexOf(typeVal) == -1){
+                $('.field_posters').hide();
+                $('.field_posters ul').children().remove();
+            } else {
+                $('.field_posters').show();
+                if ($('.field_posters ul').children().length == 0){
+                    addRow('poster');
+                }
+            }
+        }
     }
 });
 
@@ -47,6 +73,8 @@ function setFields(){
             for (field in curFields.set_value){
                 if (curFields.set_value[field] == 'checked'){
                     $(field).prop('checked', true);
+                } else if (curFields.set_value[field] == 'unchecked'){
+                    $(field).prop('checked', false);
                 } else {
                     $(field).val(curFields.set_value[field]);
                 }

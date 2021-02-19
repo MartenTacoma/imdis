@@ -56,7 +56,8 @@ class RegistrationController extends AbstractController
                 $email->from(new Address('noreply@eupeodes.nl', 'IMDIS 2021'))
                     ->to($user->getEmail())
                     ->subject('Registration confirmation IMDIS 2021')
-                    ->htmlTemplate('registration/confirmation_email.html.twig');
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->replyTo(new Address('imdis@seadatanet.org', 'IMDIS 2021'));
                 $context = $email->getContext();
                 $context['user'] = $user;
 

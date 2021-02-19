@@ -28,7 +28,8 @@ class UserPresentationType extends AbstractType
                             ->join('p.type', 't')
                             ->orderBy('b.date, b.time_start, p.time_start')
                             ->where('t.consent = 1');
-                    }
+                    },
+                    'placeholder' => 'Please select your presentation'
                 ])
         ;
     }

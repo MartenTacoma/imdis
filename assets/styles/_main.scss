@@ -1,6 +1,9 @@
 hr {
     border: none;
     border-top: solid 1px $text-color;
+    &.light {
+        border-color: #ccc;
+    }
 }
 
 tr.talk,

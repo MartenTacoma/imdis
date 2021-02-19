@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Form\RegistrationType;
+use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +78,9 @@ class UserController extends AbstractController
     public function self_edit(Request $request): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(RegistrationType::class, $user);
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->remove('agreeTerms')->remove('plainPassword');
+        $form->get('registrationType')->setData($user->getRegistrationType());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

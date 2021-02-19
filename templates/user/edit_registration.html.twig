@@ -13,28 +13,62 @@
     {{ form_row(form.email) }}
     {{ form_row(form.affiliation) }}
     {{ form_row(form.country) }}
-    
+    <hr class="light"/>
+    To change your password use the password reset function.
+    <hr  />
+    <h2>Terms and Privacy</h2>
+    <p>You have accepted the <a href="{{path('terms', {'terms': 'conditions'})}}" target="_blank">Privacy &amp; Terms</a> and <a href="{{path('terms', {'terms': 'codeofconduct'})}}" target="_blank">Code of conduct</a> when registering.</p>
+<hr class="light" />
     {{ form_row(form.show_in_list)}}
 <div class="togglefield field_show_email">{{ form_row(form.show_email)}}</div>
+<hr class="light"/>
+{{ form_row(form.maillist)}}
+<hr />
+<h2>Presenting</h2>
+{{form_row(form.registrationType)}}
+<div class="togglefield field_presentations">
+<hr class="light" />
+By selecting presentation(s) below, I explicitly agree to the speaker consent form for my presentation(s) as listed below.<br/>
+For more information on this consent form, please click <a href="/speaker_consent.pdf">here</a>
+    <ul class="subform presentation" data-prototype="{{ form_widget(form.presentations.vars.prototype)|e('html_attr') }}">
+    {% for chair in form.presentations %}
+    <li>{{ form_row(chair) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="presentation"><span class="icon-plus"></span> Add a presentation</button>
+</div>
+    
+<div class="togglefield field_posters">
+<hr class="light"/>
+By selecting poster(s) below, I explicitly agree to the poster presentation consent form for my posters(s) listed below and the pitch presentation(s) going along with them.<br/>
+For more information on this consent form, please click <a href="/poster_consent.pdf">here</a>
+    <ul class="subform poster" data-prototype="{{ form_widget(form.posters.vars.prototype)|e('html_attr') }}">
+    {% for chair in form.posters %}
+    <li>{{ form_row(chair) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="poster"><span class="icon-plus"></span> Add a poster</button>
+</div>
+<hr/>
+
 <button type="submit" class="btn">Update</button>
-    {{ form_end(form) }}
+    <div class="formEnd">{{ form_end(form) }}</div>
     <script type="text/javascript">
-var inputField = '[name="registration[show_in_list]"]'
+var inputField = '[name="registration_form[show_in_list]"]'
 var inputType = 'radio';
 var fields = {
     'public': {
-        'required': ['show_email'],
+        'required': [],
         'not_allowed': []
     },
     'login': {
-        'required': ['show_email'],
+        'required': [],
         'not_allowed': []
     },
     'hide': {
         'required': [],
         'not_allowed': ['show_email'],
-        'set_value': {'#registration_show_email_1': 'checked'}
+        'set_value': {'#registration_form_show_email': 'unchecked'}
     }
 }
+var isRegister = true;
 </script>
 {% endblock %}
