@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% from "base/blocks/shareButtons.twig" import shareButtons %}
+
+{% set pagetitle = 'Poster presenters consent' %}
+
+{% block body %}
+    <a href="{{ path('poster_consent_csv') }}">Download as CSV</a>
+    <table class="table">
+    <thead><tr><th>Poster</th><th>Presenter</th><th>Consent by</th></tr></thead>
+    {% for block in posters %}
+        <tr><th colspan="3">{% for theme in block.theme %}{% if not loop.first %} / {% endif %}{{theme}}{% endfor %}</th></tr>
+        {% for poster in block.posters %}
+            <tr>
+                <td>{{poster.abstract}}</td>
+                <td>{% for presenter in poster.abstract.people|filter((a) => a.isPresenter) %}{% if not loop.first %}, {% endif %}<nobr>{{presenter.name }}</nobr>{% endfor%}</td>
+                <td>{% for user in poster.users %}{% if not loop.first %}<br/>{% endif %}<nobr>{{user.user.name}}, {{user.user.email}}{% endfor %}</nobr></td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </table>
+{% endblock %}

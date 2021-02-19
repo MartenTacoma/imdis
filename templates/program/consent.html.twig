@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% set pagetitle = 'Oral presenters consent' %}
+
+{% block body %}
+    <a href="{{ path('presentation_consent_csv') }}">Download as CSV</a>
+    <table class="table">
+    <thead><tr><th>Talk</th><th>Presenter</th><th>Consent by</th></tr></thead>
+    {% for block in talks %}
+        {% for session in block.session %}
+            <tr><th colspan="3">{{ session.theme ?? session.title }}</th></tr>
+            {% for presentation in session.presentations|filter((a) => a.type.consent == 1) %}
+                <tr>
+                    <td>{{presentation.abstract ?? presentation.title}}</td>
+                    <td>{% if presentation.abstract %}
+                        {% for presenter in presentation.abstract.people|filter((a) => a.isPresenter) %}{% if not loop.first %}, {% endif %}<nobr>{{presenter.name }}</nobr>{% endfor%}
+                    {% else %}
+                        {% for presenter in presentation.presentationPeople|filter((a) => a.presenter) %}{% if not loop.first %}, {% endif %}<nobr>{{presenter.name }}</nobr>{% endfor%}
+                    {% endif %}
+                    </td>
+                    <td>{% for user in presentation.users %}{% if not loop.first %}<br/>{% endif %}<nobr>{{user.user.name}}, {{user.user.email}}{% endfor %}</nobr></td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+    </table>
+{% endblock %}

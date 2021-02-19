@@ -47,4 +47,15 @@ class PresentationRepository extends ServiceEntityRepository
         ;
     }
     */
+    
+    public function findByConsent($consent = true){
+        return $this->createQueryBuilder('p')
+            ->join('p.program_session', 's')
+            ->join('s.block', 'b')
+            ->join('p.type', 't')
+            ->where('t.consent = 1')
+            ->orderBy('b.date,p.time_start', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

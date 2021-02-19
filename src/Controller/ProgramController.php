@@ -36,6 +36,30 @@ class ProgramController extends AbstractController
     }
     
     /**
+     * @Route("/consent", name="presentation_consent", methods={"GET"})
+     * IsGranted("ROLE_MANAGER");
+     */
+    public function presentation_consent(ProgramBlockRepository $programBlockRepository): Response
+    {
+        return $this->render('program/consent.html.twig', [
+            'talks' => $programBlockRepository->findAll(),
+        ]);
+    }
+    /**
+     * @Route("/consent.csv", name="presentation_consent_csv", methods={"GET"})
+     * IsGranted("ROLE_MANAGER");
+     */
+    public function presentation_consent_csv(PresentationRepository $presentationRepository): Response
+    {
+        $response = $this->render('program/consent.csv.twig', [
+            'talks' => $presentationRepository->findByConsent(),
+        ]);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_poster_consent_v'.date('Ymd_His').'.csv"');
+        return $response;
+    }
+    
+    /**
      * @Route("/manage/", name="program_block_index", methods={"GET"})
      * @IsGranted("ROLE_MANAGER")
      */

@@ -1,0 +1,4 @@
+"ID","Session","Title","Presenter","Consent"
+{% for poster in posters %}
+"{{poster.abstract.ImdisId}}","{{poster.abstract.theme}}","{{poster.abstract.title}}","{% for presenter in poster.abstract.people|filter((a) => a.isPresenter) %}{% if not loop.first %}; {% endif %}{{presenter.name }}{% endfor%}","{% for user in poster.users %}{% if not loop.first %}; {% endif %}{{user.user.name}}, {{user.user.email}}{% endfor %}"
+{% endfor %}

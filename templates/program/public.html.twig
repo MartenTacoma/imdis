@@ -13,6 +13,7 @@
     {% if is_granted('ROLE_MANAGER') %}
         <div class="admin"><h3>Maintainance <span class="icon-lock"></span></h3><ul>
         <li><a href="{{path('program_block_index')}}">Edit programme</a></li>
+        <li><a href="{{path('presentation_consent')}}">View oral presenters consent list</a></li>
         </ul></div>
     {% endif %}
         <div><h3>Sessions</h3><ul>

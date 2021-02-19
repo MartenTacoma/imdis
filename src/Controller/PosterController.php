@@ -31,6 +31,30 @@ class PosterController extends AbstractController
     }
 
     /**
+     * @Route("/consent", name="poster_consent", methods={"GET"})
+     * IsGranted("ROLE_MANAGER");
+     */
+    public function poster_consent(PosterSessionRepository $posterSessionRepository): Response
+    {
+        return $this->render('poster/consent.html.twig', [
+            'posters' => $posterSessionRepository->findAll(),
+        ]);
+    }
+    /**
+     * @Route("/consent.csv", name="poster_consent_csv", methods={"GET"})
+     * IsGranted("ROLE_MANAGER");
+     */
+    public function poster_consent_csv(PosterRepository $posterRepository): Response
+    {
+        $response = $this->render('poster/consent.csv.twig', [
+            'posters' => $posterRepository->findAll(),
+        ]);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_poster_consent_v'.date('Ymd_His').'.csv"');
+        return $response;
+    }
+     
+    /**
      * @Route("/session/", name="poster_session_index", methods={"GET"})
      * @IsGranted("ROLE_MANAGER")
      */

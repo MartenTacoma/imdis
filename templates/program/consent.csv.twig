@@ -1,0 +1,8 @@
+"ID","Session","Title","Presenter","Consent"
+{% for presentation in talks %}
+{% if presentation.abstract %}
+"{{presentation.abstract.ImdisId}}","{{presentation.abstract.theme}}","{{presentation.abstract.title}}","{% for presenter in presentation.abstract.people|filter((a) => a.isPresenter) %}{% if not loop.first %}; {% endif %}{{presenter.name }}{% endfor%}","{% for user in presentation.users %}{% if not loop.first %}; {% endif %}{{user.user.name}}, {{user.user.email}}{% endfor %}"
+{% else %}
+"-","-","{{presentation.title}}","{% for presenter in presentation.presentationPeople|filter((a) => a.presenter) %}{% if not loop.first %}; {% endif %}{{presenter.name }}{% endfor%}","{% for user in presentation.users %}{% if not loop.first %}; {% endif %}{{user.user.name}}, {{user.user.email}}{% endfor %}"
+{% endif %}
+{% endfor %}
