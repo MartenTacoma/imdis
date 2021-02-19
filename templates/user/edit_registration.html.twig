@@ -29,7 +29,7 @@
 <div class="togglefield field_presentations">
 <hr class="light" />
 By selecting presentation(s) below, I explicitly agree to the speaker consent form for my presentation(s) as listed below.<br/>
-For more information on this consent form, please click <a href="/speaker_consent.pdf">here</a>
+For more information on this consent form, please click <a href="{{ url('index') }}files/speaker_consent.pdf">here</a>
     <ul class="subform presentation" data-prototype="{{ form_widget(form.presentations.vars.prototype)|e('html_attr') }}">
     {% for chair in form.presentations %}
     <li>{{ form_row(chair) }}</li>
@@ -40,7 +40,7 @@ For more information on this consent form, please click <a href="/speaker_consen
 <div class="togglefield field_posters">
 <hr class="light"/>
 By selecting poster(s) below, I explicitly agree to the poster presentation consent form for my posters(s) listed below and the pitch presentation(s) going along with them.<br/>
-For more information on this consent form, please click <a href="/poster_consent.pdf">here</a>
+For more information on this consent form, please click <a href="{{ url('index') }}files/poster_consent.pdf">here</a>
     <ul class="subform poster" data-prototype="{{ form_widget(form.posters.vars.prototype)|e('html_attr') }}">
     {% for chair in form.posters %}
     <li>{{ form_row(chair) }}</li>

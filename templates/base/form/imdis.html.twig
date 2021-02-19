@@ -7,7 +7,7 @@
     <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
         {{- form_label(form) -}}
         {% if compound|default(false) %}
-            <br/>{{- form_help(form) -}}
+            {%- if help is not empty -%}<br/>{{- form_help(form) -}}{% endif %}
             {{- form_widget(form, widget_attr) -}}
             {{- form_errors(form) -}}
         {% else %}
