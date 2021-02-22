@@ -42,4 +42,5 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
     
     role_hierarchy:
-        ROLE_ADMIN: ROLE_MANAGER
+        ROLE_ADMIN: [ROLE_EDIT_PROGRAM,ROLE_ALL_REGISTRATIONS]
+        ROLE_EDIT_PROGRAM: ROLE_CONSENT

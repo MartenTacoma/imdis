@@ -85,7 +85,7 @@ class MenuBuilder
         
         $menu[$infoLabel]->addChild('Previous Editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
         
-        if ($this->auth->isGranted('ROLE_MANAGER') && false) {
+        if ($this->auth->isGranted('ROLE_EDIT_PROGRAM') && false) {
             $menu->addChild('Admin', ['route'=>'admin']);
             $menu['Admin']->addChild('Registrations', ['route'=>'user_index']);
             $menu['Admin']->addChild('Edit Abstracts', ['route'=>'imdis_abstract_manage']);

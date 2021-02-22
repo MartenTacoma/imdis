@@ -10,10 +10,10 @@
 
 {% block side %}
     <div class="sticky">
-    {% if is_granted('ROLE_MANAGER') %}
+    {% if is_granted('ROLE_EDIT_PROGRAM') or is_granted('ROLE_CONSENT') %}
         <div class="admin"><h3>Maintainance <span class="icon-lock"></span></h3><ul>
-        <li><a href="{{path('program_block_index')}}">Edit programme</a></li>
-        <li><a href="{{path('presentation_consent')}}">View oral presenters consent list</a></li>
+        {% if is_granted('ROLE_EDIT_PROGRAM') %}<li><a href="{{path('program_block_index')}}">Edit programme</a></li>{% endif %}
+        {% if is_granted('ROLE_CONSENT') %}<li><a href="{{path('presentation_consent')}}">View oral presenters consent list</a></li>{% endif %}
         </ul></div>
     {% endif %}
         <div><h3>Sessions</h3><ul>

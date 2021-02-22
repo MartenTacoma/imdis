@@ -37,7 +37,7 @@ class ProgramController extends AbstractController
     
     /**
      * @Route("/consent", name="presentation_consent", methods={"GET"})
-     * IsGranted("ROLE_MANAGER");
+     * @IsGranted("ROLE_CONSENT");
      */
     public function presentation_consent(ProgramBlockRepository $programBlockRepository): Response
     {
@@ -47,7 +47,7 @@ class ProgramController extends AbstractController
     }
     /**
      * @Route("/consent.csv", name="presentation_consent_csv", methods={"GET"})
-     * IsGranted("ROLE_MANAGER");
+     * @IsGranted("ROLE_CONSENT");
      */
     public function presentation_consent_csv(PresentationRepository $presentationRepository): Response
     {
@@ -61,7 +61,7 @@ class ProgramController extends AbstractController
     
     /**
      * @Route("/manage/", name="program_block_index", methods={"GET"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function block_index(ProgramBlockRepository $programBlockRepository): Response
     {
@@ -72,7 +72,7 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/block/new", name="program_block_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function block_new(Request $request): Response
     {
@@ -96,7 +96,7 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/block/{id}", name="program_block_show", methods={"GET"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function block_show(ProgramBlock $programBlock): Response
     {
@@ -107,7 +107,7 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/block/{id}/edit", name="program_block_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function block_edit(Request $request, ProgramBlock $programBlock): Response
     {
@@ -128,7 +128,7 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/block/{id}", name="program_block_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function block_delete(Request $request, ProgramBlock $programBlock): Response
     {
@@ -143,7 +143,7 @@ class ProgramController extends AbstractController
     
     /**
      * @Route("/block/{id}/session", name="program_block_session", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_block_new(Request $request, ProgramBlock $programBlock): Response
     {
@@ -168,7 +168,7 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/session/{id}", name="program_session_show", methods={"GET"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_show(ProgramSession $programSession): Response
     {
@@ -179,7 +179,7 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/session/{id}/edit", name="program_session_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_edit(Request $request, ProgramSession $programSession): Response
     {
@@ -199,7 +199,7 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/session/{id}", name="program_session_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_delete(Request $request, ProgramSession $programSession): Response
     {
@@ -214,7 +214,7 @@ class ProgramController extends AbstractController
     
         /**
      * @Route("/session/{id}/presentation", name="presentation_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function new(Request $request, ProgramSession $programSession): Response
     {
@@ -244,7 +244,7 @@ class ProgramController extends AbstractController
     
         /**
      * @Route("/presentation/{id}/edit", name="presentation_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function edit(Request $request, Presentation $presentation): Response
     {
@@ -270,7 +270,7 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/presentation/{id}", name="presentation_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function delete(Request $request, Presentation $presentation): Response
     {

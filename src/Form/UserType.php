@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Controller\UserController;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,7 +32,7 @@ class UserType extends AbstractType
                 'roles',
                 ChoiceType::class,
                 [
-                    'choices' => ['Admin' => 'ROLE_ADMIN', 'Manager' => 'ROLE_MANAGER'],
+                    'choices' => UserController::$roles,
                     'multiple' => true,
                     'expanded' => true
                 ]

@@ -104,7 +104,7 @@ class PageController extends AbstractController
     
     /**
      * @Route("/admin", name="admin")
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function admin(): Response
     {

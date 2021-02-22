@@ -28,7 +28,7 @@ class CommitteeController extends AbstractController
 
     /**
      * @Route("/manage", name="committee_manage", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function manage(CommitteeRepository $committeeRepository): Response
     {
@@ -39,7 +39,7 @@ class CommitteeController extends AbstractController
 
     /**
      * @Route("/new", name="committee_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function new(Request $request): Response
     {
@@ -63,7 +63,7 @@ class CommitteeController extends AbstractController
 
     /**
      * @Route("/{id}", name="committee_show", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function show(Committee $committee): Response
     {
@@ -74,7 +74,7 @@ class CommitteeController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="committee_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function edit(Request $request, Committee $committee): Response
     {
@@ -95,7 +95,7 @@ class CommitteeController extends AbstractController
 
     /**
      * @Route("/{id}", name="committee_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function delete(Request $request, Committee $committee): Response
     {

@@ -32,7 +32,7 @@ class PosterController extends AbstractController
 
     /**
      * @Route("/consent", name="poster_consent", methods={"GET"})
-     * IsGranted("ROLE_MANAGER");
+     * @IsGranted("ROLE_CONSENT");
      */
     public function poster_consent(PosterSessionRepository $posterSessionRepository): Response
     {
@@ -42,7 +42,7 @@ class PosterController extends AbstractController
     }
     /**
      * @Route("/consent.csv", name="poster_consent_csv", methods={"GET"})
-     * IsGranted("ROLE_MANAGER");
+     * @IsGranted("ROLE_CONSENT");
      */
     public function poster_consent_csv(PosterRepository $posterRepository): Response
     {
@@ -56,7 +56,7 @@ class PosterController extends AbstractController
      
     /**
      * @Route("/session/", name="poster_session_index", methods={"GET"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function session_index(PosterSessionRepository $posterSessionRepository): Response
     {
@@ -67,7 +67,7 @@ class PosterController extends AbstractController
     
     /**
      * @Route("/session/{id}/rooms", name="poster_session_room", methods={"get"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function room(PosterSession $session): Response
     {
@@ -78,7 +78,7 @@ class PosterController extends AbstractController
     
     /**
      * @Route("/session/new", name="poster_session_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_new(Request $request): Response
     {
@@ -102,7 +102,7 @@ class PosterController extends AbstractController
 
     /**
      * @Route("/session/{id}", name="poster_session_show", methods={"GET"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_show(PosterSession $posterSession): Response
     {
@@ -113,7 +113,7 @@ class PosterController extends AbstractController
 
     /**
      * @Route("/session/{id}/edit", name="poster_session_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_edit(Request $request, PosterSession $posterSession): Response
     {
@@ -134,7 +134,7 @@ class PosterController extends AbstractController
 
     /**
      * @Route("/session/{id}", name="poster_session_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_delete(Request $request, PosterSession $posterSession): Response
     {
@@ -149,7 +149,7 @@ class PosterController extends AbstractController
     
     /**
      * @Route("/manage", name="poster_manage", methods={"GET"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function manage(PosterRepository $posterRepository): Response
     {
@@ -160,7 +160,7 @@ class PosterController extends AbstractController
 
     /**
      * @Route("/new", name="poster_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function new(Request $request): Response
     {
@@ -188,7 +188,7 @@ class PosterController extends AbstractController
 
     /**
      * @Route("/{id}", name="poster_show", methods={"GET"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function show(Poster $poster): Response
     {
@@ -199,7 +199,7 @@ class PosterController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="poster_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function edit(Request $request, Poster $poster): Response
     {
@@ -230,7 +230,7 @@ class PosterController extends AbstractController
 
     /**
      * @Route("/{id}", name="poster_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function delete(Request $request, Poster $poster): Response
     {

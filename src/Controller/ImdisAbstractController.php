@@ -29,7 +29,7 @@ class ImdisAbstractController extends AbstractController
     
     /**
      * @Route("/manage", name="imdis_abstract_manage", methods={"GET"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function manage(ImdisAbstractRepository $imdisAbstractRepository): Response
     {
@@ -40,7 +40,7 @@ class ImdisAbstractController extends AbstractController
 
     /**
      * @Route("/new", name="imdis_abstract_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function new(Request $request): Response
     {
@@ -74,7 +74,7 @@ class ImdisAbstractController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="imdis_abstract_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function edit(Request $request, ImdisAbstract $imdisAbstract): Response
     {
@@ -95,7 +95,7 @@ class ImdisAbstractController extends AbstractController
 
     /**
      * @Route("/{id}", name="imdis_abstract_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function delete(Request $request, ImdisAbstract $imdisAbstract): Response
     {

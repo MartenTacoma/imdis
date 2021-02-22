@@ -17,6 +17,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class UserController extends AbstractController
 {
+    public static $roles = [
+        'Admin' => 'ROLE_ADMIN',
+        'View all registration' => 'ROLE_ALL_REGISTRATIONS',
+        'Edit programme details' => 'ROLE_EDIT_PROGRAM',
+        'View presentation consent lists' => 'ROLE_CONSENT'
+    ];
+    
+    
     /**
      * @Route("/list", name="user_index", methods={"GET"})
      */
@@ -39,7 +47,7 @@ class UserController extends AbstractController
     }
     /**
      * @Route("/admin", name="user_admin", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function admin(UserRepository $userRepository): Response
     {
@@ -48,7 +56,7 @@ class UserController extends AbstractController
     
     /**
      * @Route("/registrations.csv", name="user_csv")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function csv(UserRepository $userRepository): Response
     {
@@ -98,7 +106,7 @@ class UserController extends AbstractController
     
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function new(Request $request): Response
     {
@@ -122,7 +130,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function show(User $user): Response
     {
@@ -133,7 +141,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function edit(Request $request, User $user): Response
     {
@@ -154,7 +162,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function delete(Request $request, User $user): Response
     {

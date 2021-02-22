@@ -8,7 +8,7 @@
 
 {% block side %}
     <div class="sticky">
-    {% if is_granted('ROLE_MANAGER') %}
+    {% if is_granted('ROLE_EDIT_PROGRAM') %}
         <div class="admin"><h3>Maintainance <span class="icon-lock"></span></h3><ul>
         <li><a href="{{path('imdis_abstract_manage')}}">Edit abstracts</a></li>
         </ul></div>

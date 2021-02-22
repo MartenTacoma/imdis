@@ -9,7 +9,7 @@
 {% block side %}
 <div class="sticky">
 {% if not admin %}
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_ALL_REGISTRATIONS') %}
             <div class="admin"><h3>Maintainance <span class="icon-lock"></span></h3><ul>
             <li><a href="{{path('user_admin')}}">Manage registrations</a> (and view hidden info)</li>
             </ul></div>
@@ -74,8 +74,7 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
                         <td class="email {% if admin and not user.ShowEmail %} adminOnly{% endif %}">{% if admin or user.ShowEmail %}{{user.email}}{% endif %}</td>
                         {% if admin %}
                             <td class="roles">
-                                {%- if 'ROLE_ADMIN' in user.roles %}Admin
-                                {% elseif 'ROLE_MANAGER' in user.roles %}Manager{% endif %}
+                                {{ user.RoleLabels|join(', ')}}
                             </td>
                             <td class="registered">{{ user.registrationTime ? user.registrationTime|date('Y-m-d H:i:s') : '' }}</td>
                             {% if is_granted('ROLE_ADMIN') %}

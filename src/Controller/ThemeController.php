@@ -28,7 +28,7 @@ class ThemeController extends AbstractController
 
     /**
      * @Route("/new", name="theme_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function new(Request $request): Response
     {
@@ -52,7 +52,7 @@ class ThemeController extends AbstractController
 
     /**
      * @Route("/{id}", name="theme_show", methods={"GET"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function show(Theme $theme): Response
     {
@@ -63,7 +63,7 @@ class ThemeController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="theme_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function edit(Request $request, Theme $theme): Response
     {
@@ -84,7 +84,7 @@ class ThemeController extends AbstractController
 
     /**
      * @Route("/{id}", name="theme_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function delete(Request $request, Theme $theme): Response
     {

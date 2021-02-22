@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Controller\UserController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -328,5 +329,13 @@ class User implements UserInterface
             false => [true => 'poster', false => 'no']
         ];
         return $types[count($this->presentations) > 0][count($this->posters) > 0];
+    }
+    
+    public function getRoleLabels(){
+        $return = [];
+        foreach ($this->roles as $role) {
+            $return[] = array_search($role, UserController::$roles);
+        }
+        return $return;
     }
 }
