@@ -19,7 +19,7 @@ class UserController extends AbstractController
 {
     public static $roles = [
         'Admin' => 'ROLE_ADMIN',
-        'View all registration' => 'ROLE_ALL_REGISTRATIONS',
+        'View all registrations' => 'ROLE_ALL_REGISTRATIONS',
         'Edit programme details' => 'ROLE_EDIT_PROGRAM',
         'View presentation consent lists' => 'ROLE_CONSENT'
     ];
