@@ -71,7 +71,7 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
                     <td class="affiliation">{{ user.affiliation }}</td>
                     <td class="country">{{ user.CountryName }}</td>
                     {% if is_granted('ROLE_USER') %}
-                        <td class="email {% if admin and not user.ShowEmail %} adminOnly{% endif %}">{% if admin or user.ShowEmail %}{{user.email}}{% endif %}</td>
+                        <td class="email {% if admin and not user.ShowEmail %} adminOnly{% endif %}">{% if admin or user.ShowEmail %}<a href="mailto:{{ user.email }}">{{user.email}}</a>{% endif %}</td>
                         {% if admin %}
                             <td class="roles">
                                 {{ user.RoleLabels|join(', ')}}

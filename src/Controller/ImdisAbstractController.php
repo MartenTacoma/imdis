@@ -63,7 +63,7 @@ class ImdisAbstractController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="imdis_abstract_show", methods={"GET"})
+     * @Route("/{imdisId}", name="imdis_abstract_show", methods={"GET"})
      */
     public function show(ImdisAbstract $imdisAbstract): Response
     {
@@ -73,7 +73,7 @@ class ImdisAbstractController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="imdis_abstract_edit", methods={"GET","POST"})
+     * @Route("/{imdisId}/edit", name="imdis_abstract_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function edit(Request $request, ImdisAbstract $imdisAbstract): Response
