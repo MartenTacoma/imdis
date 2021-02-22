@@ -18,10 +18,10 @@ class PageController extends AbstractController
         'codeofconduct' => 'Code of Conduct',
     ];
     public static $helppages = [
-        'zoom' => 'Zoom',
+        'zoom' => 'Access Live Sessions of IMDIS 2021 (Zoom)',
         'poster' => 'Poster Presentations',
         'oral' => 'Oral Presentations',
-        'video' => 'Making a Video Presentation'
+        'video' => 'Making a Video for Posters & Oral presentations'
     ];
     /**
      * @Route("/", name="index")
