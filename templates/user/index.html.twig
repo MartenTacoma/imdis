@@ -57,8 +57,7 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
                 {% if is_granted('ROLE_USER') %}
                     <th><a href="?sort=email&amp;dir={% if sort=='email' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='email' %} class="sort-{{dir}}"{% endif %}>E-mail</a></th>
                     {% if admin %}
-                        <th><a href="?sort=roles&amp;dir={% if sort=='roles' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='roles' %} class="sort-{{dir}}"{% endif %}>Roles</a></th>
-                        <th><a href="?sort=registration_time&amp;dir={% if sort=='registration_time' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='registration_time' %} class="sort-{{dir}}"{% endif %}>Registered</a></th>
+                        <th><a href="?sort=registration_time&amp;dir={% if sort=='registration_time' and dir=='asc' %}desc{% else %}asc{% endif %}"{% if sort=='registration_time' %} class="sort-{{dir}}"{% endif %}>Registered</a></th>{% if is_granted('ROLE_ADMIN') %}<th></th>{% endif %}
                     {% endif %}
                 {% endif %}
             </tr>
@@ -73,12 +72,11 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
                     {% if is_granted('ROLE_USER') %}
                         <td class="email {% if admin and not user.ShowEmail %} adminOnly{% endif %}">{% if admin or user.ShowEmail %}<a href="mailto:{{ user.email }}">{{user.email}}</a>{% endif %}</td>
                         {% if admin %}
-                            <td class="roles">
-                                {{ user.RoleLabels|join(', ')}}
-                            </td>
                             <td class="registered">{{ user.registrationTime ? user.registrationTime|date('Y-m-d H:i:s') : '' }}</td>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <td class="edit"><a href="{{ path('user_edit', {'id': user.id}) }}"><span class="icon-pencil"></span></a></td>
+                                <td class="edit">{% if user.RoleLabels|length > 0 %}
+                                    <span class="icon-key" title="{{ user.RoleLabels|join(', ')}}"></span>
+                                {% endif %} <a href="{{ path('user_edit', {'id': user.id}) }}"><span class="icon-pencil"></span></a></td>
                             {% endif %}
                         {% endif %}
                     {% endif %}
