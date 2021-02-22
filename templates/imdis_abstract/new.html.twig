@@ -6,6 +6,7 @@
 {{ encore_entry_script_tags('form') }}
 {% endblock %}
 {% block body %}
+{% set action = 'new' %}
     <a href="{{ path('imdis_abstract_index') }}">back to list</a>
 
     {{ include('imdis_abstract/_form.html.twig') }}

@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% set pagetitle = 'Edit abstract' %}
+{% set pagetitle = 'Edit abstract ' ~ imdis_abstract.imdisId %}
+{% set action = 'edit' %}
 
 {% block javascripts %}
 {{ encore_entry_script_tags('form') }}
 {% endblock %}
 
 {% block body %}
-    <a href="{{ path('imdis_abstract_index') }}">back to list</a>
+    <a href="{{ path('imdis_abstract_manage') }}">back to list</a>
     
     {{ include('imdis_abstract/_form.html.twig', {'button_label': 'Update'}) }}
 
 
-    {{ include('imdis_abstract/_delete_form.html.twig') }}
+    {# {{ include('imdis_abstract/_delete_form.html.twig') }} #}
 {% endblock %}
