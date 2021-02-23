@@ -101,6 +101,9 @@
                         div.map {
                             width: 100%;
                             height: 100%;
+                            svg {
+                                cursor: default;
+                            }
                             &::before {
                                 content: '';
                                 display: inline-block;

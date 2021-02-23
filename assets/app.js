@@ -15,10 +15,14 @@ import './bootstrap';
 const $ = require('jquery');
 $(function() {
     $('a[href^="https://"]').attr('target','_blank');
-    $('.worldMap').on('click', function(){
-        $(this).parents('.sticky').toggleClass('fullMap');
+    $('.worldMap svg').on('click', function(e){
+        $(this).parents('.sticky').addClass('fullMap');
+        e.stopPropagation();
     });
-    $('.worldMap').on('mousemove', function(e){
+    $('.worldMap').on('click', function(e){
+        $(this).parents('.sticky').removeClass('fullMap');
+    });
+    $('.worldMap svg').on('mousemove', function(e){
         $('#toolTip').css('top', e.pageY - $(document).scrollTop()).css('left', e.pageX + 20)
     })
     $('.worldMap path').on('mouseover', function(){
