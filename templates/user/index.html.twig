@@ -38,7 +38,21 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
 {% if stats.hide > 0 or (stats.login > 0 and not is_granted('ROLE_USER')) %}</div><div>
     Not all registrations are displayed as some participants have chosen not to be listed.{% endif %}
 {% endif %}
-</div></div>
+</div>
+<div class="worldMap">
+    <div class="close">&#10006;</div>
+    <div class="map">{{ include('user/world.svg')}}</div>
+    <style>
+    {% for country in countries %}
+        #{{country.country}} {
+            fill: #093564;
+        }
+    {% endfor %}
+    </style>
+    <div class="open">Click the map for a larger view</div>
+</div>
+
+</div>
 {% endblock %}
 
 

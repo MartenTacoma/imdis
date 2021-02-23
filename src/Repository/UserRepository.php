@@ -85,4 +85,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult()[0];
     }
+    
+    public function findAllCountries(){
+        return $this->createQueryBuilder('u')
+            ->select('u.country, count(u.id) as registrations')
+            ->groupBy('u.country')
+            ->getQuery()
+            ->getResult();
+    }
 }

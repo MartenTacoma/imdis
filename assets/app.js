@@ -15,4 +15,7 @@ import './bootstrap';
 const $ = require('jquery');
 $(function() {
     $('a[href^="https://"]').attr('target','_blank');
+    $('.worldMap').on('click', function(){
+        $(this).parents('.sticky').toggleClass('fullMap');
+    });
 });

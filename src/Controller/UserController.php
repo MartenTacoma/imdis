@@ -42,7 +42,8 @@ class UserController extends AbstractController
             'admin' => $admin,
             'sort' => $_GET['sort'] ?? 'name',
             'dir' => $_GET['dir'] ?? 'asc',
-            'stats' => $userRepository->findAllStatistics()
+            'stats' => $userRepository->findAllStatistics(),
+            'countries' => $userRepository->findAllCountries(),
         ]);
     }
     /**
