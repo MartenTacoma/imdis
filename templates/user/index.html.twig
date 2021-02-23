@@ -49,7 +49,7 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
     {% set color_max_l = 50 %}
     <style>
     {% for country in countries %}
-        #{{country.country}} {
+        #{{country.id}} {
             {% if admin %}
             {% set color_l = color_min_l + (
                 ( color_max_l - color_min_l ) *
@@ -96,7 +96,7 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
                 <tr {% if not (user.showInList == 'public' or (user.showInList == 'login' and is_granted('ROLE_USER'))) %} class="adminOnly" {% endif %}>
                     <td class="name">{{ user.name }}</td>
                     <td class="affiliation">{{ user.affiliation }}</td>
-                    <td class="country">{{ user.CountryName }}</td>
+                    <td class="country">{{ user.country.name }}</td>
                     {% if is_granted('ROLE_USER') %}
                         <td class="email {% if admin and not user.ShowEmail %} adminOnly{% endif %}">{% if admin or user.ShowEmail %}<a href="mailto:{{ user.email }}">{{user.email}}</a>{% endif %}</td>
                         {% if admin %}

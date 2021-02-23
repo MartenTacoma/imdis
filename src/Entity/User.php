@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Intl\Countries;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -56,7 +55,8 @@ class User implements UserInterface
     private $affiliation;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Country::class)
+     * @ORM\JoinColumn(name="country", referencedColumnName="id")
      */
     private $country;
 
@@ -206,27 +206,18 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getCountry(): ?string
+    public function getCountry(): ?Country
     {
         return $this->country;
     }
 
-    public function setCountry(?string $country): self
+    public function setCountry(?Country $country): self
     {
         $this->country = $country;
 
         return $this;
     }
     
-    public function getCountryName(): ?string
-    {
-        if (empty($this->country)) {
-            return null;
-        } else {
-            return Countries::getName($this->country);
-        }
-    }
-
     public function getShowInList(): ?string
     {
         return $this->show_in_list;

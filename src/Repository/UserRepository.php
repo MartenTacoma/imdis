@@ -65,6 +65,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
     */
     
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null){
+        if(array_key_exists('country', $orderBy)){
+            return $this->createQueryBuilder('u')
+                ->join('u.country', 'c')
+                ->orderBy('c.name, u.name, u.email', $orderBy['country'])
+                ->getQuery()
+                ->getResult();
+        } else {
+            return parent::findBy($criteria,$orderBy, $limit, $offset);
+        }
+    }
+    
     public function findAll(){
         return $this->createQueryBuilder('p')
             ->orderBy('p.name, p.email', 'ASC')
@@ -88,14 +100,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     
     public function findAllCountries(){
         return $this->createQueryBuilder('u')
+            ->join('u.country', 'c')
             ->select(
-                'u.country',
+                'c.id',
                 'count(u.id) as registrations',
                 "sum(CASE WHEN u.show_in_list='public' THEN 1 ELSE 0 END) AS public",
                 "sum(CASE WHEN u.show_in_list='login' THEN 1 ELSE 0 END) AS login",
                 "sum(CASE WHEN u.show_in_list='hide' THEN 1 ELSE 0 END) AS hide"
             )
-            ->groupBy('u.country')
+            ->groupBy('c.id')
             ->orderBy('registrations', 'DESC')
             ->getQuery()
             ->getResult();
