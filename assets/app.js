@@ -19,7 +19,7 @@ $(function() {
         $(this).parents('.sticky').toggleClass('fullMap');
     });
     $('.worldMap').on('mousemove', function(e){
-        $('#toolTip').css('top', e.pageY).css('left', e.pageX + 20)
+        $('#toolTip').css('top', e.pageY - $(document).scrollTop()).css('left', e.pageX + 20)
     })
     $('.worldMap path').on('mouseover', function(){
         var str = $(this).attr('title');
