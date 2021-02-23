@@ -63,7 +63,14 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
         }
     {% endfor %}
     </style>
+    {% if admin %}
+    <script style="text/javascript">
+    var registrations = {
+    {% for country in countries %}{% if not loop.first %},{% endif %}'{{country.id}}': {{country.registrations}}{% endfor %}
+    }</script>
+    {% endif %}
     <div class="open">Click the map for a larger view</div>
+    <div id="toolTip">TEST</div>
 </div>
 
 </div>

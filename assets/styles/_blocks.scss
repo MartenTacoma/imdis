@@ -454,3 +454,12 @@
         }
     }
 }
+
+#toolTip {
+    position: fixed;
+    z-index: 1000;
+    display: none;
+    padding: 3px;
+    font-size: 0.7em;
+    background: $grey;
+}

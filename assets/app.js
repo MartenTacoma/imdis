@@ -18,7 +18,17 @@ $(function() {
     $('.worldMap').on('click', function(){
         $(this).parents('.sticky').toggleClass('fullMap');
     });
-    $('.worldMap path').on('mouseover', function(){
-        console.log($(this).attr('title'));
+    $('.worldMap').on('mousemove', function(e){
+        $('#toolTip').css('top', e.pageY).css('left', e.pageX + 20)
     })
+    $('.worldMap path').on('mouseover', function(){
+        var str = $(this).attr('title');
+        if(typeof registrations != 'undefined' && typeof registrations[$(this).attr('id')] != 'undefined'){
+            str = str + ' - ' + registrations[$(this).attr('id')];
+        }
+        $('#toolTip').text(str).show();
+    });
+    $('.worldMap path').on('mouseout', function(){
+        $('#toolTip').text('').hide();
+    });
 });
