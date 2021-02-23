@@ -18,4 +18,7 @@ $(function() {
     $('.worldMap').on('click', function(){
         $(this).parents('.sticky').toggleClass('fullMap');
     });
+    $('.worldMap path').on('mouseover', function(){
+        console.log($(this).attr('title'));
+    })
 });

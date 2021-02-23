@@ -42,10 +42,24 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
 <div class="worldMap">
     <div class="close">&#10006;</div>
     <div class="map">{{ include('user/world.svg')}}</div>
+    {% set maxRegs = max(countries|first.registrations,2) %}
+    {% set color_h = 211 %}
+    {% set color_s = 83.5 %}
+    {% set color_min_l = 21.4 %}
+    {% set color_max_l = 50 %}
     <style>
     {% for country in countries %}
         #{{country.country}} {
-            fill: #093564;
+            {% if admin %}
+            {% set color_l = color_min_l + (
+                ( color_max_l - color_min_l ) *
+                ( maxRegs - country.registrations ) /
+                ( maxRegs - 1)
+            ) %}
+            {% else %}
+            {% set color_l = color_min_l %}
+            {% endif %}
+            fill: hsl({{color_h}}, {{color_s}}%, {{color_l}}%);
         }
     {% endfor %}
     </style>

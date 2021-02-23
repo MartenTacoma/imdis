@@ -70,6 +70,10 @@
                         cursor: pointer;
                         path {
                             fill: $na-color;
+                            opacity: 0.9;
+                            &:hover{
+                                opacity: 1;
+                            }
                         }
                     }
                     .close {
