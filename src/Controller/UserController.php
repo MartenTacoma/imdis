@@ -37,13 +37,59 @@ class UserController extends AbstractController
             $users = $userRepository->findBy([], [$_GET['sort']=>$_GET['dir'], 'name'=>$_GET['dir'], 'email'=>$_GET['dir']]);
         }
         
+        $colors = [
+            'min' => [
+                'r'=> 143,
+                'g'=> 192,
+                'b'=> 245
+            ],
+            'max' => [
+                'r'=> 9,
+                'g'=> 53,
+                'b'=> 100
+            ]
+        ];
+        $countries = $userRepository->findAllCountries();
+        $maxRegs = max(1, $countries[0]['registrations']);
+        $bins = 5;
+        $step = ceil($maxRegs / $bins);
+        $bins = ceil($maxRegs / $step);
+        $colorscale = [];
+        $limits = [];
+        if($bins == 1 || !$admin){
+            $factor = 0.5;
+            $i = 1;
+            $colorscale[$i] = 'rgb('
+                . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
+                . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
+                . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
+            $limits[$i] = $i * $step;
+            foreach($countries as &$country){
+                $country['color'] = $colorscale[$i];
+            }    
+        } else {
+            for($i = 1; $i<=$bins; $i++){
+                $factor = ($i - 1) / ($bins - 1);
+                $colorscale[$i] = 'rgb('
+                    . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
+                    . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
+                    . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
+                $limits[$i] = $step == 1 ? $i * $step : $i * $step - $step + 1 . ' - ' . $i * $step;
+            }
+            foreach($countries as &$country){
+                $i = ceil($country['registrations'] / $maxRegs * $bins);
+                $country['color'] = $colorscale[$i];
+            }
+        }
         return $this->render('user/index.html.twig', [
             'users' => $users,
             'admin' => $admin,
             'sort' => $_GET['sort'] ?? 'name',
             'dir' => $_GET['dir'] ?? 'asc',
             'stats' => $userRepository->findAllStatistics(),
-            'countries' => $userRepository->findAllCountries(),
+            'countries' => $countries,
+            'colors' => $colorscale,
+            'limits' => $limits
         ]);
     }
     /**
