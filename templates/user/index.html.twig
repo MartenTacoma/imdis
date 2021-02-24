@@ -72,12 +72,19 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
       <stop offset="100%" style="stop-color:rgb({{colors.max.r}}, {{colors.max.g}}, {{colors.max.b}})" />
     </linearGradient>
   </defs>
-   <rect x="5" y="650" width="20" height="10" fill="#e3e3e3" />
-   <text x="15" y="645" font-size="9" fill="black" text-anchor="middle">0</text> 
+   <text x="5" y="630" font-weight="bold" fill="black" font-size="10">Number of particpants per country</text>
+   <rect x="5" y="650" width="10" height="10" fill="#e3e3e3" />
+   <text x="10" y="645" font-size="9" fill="black" text-anchor="middle">0</text> 
    
-   <rect x="35" y="650" width="200" height="10" fill="url(#grad1)" />
-   <text x="35" y="645" font-size="9" fill="black" text-anchor="middle">1</text> 
-   <text x="235" y="645" font-size="9" fill="black" text-anchor="middle">{{maxRegs}}</text> 
+   <rect x="25" y="650" width="200" height="10" fill="url(#grad1)" />
+   <text x="25" y="645" font-size="9" fill="black" text-anchor="middle">1</text> 
+   <text x="225" y="645" font-size="9" fill="black" text-anchor="middle">{{maxRegs}}</text> 
+{% else %}
+{% set factor = 0.5 %}
+{% set fill = 'rgb(' ~ (colors.min.r + factor * (colors.max.r - colors.min.r)) ~ ', ' ~ (colors.min.g + factor * (colors.max.g - colors.min.g)) ~ ', ' ~ (colors.min.b + factor * (colors.max.b - colors.min.b)) ~ ')' %}
+{# <rect x="5" y="615" width="20" height="20" fill="#e3e3e3" /><text x="30" y="630" font-size="9" fill="black">Countries without registrations</text> 
+<rect x="5" y="640" width="20" height="20" fill="{{fill}}" /><text x="30" y="655" font-size="9" fill="black">Countries with registrations</text> #}
+   
 {% endif %}
 <text x="780" y="650" font-size="9" fill="#999">IMDIS 2021 - Participants' countries</text> 
 <text x="780" y="659" font-size="9" fill="#999">Basemap: CC-BY - <a xlink:href="https://mapsvg.com/maps/world" target="_blank">https://MapSVG.com/maps/world</a></text></svg></div>
@@ -88,7 +95,7 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
                 {% set factor = ( country.registrations - 1 ) / ( maxRegs - 1) %}
                 fill: rgb({{colors.min.r + factor * (colors.max.r - colors.min.r)}}, {{colors.min.g + factor * (colors.max.g - colors.min.g)}}, {{colors.min.b + factor * (colors.max.b - colors.min.b)}});
             {% else %}
-                fill: rgb({{colors.max.r}}, {{colors.max.g}}, {{colors.max.b}});
+                fill: {{fill}};
             {% endif %}
         }
     {% endfor %}
