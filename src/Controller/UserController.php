@@ -50,7 +50,8 @@ class UserController extends AbstractController
             ]
         ];
         $countries = $userRepository->findAllCountries();
-        $maxRegs = max(1, $countries[0]['registrations']);
+        $maxRegs = 9+$countries[0]['registrations'];
+        
         $bins = 5;
         $step = ceil($maxRegs / $bins);
         $bins = ceil($maxRegs / $step);
@@ -85,6 +86,7 @@ class UserController extends AbstractController
                 . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
             }
         }
+        
         return $this->render('user/index.html.twig', [
             'users' => $users,
             'admin' => $admin,
@@ -93,8 +95,6 @@ class UserController extends AbstractController
             'stats' => $userRepository->findAllStatistics(),
             'countries' => $countries,
             'colorscale' => $colorscale,
-            'colors' => $colors,
-            'maxRegs' => $maxRegs,
             'limits' => $limits
         ]);
     }
