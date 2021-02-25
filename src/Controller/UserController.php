@@ -77,8 +77,12 @@ class UserController extends AbstractController
                 $limits[$i] = $step == 1 ? $i * $step : $i * $step - $step + 1 . ' - ' . $i * $step;
             }
             foreach($countries as &$country){
+                $factor = ($country['registrations'] - 1) / ($maxRegs - 1);
                 $i = ceil($country['registrations'] / $maxRegs * $bins);
-                $country['color'] = $colorscale[$i];
+                $country['color'] =  'rgb('
+                . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
+                . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
+                . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
             }
         }
         return $this->render('user/index.html.twig', [
@@ -88,7 +92,9 @@ class UserController extends AbstractController
             'dir' => $_GET['dir'] ?? 'asc',
             'stats' => $userRepository->findAllStatistics(),
             'countries' => $countries,
-            'colors' => $colorscale,
+            'colorscale' => $colorscale,
+            'colors' => $colors,
+            'maxRegs' => $maxRegs,
             'limits' => $limits
         ]);
     }
