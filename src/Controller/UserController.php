@@ -50,7 +50,7 @@ class UserController extends AbstractController
             ]
         ];
         $countries = $userRepository->findAllCountries();
-        $maxRegs = 9+$countries[0]['registrations'];
+        $maxRegs = $countries[0]['registrations'];
         
         $bins = 5;
         $step = ceil($maxRegs / $bins);
