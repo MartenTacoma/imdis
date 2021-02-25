@@ -92,7 +92,6 @@ class UserController extends AbstractController
                 . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
             $bin = $bins[1];
             $limits[$i] = $bin['start'] . ($bin['start'] == $bin['end'] ? '' : ' - '.$bin['end']);
-            var_dump($limits);
             foreach($countries as &$country){
                 $country['color'] = $colorscale[$i];
             }    
