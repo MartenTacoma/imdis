@@ -68,13 +68,13 @@ class UserController extends AbstractController
             }
             $r = array_sum($counts);
             $aim = floor($r / (6 - $i));
-            $bins[$i] = ['start' => $prev+1, 'n'=>0];
+            $bins[$i] = ['start' => $prev+1, 'n'=>0, '$aim'=>$aim];
             foreach($counts as $n=>$c){
                 $map[$n] = $i;
                 $aim -= $c;
                 $bins[$i]['n'] += $c;
                 unset($counts[$n]);
-                if($aim < 0){
+                if($aim <= 0){
                     $bins[$i]['end'] = $n;
                     $prev = $n;
                     break;
