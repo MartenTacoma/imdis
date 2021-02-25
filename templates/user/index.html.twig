@@ -68,8 +68,23 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
    {% for color in colorscale %}
     {% set y = 640 - (colorscale|length - loop.index) * 25 %}
     <rect x="5" y="{{y}}" width="20" height="20" fill="{{color}}" />
-    {<text x="30" y="{{y + 14}}" font-size="9" fill="black">{{limits[loop.index]}}</text>
+    <text x="30" y="{{y + 14}}" font-size="9" fill="black">{{limits[loop.index]}}</text>
    {% endfor %}
+   
+    {# horizontal gradient scale #}
+    {# <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgb({{colors.min.r}}, {{colors.min.g}}, {{colors.min.b}})" />
+      <stop offset="100%" style="stop-color:rgb({{colors.max.r}}, {{colors.max.g}}, {{colors.max.b}})" />
+    </linearGradient>
+  </defs>
+   <text x="5" y="630" font-weight="bold" fill="black" font-size="10">Number of particpants per country</text>
+   <rect x="5" y="650" width="10" height="10" fill="#e3e3e3" />
+   <text x="10" y="645" font-size="9" fill="black" text-anchor="middle">0</text> 
+
+   <rect x="25" y="650" width="200" height="10" fill="url(#grad1)" />
+   <text x="25" y="645" font-size="9" fill="black" text-anchor="middle">1</text> 
+   <text x="225" y="645" font-size="9" fill="black" text-anchor="middle">{{maxRegs}}</text>  #}
 {% else %}
 {# <rect x="5" y="615" width="20" height="20" fill="#e3e3e3" /><text x="30" y="630" font-size="9" fill="black">Countries without registrations</text> 
 <rect x="5" y="640" width="20" height="20" fill="{{fill}}" /><text x="30" y="655" font-size="9" fill="black">Countries with registrations</text> #}

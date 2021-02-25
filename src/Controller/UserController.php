@@ -50,40 +50,63 @@ class UserController extends AbstractController
             ]
         ];
         $countries = $userRepository->findAllCountries();
-        $maxRegs = $countries[0]['registrations'];
-        
-        $bins = 5;
-        $step = ceil($maxRegs / $bins);
-        $bins = ceil($maxRegs / $step);
+        $counts = [];
+        foreach($countries as $country){
+            if(array_key_exists($country['registrations'], $counts)){
+                $counts[$country['registrations']]++;
+            } else {
+                $counts[$country['registrations']] = 1;
+            }
+        }
+        ksort($counts);
+        $bins = [];
+        $map = [];
+        $prev = 0;
+        for($i = 1;$i <= 5; $i++){
+            if(count($counts) == 0){
+                break;
+            }
+            $r = array_sum($counts);
+            $aim = floor($r / (6 - $i));
+            $bins[$i] = ['start' => $prev+1, 'n'=>0];
+            foreach($counts as $n=>$c){
+                $map[$n] = $i;
+                $aim -= $c;
+                $bins[$i]['n'] += $c;
+                unset($counts[$n]);
+                if($aim < 0){
+                    $bins[$i]['end'] = $n;
+                    $prev = $n;
+                    break;
+                }
+            }
+        }
+        $bins[$i-1]['end'] = $n;
         $colorscale = [];
-        $limits = [];
-        if($bins == 1 || !$admin){
+        if(count($bins) == 1 || !$admin){
             $factor = 0.5;
             $i = 1;
             $colorscale[$i] = 'rgb('
                 . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
                 . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
                 . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
-            $limits[$i] = $i * $step;
+            $bin = $bins[1];
+            $limits[$i] = $bin['start'] . ($bin['start'] == $bin['end'] ? '' : ' - '.$bin['end']);
+            var_dump($limits);
             foreach($countries as &$country){
                 $country['color'] = $colorscale[$i];
             }    
         } else {
-            for($i = 1; $i<=$bins; $i++){
-                $factor = ($i - 1) / ($bins - 1);
+            foreach($bins as $i=>$bin){
+                $factor = ($i - 1) / (count($bins) - 1);
                 $colorscale[$i] = 'rgb('
                     . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
                     . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
                     . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
-                $limits[$i] = $step == 1 ? $i * $step : $i * $step - $step + 1 . ' - ' . $i * $step;
+                $limits[$i] = $bin['start'] . ($bin['start'] == $bin['end'] ? '' : ' - '.$bin['end']);
             }
             foreach($countries as &$country){
-                $factor = ($country['registrations'] - 1) / ($maxRegs - 1);
-                $i = ceil($country['registrations'] / $maxRegs * $bins);
-                $country['color'] =  'rgb('
-                . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
-                . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
-                . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
+                $country['color'] =  $colorscale[$map[$country['registrations']]];
             }
         }
         
@@ -95,6 +118,7 @@ class UserController extends AbstractController
             'stats' => $userRepository->findAllStatistics(),
             'countries' => $countries,
             'colorscale' => $colorscale,
+            'colors' => $colors,
             'limits' => $limits
         ]);
     }
