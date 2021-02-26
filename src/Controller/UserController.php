@@ -59,6 +59,7 @@ class UserController extends AbstractController
             }
         }
         ksort($counts);
+        $maxRegs = max(array_keys($counts));
         $bins = [];
         $map = [];
         $prev = 0;
@@ -94,6 +95,13 @@ class UserController extends AbstractController
             $limits[$i] = $bin['start'] . ($bin['start'] == $bin['end'] ? '' : ' - '.$bin['end']);
             foreach($countries as &$country){
                 $country['color'] = $colorscale[$i];
+                $country['color2'] = $colorscale[$i];
+                $color = [
+                    'r' => ($colors['min']['r']+$colors['max']['r'])/2,
+                    'g' => ($colors['min']['g']+$colors['max']['g'])/2,
+                    'b' => ($colors['min']['b']+$colors['max']['b'])/2
+                ];
+                $colors = ['min' => $color, 'max' => $color];
             }    
         } else {
             foreach($bins as $i=>$bin){
@@ -106,19 +114,34 @@ class UserController extends AbstractController
             }
             foreach($countries as &$country){
                 $country['color'] =  $colorscale[$map[$country['registrations']]];
+                $factor = log10($country['registrations']) / log10($maxRegs);
+                $country['color'] = 'rgb('
+                . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
+                . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
+                . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
             }
         }
-        
+        $labels = [1=>0, $maxRegs=>1];
+        if($maxRegs > 1){
+            $marks = [1/4, 1/2, 3/4];
+            foreach ($marks as $mark){
+                $label = round(pow(10, $mark * log10($maxRegs)));
+                $labels[$label] = log10($label) / log10($maxRegs);
+                echo $label;
+            }
+        }
         return $this->render('user/index.html.twig', [
             'users' => $users,
             'admin' => $admin,
+            'maxRegs' => $maxRegs,
             'sort' => $_GET['sort'] ?? 'name',
             'dir' => $_GET['dir'] ?? 'asc',
             'stats' => $userRepository->findAllStatistics(),
             'countries' => $countries,
             'colorscale' => $colorscale,
             'colors' => $colors,
-            'limits' => $limits
+            'limits' => $limits,
+            'labels' => $labels
         ]);
     }
     /**
