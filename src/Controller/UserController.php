@@ -127,7 +127,6 @@ class UserController extends AbstractController
             foreach ($marks as $mark){
                 $label = round(pow(10, $mark * log10($maxRegs)));
                 $labels[$label] = log10($label) / log10($maxRegs);
-                echo $label;
             }
         }
         return $this->render('user/index.html.twig', [
