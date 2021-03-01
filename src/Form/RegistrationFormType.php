@@ -3,12 +3,15 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Country;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -24,7 +27,18 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add('name')
             ->add('affiliation')
-            ->add('country', null, ['help'=>'We ask your country for statistics to report to the EU', 'placeholder'=>'Please select your country'])
+            ->add('country',
+            EntityType::class,
+            [
+                'class' => Country::class,
+                'query_builder' => function(EntityRepository $er){
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name');
+                },
+                'help'=>'We ask your country for statistics to report to the EU',
+                'placeholder'=>'Please select your country'
+                
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'I have read the Privacy & Terms and the Code of Conduct and agree with them',
                 'mapped' => false,

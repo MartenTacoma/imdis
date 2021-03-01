@@ -59,88 +59,89 @@ class UserController extends AbstractController
             }
         }
         ksort($counts);
-        $maxRegs = max(array_keys($counts));
-        $bins = [];
-        $map = [];
-        $prev = 0;
-        for($i = 1;$i <= 5; $i++){
-            if(count($counts) == 0){
-                break;
-            }
-            $r = array_sum($counts);
-            $aim = floor($r / (6 - $i));
-            $bins[$i] = ['start' => $prev+1, 'n'=>0, '$aim'=>$aim];
-            foreach($counts as $n=>$c){
-                $map[$n] = $i;
-                $aim -= $c;
-                $bins[$i]['n'] += $c;
-                unset($counts[$n]);
-                if($aim <= 0){
-                    $bins[$i]['end'] = $n;
-                    $prev = $n;
+        if(count($counts) > 0){
+            $maxRegs = max(array_keys($counts));
+            $bins = [];
+            $map = [];
+            $prev = 0;
+            for($i = 1;$i <= 5; $i++){
+                if(count($counts) == 0){
                     break;
                 }
+                $r = array_sum($counts);
+                $aim = floor($r / (6 - $i));
+                $bins[$i] = ['start' => $prev+1, 'n'=>0, '$aim'=>$aim];
+                foreach($counts as $n=>$c){
+                    $map[$n] = $i;
+                    $aim -= $c;
+                    $bins[$i]['n'] += $c;
+                    unset($counts[$n]);
+                    if($aim <= 0){
+                        $bins[$i]['end'] = $n;
+                        $prev = $n;
+                        break;
+                    }
+                }
             }
-        }
-        $bins[$i-1]['end'] = $n;
-        $colorscale = [];
-        if(count($bins) == 1){
-            $factor = 0.5;
-            $i = 1;
-            $colorscale[$i] = 'rgb('
-                . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
-                . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
-                . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
-            $bin = $bins[1];
-            $limits[$i] = $bin['start'] . ($bin['start'] == $bin['end'] ? '' : ' - '.$bin['end']);
-            foreach($countries as &$country){
-                $country['color'] = $colorscale[$i];
-                $country['color2'] = $colorscale[$i];
-                $color = [
-                    'r' => ($colors['min']['r']+$colors['max']['r'])/2,
-                    'g' => ($colors['min']['g']+$colors['max']['g'])/2,
-                    'b' => ($colors['min']['b']+$colors['max']['b'])/2
-                ];
-                $colors = ['min' => $color, 'max' => $color];
-            }    
-        } else {
-            foreach($bins as $i=>$bin){
-                $factor = ($i - 1) / (count($bins) - 1);
+            $bins[$i-1]['end'] = $n;
+            $colorscale = [];
+            if(count($bins) == 1){
+                $factor = 0.5;
+                $i = 1;
                 $colorscale[$i] = 'rgb('
                     . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
                     . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
                     . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
+                $bin = $bins[1];
                 $limits[$i] = $bin['start'] . ($bin['start'] == $bin['end'] ? '' : ' - '.$bin['end']);
+                foreach($countries as &$country){
+                    $country['color'] = $colorscale[$i];
+                    $country['color2'] = $colorscale[$i];
+                    $color = [
+                        'r' => ($colors['min']['r']+$colors['max']['r'])/2,
+                        'g' => ($colors['min']['g']+$colors['max']['g'])/2,
+                        'b' => ($colors['min']['b']+$colors['max']['b'])/2
+                    ];
+                    $colors = ['min' => $color, 'max' => $color];
+                }    
+            } else {
+                foreach($bins as $i=>$bin){
+                    $factor = ($i - 1) / (count($bins) - 1);
+                    $colorscale[$i] = 'rgb('
+                        . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
+                        . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
+                        . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
+                    $limits[$i] = $bin['start'] . ($bin['start'] == $bin['end'] ? '' : ' - '.$bin['end']);
+                }
+                foreach($countries as &$country){
+                    $country['color'] =  $colorscale[$map[$country['registrations']]];
+                    $factor = log10($country['registrations']) / log10($maxRegs);
+                    $country['color'] = 'rgb('
+                    . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
+                    . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
+                    . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
+                }
             }
-            foreach($countries as &$country){
-                $country['color'] =  $colorscale[$map[$country['registrations']]];
-                $factor = log10($country['registrations']) / log10($maxRegs);
-                $country['color'] = 'rgb('
-                . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
-                . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
-                . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
-            }
-        }
-        $labels = [1=>0, $maxRegs=>1];
-        if($maxRegs > 1){
-            $marks = [1/4, 1/2, 3/4];
-            foreach ($marks as $mark){
-                $label = round(pow(10, $mark * log10($maxRegs)));
-                $labels[$label] = log10($label) / log10($maxRegs);
+            $labels = [1=>0, $maxRegs=>1];
+            if($maxRegs > 1){
+                $marks = [1/4, 1/2, 3/4];
+                foreach ($marks as $mark){
+                    $label = round(pow(10, $mark * log10($maxRegs)));
+                    $labels[$label] = log10($label) / log10($maxRegs);
+                }
             }
         }
         return $this->render('user/index.html.twig', [
             'users' => $users,
             'admin' => $admin,
-            'maxRegs' => $maxRegs,
             'sort' => $_GET['sort'] ?? 'name',
             'dir' => $_GET['dir'] ?? 'asc',
             'stats' => $userRepository->findAllStatistics(),
             'countries' => $countries,
-            'colorscale' => $colorscale,
-            'colors' => $colors,
-            'limits' => $limits,
-            'labels' => $labels
+            'colorscale' => $colorscale ?? [],
+            'colors' => $colors ?? [],
+            'limits' => $limits ?? [],
+            'labels' => $labels ?? []
         ]);
     }
     /**

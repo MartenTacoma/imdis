@@ -38,11 +38,11 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
 {% if stats.hide > 0 or (stats.login > 0 and not is_granted('ROLE_USER')) %}</div><div>
     Not all registrations are displayed as some participants have chosen not to be listed.{% endif %}
 {% endif %}
-</div>
+</div>{% set bins = colorscale|length %}
+{% if bins > 0 %}
 <div class="worldMap">
     <div class="close"><span class="icon-cross"></span></div>
     <div class="map"><svg xmlns:mapsvg="http://mapsvg.com" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" mapsvg:geoViewBox="-169.110266 83.600842 190.486279 -58.508473" viewbox="0 0 1000 665" xmlns:xlink="http://www.w3.org/1999/xlink">
-   {% set bins = colorscale|length %}
    {% set x_length = 250 %}
    {% set x_start = 20 %}
    {% set x_end = x_start + x_length %}
@@ -98,8 +98,9 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
     {% for country in countries %}{% if not loop.first %},{% endif %}'{{country.id}}': {{country.registrations}}{% endfor %}
     }</script>
     <div class="open">Click the map for a larger view</div>
-    <div id="toolTip">TEST</div>
+    <div id="toolTip"></div>
 </div>
+{% endif %}
 
 </div>
 {% endblock %}

@@ -3,12 +3,14 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Country;
 use App\Controller\UserController;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -26,7 +28,16 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('name')
             ->add('affiliation')
-            ->add('country', CountryType::class, ['required'=>false]);
+            ->add('country',
+            EntityType::class,
+            [
+                'class' => Country::class,
+                'query_builder' => function(EntityRepository $er){
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name');
+                },
+                'placeholder' => 'Please select a country'
+            ]);
         if ($this->auth->isGranted('ROLE_ADMIN')){
             $builder->add(
                 'roles',
