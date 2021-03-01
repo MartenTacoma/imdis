@@ -1,42 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% set pagetitle = user.name %}
+
 
 {% block body %}
-    <h1>User</h1>
+<a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Registration_time</th>
-                <td>{{ user.registrationTime ? user.registrationTime|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>IsVerified</th>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<table class="table">
+<tr><th>Name</th><td>{{user.name}}</td></tr>
+<tr><th>Affiliation</th><td>{{user.affiliation}}</td></tr>
+<tr><th>Country</th><td>{{user.country.name}}</td></tr>
+<tr><th>E-mail</th><td>{{ user.email }}</td></tr>
+<tr><th>Show details</th><td>{% if user.ShowInList == 'public' %}For everybody{% elseif user.ShowInList == 'login' %}For other (logged in) participants{% else %}Only for organizers{% endif %}</td></tr>
+{% if user.ShowInList != 'hidden' %}<tr><th>Show email for logged in users</th><td>{{user.ShowEmail ? 'Yes' : 'No' }}</td></tr>{% endif %}
+<tr><th>Add to IMDIS maillist</th><td>{{ user.maillist ? 'Yes' : 'No'}}</td></tr>
+{% if user.registrationType == 'no' %}<tr><th>Are you a presenter?</th><td>No</td></tr>{% endif %}
+</table>
 
-    <a href="{{ path('user_index') }}">back to list</a>
+<h2>Presenter consent</h2>
+    <h3>Oral presentation(s)</h3>
+    <ul>
+    {% for presentation in user.presentations %}<li>{{ presentation.presentation }}</li>{% else %}<li>No oral presentation consent given</li>{% endfor %}
+    </ul>
+    
+    <h3>Poster presentation(s)</h3>
+    <ul>
+    {% for poster in user.posters %}<li>{{ poster.poster }}</li>{% else %}<li>No poster consent given</li>{% endfor %}
+    </ul>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+    
 
-    {{ include('user/_delete_form.html.twig') }}
+    {# {{ include('user/_delete_form.html.twig') }} #}
 {% endblock %}

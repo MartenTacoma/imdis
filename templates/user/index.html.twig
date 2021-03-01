@@ -129,7 +129,7 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
         {% for user in users %}
             {% if admin or user.showInList == 'public' or (user.showInList == 'login' and is_granted('ROLE_USER')) %}
                 <tr {% if not (user.showInList == 'public' or (user.showInList == 'login' and is_granted('ROLE_USER'))) %} class="adminOnly" {% endif %}>
-                    <td class="name">{{ user.name }}</td>
+                    <td class="name">{% if admin %}<a href="{{path('user_show', {'id': user.id})}}">{{ user.name }}</a>{% else %}{{ user.name }}{% endif %}</td>
                     <td class="affiliation">{{ user.affiliation }}</td>
                     <td class="country">{{ user.country.name }}</td>
                     {% if is_granted('ROLE_USER') %}
