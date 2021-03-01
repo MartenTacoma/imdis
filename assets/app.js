@@ -19,11 +19,11 @@ $(function() {
         $.get('/img/world.svg', function(r){
             $('.worldMap .map svg').append([r.documentElement.children]);
             $('.worldMap svg').on('click', function(e){
-                $(this).parents('.sticky').addClass('fullMap');
+                $('.sticky').addClass('fullMap');
                 e.stopPropagation();
             });
             $('.worldMap').on('click', function(e){
-                $(this).parents('.sticky').removeClass('fullMap');
+                $('.sticky').removeClass('fullMap');
             });
             $('.worldMap svg').on('mousemove', function(e){
                 $('#toolTip').css('top', e.pageY - $(document).scrollTop()).css('left', e.pageX + 20)
@@ -38,6 +38,9 @@ $(function() {
             $('.worldMap path').on('mouseout', function(){
                 $('#toolTip').text('').hide();
             });
+            $(document).keyup(function(e) {
+                if (e.key == 'Escape') $('.sticky').removeClass('fullMap');;
+              });
         })
     }
 });
