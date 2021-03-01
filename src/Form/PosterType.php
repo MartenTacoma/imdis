@@ -13,14 +13,15 @@ class PosterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('video_url')
-            ->add('comment_url')
-            ->add('previewFile', VichImageType::class, [
-                'required' => false
-            ])
-            ->add('download_url')
             ->add('abstract')
             ->add('poster_session')
+            ->add('video_url', null, ['help'=>'Link to the poster pitch on YouTube'])
+            ->add('comment_url', null, ['help'=>'Link to the poster on google Drive'])
+            ->add('download_url', null, ['help' => 'Link to the poster at the main IMDIS website at IFREMER'])
+            ->add('previewFile', VichImageType::class, [
+                'required' => false,
+                'help' => '300 pixels wide and 200 pixels high'
+            ])
         ;
     }
 

@@ -254,7 +254,7 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('program_session_show', ['id' => $presentation->getProgramSession()->getId()]);
+            return $this->redirectToRoute('program_index');
         }
 
         $repository = $this->getDoctrine()->getRepository(PresentationType::class);

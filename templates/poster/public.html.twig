@@ -48,7 +48,7 @@
         <div class="poster">
             <div class="main">
                 {{ shareButtons(url('poster_index') ~ '#' ~ poster.abstract.ImdisId, poster.abstract.title) }}
-                <div class="id">{{ poster.abstract.ImdisId }}</div>
+                <div class="id">{{ poster.abstract.ImdisId }} {% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('poster_edit', {'id': poster.id})}}"><span class="icon-pencil"></span></a></li>{% endif %}</div>
                 <div class="title">{% if poster.abstract.url %}<a href="{{poster.abstract.url}}">{{ poster.abstract.title }}</a>{% else %}{{ poster.abstract.title }}{% endif %}</div>
                 <div class="authors">{% apply spaceless %}
                     {%- for person in poster.abstract.people %}{%- if not loop.first %}{%- if not loop.last %}, {% else %} and {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}

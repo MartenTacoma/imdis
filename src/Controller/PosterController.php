@@ -211,7 +211,7 @@ class PosterController extends AbstractController
             if(!empty($poster->getPreview()->getName())){
                 $this->resizeImage('img/poster/thumbs/'.$poster->getPreview()->getName());
             }
-            return $this->redirectToRoute('poster_manage');
+            return $this->redirectToRoute('poster_index');
         }
 
         return $this->render('poster/edit.html.twig', [

@@ -77,7 +77,7 @@
                     </td>
                     <td>
                         {{ shareButtons(url('program_index') ~ '#' ~ anchor, talk.abstract.title ?? talk.title) }}
-                        <span class="id">{% if talk.abstract %}{{talk.abstract.ImdisId}}{% endif %}</span>
+                        <span class="id">{% if talk.abstract %}{{talk.abstract.ImdisId}}{% endif %} {% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('presentation_edit', {'id': talk.id})}}"><span class="icon-pencil"></span></a></li>{% endif %}</span>
                         <span class="title">{% if talk.abstract and talk.abstract.url %}<a href="{{talk.abstract.url}}">{{ talk.abstract.title ?? talk.title }}</a>{% else %}{{ talk.abstract.title ?? talk.title }}{% endif %}</span>
                     <span class="authors">{% apply spaceless %}
                     {% if talk.abstract %}
