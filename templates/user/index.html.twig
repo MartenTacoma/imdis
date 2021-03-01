@@ -42,9 +42,6 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
 <div class="worldMap">
     <div class="close"><span class="icon-cross"></span></div>
     <div class="map"><svg xmlns:mapsvg="http://mapsvg.com" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" mapsvg:geoViewBox="-169.110266 83.600842 190.486279 -58.508473" viewbox="0 0 1000 665" xmlns:xlink="http://www.w3.org/1999/xlink">
-{% if admin %}
- <defs>
-  </defs>
    {% set bins = colorscale|length %}
    {% set x_length = 250 %}
    {% set x_start = 20 %}
@@ -87,11 +84,6 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
    <text x="{{ 25 + pos * 200 }}" y="645" font-size="9" fill="black" text-anchor="middle">{{label}}</text> 
    {% endfor %}
    {# <text x="225" y="645" font-size="9" fill="black" text-anchor="middle">{{maxRegs}}</text>  #}
-{% else %}
-{# <rect x="5" y="615" width="20" height="20" fill="#e3e3e3" /><text x="30" y="630" font-size="9" fill="black">Countries without registrations</text> 
-<rect x="5" y="640" width="20" height="20" fill="{{fill}}" /><text x="30" y="655" font-size="9" fill="black">Countries with registrations</text> #}
-   
-{% endif %}
 <text x="780" y="650" font-size="9" fill="#999">IMDIS 2021 - Participants' countries</text> 
 <text x="780" y="659" font-size="9" fill="#999">Basemap: CC-BY - <a xlink:href="https://mapsvg.com/maps/world" target="_blank">https://MapSVG.com/maps/world</a></text></svg></div>
     <style>
@@ -101,12 +93,10 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
         }
     {% endfor %}
     </style>
-    {% if admin %}
     <script style="text/javascript">
     var registrations = {
     {% for country in countries %}{% if not loop.first %},{% endif %}'{{country.id}}': {{country.registrations}}{% endfor %}
     }</script>
-    {% endif %}
     <div class="open">Click the map for a larger view</div>
     <div id="toolTip">TEST</div>
 </div>

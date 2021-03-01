@@ -84,7 +84,7 @@ class UserController extends AbstractController
         }
         $bins[$i-1]['end'] = $n;
         $colorscale = [];
-        if(count($bins) == 1 || !$admin){
+        if(count($bins) == 1){
             $factor = 0.5;
             $i = 1;
             $colorscale[$i] = 'rgb('
