@@ -15,15 +15,20 @@
     {% if user.presentations|length %}
     <h3>Oral presentation(s)</h3>
     <p>You have agreed to the speaker consent form for the presentation(s) as listed below.<br/>
-    For more information on this consent form, please click <a href="{{ url('index') }}files/speaker_consent.pdf">here</a></p>
+    For more information on this consent form, please click <a href="{{ url('index') }}files/speaker_consent.pdf">here</a>.</p>
     <ul>
     {% for presentation in user.presentations %}<li>{{ presentation.presentation }}</li>{% endfor %}
-    </ul>{% endif %}
+    </ul>
+    <p>You can find the oral presentation guidelines <a href="{{url('help', {'help': 'oral'})}}">here</a>.</p>
+    {% endif %}
     {% if user.posters|length %}
     <h3>Poster presentation(s)</h3>
     <p>You have agreed to the poster presentation consent form for the posters(s) listed below and the pitch presentation(s) going along with them.<br/>
-For more information on this consent form, please click <a href="{{ url('index') }}files/poster_consent.pdf">here</a></p>
+For more information on this consent form, please click <a href="{{ url('index') }}files/poster_consent.pdf">here</a>.</p>
     <ul>
     {% for poster in user.posters %}<li>{{ poster.poster }}</li>{% endfor %}
-    </ul>{% endif %}
+    </ul>
+    <p>You can find the poster presentation guidelines <a href="{{url('help', {'help': 'poster'})}}">here</a>.</p>{% endif %}
+    <h3>Sending in presentation files</h3>
+    <p>Please send your files {{imdis.presentation_submission|raw}}</p>
 {% endif %}
