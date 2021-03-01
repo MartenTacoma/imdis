@@ -1,4 +1,4 @@
 "Name","email","affiliation","country","registration time","visibility","show_email","add to imdis maillist"
 {% for user in users %}
-"{{user.name}}","{{user.email}}","{{user.affiliation}}","{{user.country.name}}","{{user.RegistrationTime|date('Y-m-d H:i:s')}}","{{user.ShowInList}}","{{ user.ShowEmail ? 'show' : 'hide' }}","{{ user.maillist ? 'Yes' : 'No' }}"
+"{{user.name}}","{{user.email}}","{{user.affiliation}}","{{user.country.name ?? '-'}}","{{user.RegistrationTime|date('Y-m-d H:i:s')}}","{{user.ShowInList}}","{{ user.ShowEmail ? 'show' : 'hide' }}","{{ user.maillist ? 'Yes' : 'No' }}"
 {% endfor %}

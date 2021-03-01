@@ -9,7 +9,7 @@
 <table class="table">
 <tr><th>Name</th><td>{{user.name}}</td></tr>
 <tr><th>Affiliation</th><td>{{user.affiliation}}</td></tr>
-<tr><th>Country</th><td>{{user.country.name}}</td></tr>
+<tr><th>Country</th><td>{{user.country.name ?? '-'}}</td></tr>
 <tr><th>E-mail</th><td>{{ user.email }}</td></tr>
 <tr><th>Show details</th><td>{% if user.ShowInList == 'public' %}For everybody{% elseif user.ShowInList == 'login' %}For other (logged in) participants{% else %}Only for organizers{% endif %}</td></tr>
 {% if user.ShowInList != 'hidden' %}<tr><th>Show email for logged in users</th><td>{{user.ShowEmail ? 'Yes' : 'No' }}</td></tr>{% endif %}
