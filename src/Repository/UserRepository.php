@@ -66,7 +66,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     */
     
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null){
-        if(array_key_exists('country', $orderBy)){
+        if(is_array($orderBy) && array_key_exists('country', $orderBy)){
             return $this->createQueryBuilder('u')
                 ->join('u.country', 'c')
                 ->orderBy('c.name, u.name, u.email', $orderBy['country'])
