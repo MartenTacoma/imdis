@@ -100,7 +100,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Are you presenter at IMDIS 2021?',
                     'help' => 'You are presenter if your name is bold on the program or poster list',
                     'choices' => [
-                        'No'=>'No',
+                        'No'=>'no',
                         'Yes, I present one or more posters' => 'poster',
                         'Yes, I have one or more oral presentations' => 'oral',
                         'Yes, I have one or more oral presentations and one or more posters' => 'both'
