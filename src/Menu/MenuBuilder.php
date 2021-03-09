@@ -67,8 +67,13 @@ class MenuBuilder
         $menu->addChild($infoLabel, ['route'=>'conference_info']);
         // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
         $menu[$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
+        $menu[$infoLabel]->addChild('Access Live Sessions of IMDIS 2021 (Zoom)', ['route'=>'zoom']);
+        $menu[$infoLabel]->addChild('Access Informal Sessions of IMDIS 2021 (Wonder.me)', ['route'=>'wonderme']);
         $menu[$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
         $menu[$infoLabel]->addChild('Contact', ['route'=>'contact']);
+        
+        // 'zoom' => 'Access Live Sessions of IMDIS 2021 (Zoom)',
+        // 'wonder.me' => 'Access Informal Sessions of IMDIS 2021 (Wonder.me)',
         
         $helpName = 'Guidelines';
         $menu->addChild($helpName, ['route'=>'help_index']);

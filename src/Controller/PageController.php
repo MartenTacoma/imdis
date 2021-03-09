@@ -18,7 +18,6 @@ class PageController extends AbstractController
         'codeofconduct' => 'Code of Conduct',
     ];
     public static $helppages = [
-        'zoom' => 'Access Live Sessions of IMDIS 2021 (Zoom)',
         'poster' => 'Poster Presentations',
         'oral' => 'Oral Presentations',
         'video' => 'Making a Video for Posters & Oral presentations'
@@ -48,6 +47,27 @@ class PageController extends AbstractController
                 'terms' => $terms,
                 'pagetitle' => self::$termspages[$terms]
             ]
+        );
+    }
+    
+    /**
+     * @Route("/zoom", name="zoom")
+     */
+    public function zoom(): Response
+    {
+        return $this->render(
+            'page/zoom.html.twig'
+        );
+    }
+    
+    
+    /**
+     * @Route("/wonder.me", name="wonderme")
+     */
+    public function wonderme(): Response
+    {
+        return $this->render(
+            'page/wonder.me.html.twig'
         );
     }
     
