@@ -107,7 +107,7 @@ class UserController extends AbstractController
                     $this->colors = ['min' => $color, 'max' => $color];
                 }    
             } else {
-                foreach($countries as &$country){
+                foreach($this->countries as &$country){
                     $factor = log10($country['registrations']) / log10($maxRegs);
                     $country['color'] = 'rgb('
                     . ( $this->colors['min']['r'] + $factor * ($this->colors['max']['r'] - $this->colors['min']['r']) ) . ', '
