@@ -329,6 +329,7 @@ section {
 }
 
 table.table {
+    width: 100%;
     border-collapse: collapse;
     thead {
         a {
@@ -355,6 +356,16 @@ table.table {
                 white-space: nowrap;
             }
         }
+    }
+    
+    tfoot {
+        tr {
+            border-top: solid 1px $grey;
+        }
+        td {
+            padding: 2px;
+        }
+        font-weight: bold;
     }
     @media screen and (max-width: $mobile){
         &.registration {

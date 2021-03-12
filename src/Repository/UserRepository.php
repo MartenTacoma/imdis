@@ -102,14 +102,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->createQueryBuilder('u')
             ->join('u.country', 'c')
             ->select(
-                'c.id',
+                'c.id, c.continent, c.name',
                 'count(u.id) as registrations',
                 "sum(CASE WHEN u.show_in_list='public' THEN 1 ELSE 0 END) AS public",
                 "sum(CASE WHEN u.show_in_list='login' THEN 1 ELSE 0 END) AS login",
                 "sum(CASE WHEN u.show_in_list='hide' THEN 1 ELSE 0 END) AS hide"
             )
-            ->groupBy('c.id')
-            ->orderBy('registrations', 'DESC')
+            ->groupBy('c.continent, c.id, c.name')
+            ->orderBy('c.continent, c.name', 'DESC')
             ->getQuery()
             ->getResult();
     }

@@ -38,68 +38,9 @@ There are {{stats.total}} registrations for IMDIS 2021. So far we expect partici
 {% if stats.hide > 0 or (stats.login > 0 and not is_granted('ROLE_USER')) %}</div><div>
     Not all registrations are displayed as some participants have chosen not to be listed.{% endif %}
 {% endif %}
-</div>{% set bins = colorscale|length %}
-{% if bins > 0 %}
-<div class="worldMap">
-    <div class="close"><span class="icon-cross"></span></div>
-    <div class="map"><svg xmlns:mapsvg="http://mapsvg.com" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" mapsvg:geoViewBox="-169.110266 83.600842 190.486279 -58.508473" viewbox="0 0 1000 665" xmlns:xlink="http://www.w3.org/1999/xlink">
-   {% set x_length = 250 %}
-   {% set x_start = 20 %}
-   {% set x_end = x_start + x_length %}
-   {% set x_step = x_length / bins %}
-   
-   {# horizontal legend #}
-   {# <text x="5" y="630" font-weight="bold" fill="black" font-size="10">Number of particpants per country</text>
-   <rect x="5" y="650" width="10" height="10" fill="#e3e3e3" />
-   <text x="10" y="645" font-size="9" fill="black" text-anchor="middle">0</text> 
-   {% for color in colorscale %}
-    {% set x1 = x_start + (x_step * (loop.index - 1)) %}
-    <rect x="{{ x1 }}" y="650" width="{{ x_step }}" height="10" fill="{{color}}" />
-    <text x="{{ x1 + x_step / 2}}" y="645" font-size="9" fill="black" text-anchor="middle">{{limits[loop.index]}}</text>  
-   {% endfor %}#}
-   
-   {# vertial legend #}
-   {# <text x="5" y="{{635 - (colorscale|length) * 25}}" font-weight="bold" fill="black" font-size="10">Number of particpants per country</text>
-   <rect x="5" y="{{640 - (colorscale|length) * 25}}" width="20" height="20" fill="#e3e3e3" />
-   <text x="30" y="{{654 - (colorscale|length) * 25}}" font-size="9" fill="black">0</text> 
-   {% for color in colorscale %}
-    {% set y = 640 - (colorscale|length - loop.index) * 25 %}
-    <rect x="5" y="{{y}}" width="20" height="20" fill="{{color}}" />
-    <text x="30" y="{{y + 14}}" font-size="9" fill="black">{{limits[loop.index]}}</text>
-   {% endfor %} #}
-   
-    {# horizontal gradient scale #}
-    <defs>
-    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:rgb({{colors.min.r}}, {{colors.min.g}}, {{colors.min.b}})" />
-      <stop offset="100%" style="stop-color:rgb({{colors.max.r}}, {{colors.max.g}}, {{colors.max.b}})" />
-    </linearGradient>
-  </defs>
-   <text x="5" y="630" font-weight="bold" fill="black" font-size="10">Number of particpants per country</text>
-   <rect x="5" y="650" width="10" height="10" fill="#e3e3e3" />
-   <text x="10" y="645" font-size="9" fill="black" text-anchor="middle">0</text> 
-
-   <rect x="25" y="650" width="200" height="10" fill="url(#grad1)" />
-   {% for label,pos in labels %}
-   <text x="{{ 25 + pos * 200 }}" y="645" font-size="9" fill="black" text-anchor="middle">{{label}}</text> 
-   {% endfor %}
-   {# <text x="225" y="645" font-size="9" fill="black" text-anchor="middle">{{maxRegs}}</text>  #}
-<text x="780" y="650" font-size="9" fill="#999">IMDIS 2021 - Participants' countries</text> 
-<text x="780" y="659" font-size="9" fill="#999">Basemap: CC-BY - <a xlink:href="https://mapsvg.com/maps/world" target="_blank">https://MapSVG.com/maps/world</a></text></svg></div>
-    <style>
-    {% for country in countries %}
-        #{{country.id}} {
-            fill: {{country.color}}
-        }
-    {% endfor %}
-    </style>
-    <script style="text/javascript">
-    var registrations = {
-    {% for country in countries %}{% if not loop.first %},{% endif %}'{{country.id}}': {{country.registrations}}{% endfor %}
-    }</script>
-    <div class="open">Click the map for a larger view</div>
-    <div id="toolTip"></div>
 </div>
+{% if stats.countries > 0 %}
+{% include 'user/map.html.twig' %}
 {% endif %}
 
 </div>

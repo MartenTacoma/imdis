@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Registration statistics' %}
+
+{% block side %}
+<div class="sticky">
+
+{% include 'user/map.html.twig' %}
+</div>
+{% endblock %}
+
+
+
+{% block main %}
+    {% set continent = '' %}
+    {% set n = 0 %}
+    {% set r = 0 %}
+    {% for country in countries %}
+        {% if country.continent != continent %}
+            {% if n > 0 %}
+                <tfoot>
+                <tr><td>Total registrations</td><td>{{ r }}</td></tr>
+                <tr><td>Number of countries</th><td>{{ n }}</td></tr>
+                </tfoot>
+                </table></div>
+            {% endif %}
+            {% set continent = country.continent %}
+            {% set n = 0 %}
+            {% set r = 0 %}
+            <h2>{{ continent }}</h2>
+            <div><table class="table">
+        {% endif %}
+        {% set n = n + 1 %}
+        {% set r = r + country.registrations %}
+        <tr><td>{{country.name}}</td><td>{{country.registrations}}</td></tr>
+    {% endfor %}
+    {% if n > 0 %}
+        <tfoot>
+        <tr><td>Total registrations</td><td>{{ r }}</td></tr>
+        <tr><td>Number of countries</th><td>{{ n }}</td></tr>
+        </tfoot>
+        </table></div>
+    {% endif %}
+{% endblock %}

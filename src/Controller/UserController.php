@@ -24,7 +24,6 @@ class UserController extends AbstractController
         'View presentation consent lists' => 'ROLE_CONSENT'
     ];
     
-    
     /**
      * @Route("/list", name="user_index", methods={"GET"})
      */
@@ -36,8 +35,45 @@ class UserController extends AbstractController
         } else {
             $users = $userRepository->findBy([], [$_GET['sort']=>$_GET['dir'], 'name'=>$_GET['dir'], 'email'=>$_GET['dir']]);
         }
-        
-        $colors = [
+        $this->countries = $userRepository->findAllCountries();
+        $this->map();
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+            'admin' => $admin,
+            'sort' => $_GET['sort'] ?? 'name',
+            'dir' => $_GET['dir'] ?? 'asc',
+            'stats' => $userRepository->findAllStatistics(),
+            'countries' => $this->countries,
+            'colors' => $this->colors ?? [],
+            'labels' => $this->labels ?? []
+        ]);
+    }
+    /**
+     * @Route("/admin", name="user_admin", methods={"GET"})
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
+     */
+    public function admin(UserRepository $userRepository): Response
+    {
+        return $this->index($userRepository, true);
+    }
+    
+    /**
+     * @Route("/statistics", name="user_statistics", methods={"GET"})
+     */
+    function user_statistics(UserRepository $userRepository): Response
+    {
+        $this->countries = $userRepository->findAllCountries();
+        $this->map();
+        return $this->render('user/statistics.html.twig', [
+            'stats' => $userRepository->findAllStatistics(),
+            'countries' => $this->countries,
+            'colors' => $this->colors ?? [],
+            'labels' => $this->labels ?? []
+        ]);
+    }
+    
+    private function map(){
+        $this->colors = [
             'min' => [
                 'r'=> 143,
                 'g'=> 192,
@@ -49,9 +85,8 @@ class UserController extends AbstractController
                 'b'=> 100
             ]
         ];
-        $countries = $userRepository->findAllCountries();
         $counts = [];
-        foreach($countries as $country){
+        foreach($this->countries as $country){
             if(array_key_exists($country['registrations'], $counts)){
                 $counts[$country['registrations']]++;
             } else {
@@ -61,96 +96,34 @@ class UserController extends AbstractController
         ksort($counts);
         if(count($counts) > 0){
             $maxRegs = max(array_keys($counts));
-            $bins = [];
-            $map = [];
-            $prev = 0;
-            for($i = 1;$i <= 5; $i++){
-                if(count($counts) == 0){
-                    break;
-                }
-                $r = array_sum($counts);
-                $aim = floor($r / (6 - $i));
-                $bins[$i] = ['start' => $prev+1, 'n'=>0, '$aim'=>$aim];
-                foreach($counts as $n=>$c){
-                    $map[$n] = $i;
-                    $aim -= $c;
-                    $bins[$i]['n'] += $c;
-                    unset($counts[$n]);
-                    if($aim <= 0){
-                        $bins[$i]['end'] = $n;
-                        $prev = $n;
-                        break;
-                    }
-                }
-            }
-            $bins[$i-1]['end'] = $n;
-            $colorscale = [];
-            if(count($bins) == 1){
-                $factor = 0.5;
-                $i = 1;
-                $colorscale[$i] = 'rgb('
-                    . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
-                    . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
-                    . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
-                $bin = $bins[1];
-                $limits[$i] = $bin['start'] . ($bin['start'] == $bin['end'] ? '' : ' - '.$bin['end']);
-                foreach($countries as &$country){
-                    $country['color'] = $colorscale[$i];
-                    $country['color2'] = $colorscale[$i];
+            if($maxRegs == 1){
+                foreach($this->countries as &$country){
                     $color = [
-                        'r' => ($colors['min']['r']+$colors['max']['r'])/2,
-                        'g' => ($colors['min']['g']+$colors['max']['g'])/2,
-                        'b' => ($colors['min']['b']+$colors['max']['b'])/2
+                        'r' => ($this->colors['min']['r']+$this->colors['max']['r'])/2,
+                        'g' => ($this->colors['min']['g']+$this->colors['max']['g'])/2,
+                        'b' => ($this->colors['min']['b']+$this->colors['max']['b'])/2
                     ];
-                    $colors = ['min' => $color, 'max' => $color];
+                    $country['color'] = 'rgb(' . $color['r'] . ', ' . $color['g'] . ', ' . $color['b'] . ')';
+                    $this->colors = ['min' => $color, 'max' => $color];
                 }    
             } else {
-                foreach($bins as $i=>$bin){
-                    $factor = ($i - 1) / (count($bins) - 1);
-                    $colorscale[$i] = 'rgb('
-                        . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
-                        . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
-                        . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
-                    $limits[$i] = $bin['start'] . ($bin['start'] == $bin['end'] ? '' : ' - '.$bin['end']);
-                }
                 foreach($countries as &$country){
-                    $country['color'] =  $colorscale[$map[$country['registrations']]];
                     $factor = log10($country['registrations']) / log10($maxRegs);
                     $country['color'] = 'rgb('
-                    . ( $colors['min']['r'] + $factor * ($colors['max']['r'] - $colors['min']['r']) ) . ', '
-                    . ( $colors['min']['g'] + $factor * ($colors['max']['g'] - $colors['min']['g']) ) . ', '
-                    . ( $colors['min']['b'] + $factor * ($colors['max']['b'] - $colors['min']['b']) ) . ')';
+                    . ( $this->colors['min']['r'] + $factor * ($this->colors['max']['r'] - $this->colors['min']['r']) ) . ', '
+                    . ( $this->colors['min']['g'] + $factor * ($this->colors['max']['g'] - $this->colors['min']['g']) ) . ', '
+                    . ( $this->colors['min']['b'] + $factor * ($this->colors['max']['b'] - $this->colors['min']['b']) ) . ')';
                 }
             }
-            $labels = [1=>0, $maxRegs=>1];
+            $this->labels = [1=>0, $maxRegs=>1];
             if($maxRegs > 1){
                 $marks = [1/4, 1/2, 3/4];
                 foreach ($marks as $mark){
                     $label = round(pow(10, $mark * log10($maxRegs)));
-                    $labels[$label] = log10($label) / log10($maxRegs);
+                    $this->labels[$label] = log10($label) / log10($maxRegs);
                 }
             }
         }
-        return $this->render('user/index.html.twig', [
-            'users' => $users,
-            'admin' => $admin,
-            'sort' => $_GET['sort'] ?? 'name',
-            'dir' => $_GET['dir'] ?? 'asc',
-            'stats' => $userRepository->findAllStatistics(),
-            'countries' => $countries,
-            'colorscale' => $colorscale ?? [],
-            'colors' => $colors ?? [],
-            'limits' => $limits ?? [],
-            'labels' => $labels ?? []
-        ]);
-    }
-    /**
-     * @Route("/admin", name="user_admin", methods={"GET"})
-     * @IsGranted("ROLE_ALL_REGISTRATIONS")
-     */
-    public function admin(UserRepository $userRepository): Response
-    {
-        return $this->index($userRepository, true);
     }
     
     /**
