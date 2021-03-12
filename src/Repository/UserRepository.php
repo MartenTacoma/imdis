@@ -109,7 +109,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 "sum(CASE WHEN u.show_in_list='hide' THEN 1 ELSE 0 END) AS hide"
             )
             ->groupBy('c.continent, c.id, c.name')
-            ->orderBy('c.continent, c.name', 'DESC')
+            ->orderBy('c.continent, c.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
