@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set pagetitle = 'Registration statistics' %}
+{% set pagetitle = 'Countries' %}
 
 {% block side %}
 <div class="sticky">
@@ -9,9 +9,8 @@
 </div>
 {% endblock %}
 
-
-
 {% block main %}
+<div class="countrylist">
     {% set continent = '' %}
     {% set n = 0 %}
     {% set r = 0 %}
@@ -27,7 +26,7 @@
             {% set continent = country.continent %}
             {% set n = 0 %}
             {% set r = 0 %}
-            <div><h2>{{ continent }}</h2>
+            <div id="{{continent}}"><h2>{{ continent }}</h2>
             <table class="table">
         {% endif %}
         {% set n = n + 1 %}
@@ -41,4 +40,5 @@
         </tfoot>
         </table></div>
     {% endif %}
+</div>
 {% endblock %}

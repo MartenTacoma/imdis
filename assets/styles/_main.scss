@@ -402,3 +402,16 @@ table.table {
     font-style: italic;
     text-decoration: underline dashed orange;
 }
+
+.countrylist {
+    column-count: 3;
+    h2 {
+        margin-top: 0px;
+        break-after: avoid;
+    }
+    table {margin-bottom: 20px;}
+    #Europe {
+        break-before: always;
+        break-after: always;
+    }
+}
