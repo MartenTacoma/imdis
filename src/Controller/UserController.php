@@ -58,9 +58,9 @@ class UserController extends AbstractController
     }
     
     /**
-     * @Route("/statistics", name="user_statistics", methods={"GET"})
+     * @Route("/countries", name="user_countries", methods={"GET"})
      */
-    function user_statistics(UserRepository $userRepository): Response
+    function user_countries(UserRepository $userRepository): Response
     {
         $this->countries = $userRepository->findAllCountries();
         $this->map();

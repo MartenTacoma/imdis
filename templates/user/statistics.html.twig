@@ -4,7 +4,10 @@
 
 {% block side %}
 <div class="sticky">
-
+<div><table class="table" style="width:100%">
+    <tr><th>Registrations</th><td>{{ stats.total }}</td></tr>
+    <tr><th>Countries</th><td>{{ stats.countries }}</td></tr>
+</table></div>
 {% include 'user/map.html.twig' %}
 </div>
 {% endblock %}
