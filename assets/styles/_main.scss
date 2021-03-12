@@ -405,6 +405,11 @@ table.table {
 
 .countrylist {
     column-count: 3;
+    div {
+        break-inside: avoid-column;
+        display: inline-block;
+        width: 100%;
+    }
     h2 {
         margin-top: 0px;
         break-after: avoid;
