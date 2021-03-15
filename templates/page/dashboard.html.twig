@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Welcome to IMDIS 2021' %}
+
+{% macro frontblock(icon, label, link, value) %}
+    <div class="statblock" title="{{label}}"><div onclick="window.location='{{ link }}'">
+        <span class="icon icon-{{ icon }}"></span>
+        <span class="value">{{ value }}</span>
+        <span class="label">{{ label }}</span>
+    </div></div>
+{% endmacro %}
+
+{% block body %}
+WIP
+{% endblock %}

@@ -8,6 +8,10 @@ parameters:
     app.registration_status: '%env(REGISTRATION_STATUS)%'
     env(PRESENTATION_SUBMISSION): 'TO BE DETERMINED'
     app.presentation_submission: '%env(PRESENTATION_SUBMISSION)%'
+    env(DASHBOARD_ROLE): 'ROLE_ADMIN'
+    app.dashboard_role: '%env(DASHBOARD_ROLE)%'
+    env(DASHBOARD): 'false'
+    app.dashboard: '%env(bool:DASHBOARD)%'
 
 
 services:

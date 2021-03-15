@@ -22,17 +22,25 @@ class PageController extends AbstractController
         'oral' => 'Oral Presentations',
         'video' => 'Making a Video for Posters & Oral presentations'
     ];
+    
     /**
      * @Route("/", name="index")
      */
     public function index(UserRepository $users, ThemeRepository $themes, ImdisAbstractRepository $abstracts): Response
     {
-        // return $this->redirectToRoute('program_index');
-        return $this->render('page/index.html.twig', [
-            'users' => $users->findAllStatistics(),
-            'themes' => $themes->findAll(),
-            'abstracts' => $abstracts->findAll()
-        ]);
+        if($this->getParameter('app.dashboard') && $this->isGranted($this->getParameter('app.dashboard_role'))){
+            return $this->render('page/dashboard.html.twig', [
+                'users' => $users->findAllStatistics(),
+                'themes' => $themes->findAll(),
+                'abstracts' => $abstracts->findAll()
+            ]);
+        } else {
+            return $this->render('page/index.html.twig', [
+                'users' => $users->findAllStatistics(),
+                'themes' => $themes->findAll(),
+                'abstracts' => $abstracts->findAll()
+            ]);
+        }
     }
     
     /**
@@ -60,7 +68,6 @@ class PageController extends AbstractController
         );
     }
     
-    
     /**
      * @Route("/wonder.me", name="wonderme")
      */
@@ -70,6 +77,7 @@ class PageController extends AbstractController
             'page/wonder.me.html.twig'
         );
     }
+    
     /**
      * @Route("/chrome", name="chrome")
      */
@@ -130,31 +138,4 @@ class PageController extends AbstractController
             ]
         );
     }
-    
-    /**
-     * @Route("/admin", name="admin")
-     * @IsGranted("ROLE_EDIT_PROGRAM")
-     */
-    public function admin(): Response
-    {
-        return $this->render(
-            'page/menu.html.twig',
-            [
-                'pagetitle' => 'Admin'
-            ]
-        );
-    }
-    
-    // /**
-    //  * @Route("/p/{page}", name="menupage")
-    //  */
-    // public function menu($page): Response
-    // {
-    //     return $this->render(
-    //         'page/menu.html.twig',
-    //         [
-    //             'pagetitle' => ucfirst($page)
-    //         ]
-    //     );
-    // }
 }
