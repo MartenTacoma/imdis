@@ -70,6 +70,15 @@ class PageController extends AbstractController
             'page/wonder.me.html.twig'
         );
     }
+    /**
+     * @Route("/chrome", name="chrome")
+     */
+    public function chrome(): Response
+    {
+        return $this->render(
+            'page/chrome.html.twig'
+        );
+    }
     
     /**
      * @Route("/contact", name="contact")
