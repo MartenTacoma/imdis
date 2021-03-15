@@ -28,6 +28,6 @@
     var registrations = {
     {% for country in countries %}{% if not loop.first %},{% endif %}'{{country.id}}': {{country.registrations}}{% endfor %}
     }</script>
-    <div class="open">Click the map for a larger view</div>
+    <div class="open desktop">Click the map for a larger view</div>
     <div id="toolTip"></div>
 </div>
