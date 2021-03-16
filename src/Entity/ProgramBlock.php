@@ -45,6 +45,21 @@ class ProgramBlock
      */
     private $session;
 
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $ZoomId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ZoomPass;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $ZoomPassPhone;
+
     public function __construct()
     {
         $this->session = new ArrayCollection();
@@ -136,7 +151,7 @@ class ProgramBlock
     public function getStatus(){
         if (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_end->format('H:i')) + 900){
             return 'past';
-        } elseif (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_start->format('H:i')) - 3600) {
+        } elseif (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_start->format('H:i')) - 900) {
             return 'current';
         } else {
             return 'future';
@@ -159,5 +174,46 @@ class ProgramBlock
             $string .= ' | ' . implode(' / ', $themes);
         }
         return $string;
+    }
+    
+    public function getAnchor(): string
+    {
+        return $this->date->format('Ymd') . $this->time_start->format('Hi');
+    }
+
+    public function getZoomId(): ?string
+    {
+        return $this->ZoomId;
+    }
+
+    public function setZoomId(?string $ZoomId): self
+    {
+        $this->ZoomId = $ZoomId;
+
+        return $this;
+    }
+
+    public function getZoomPass(): ?string
+    {
+        return $this->ZoomPass;
+    }
+
+    public function setZoomPass(?string $ZoomPass): self
+    {
+        $this->ZoomPass = $ZoomPass;
+
+        return $this;
+    }
+
+    public function getZoomPassPhone(): ?string
+    {
+        return $this->ZoomPassPhone;
+    }
+
+    public function setZoomPassPhone(?string $ZoomPassPhone): self
+    {
+        $this->ZoomPassPhone = $ZoomPassPhone;
+
+        return $this;
     }
 }

@@ -1,4 +1,13 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{form_row(form.date)}}
+    {{form_row(form.time_start)}}
+    {{form_row(form.time_end)}}
+    <h2>Zoom connection info</h2>
+    {{form_row(form.session_url)}}
+    {{form_row(form.zoom_id)}}
+    {{form_row(form.zoom_pass)}}
+    {{form_row(form.zoom_pass_phone)}}
+
+    <br/><br/>
     <button class="btn"><span class="icon-floppy-disk"></span> {{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

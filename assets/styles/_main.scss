@@ -420,3 +420,33 @@ table.table {
         break-after: always;
     }
 }
+
+.dashboard {
+    .blocks {
+        margin: -10px;
+        div.outer {
+            border: 2px solid $blue;
+            margin: 10px;
+            h3 {
+                color: white;
+                background: $blue;
+                padding: 5px;
+                margin: 0px;
+            }
+            .inner {
+                padding: 5px;
+            }
+        }
+        @media screen and (min-width: $desktop){
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+            div.outer {
+                width: calc(50% - 20px);
+            }
+        }
+    }
+    th {
+        text-align: left;
+    }
+}

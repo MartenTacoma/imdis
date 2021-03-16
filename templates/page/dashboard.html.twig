@@ -2,14 +2,55 @@
 
 {% set pagetitle = 'Welcome to IMDIS 2021' %}
 
-{% macro frontblock(icon, label, link, value) %}
-    <div class="statblock" title="{{label}}"><div onclick="window.location='{{ link }}'">
-        <span class="icon icon-{{ icon }}"></span>
-        <span class="value">{{ value }}</span>
-        <span class="label">{{ label }}</span>
-    </div></div>
-{% endmacro %}
+{% block head %}
+    <div class="timezone"><span class="icon-clock"></span> All times are listed in CEST (UTC+2)</div>
+{% endblock %}
+
+
+{% block side %}
+{% if program %}
+<div class="sticky">
+</div>
+{% endif %}
+{% endblock %}
 
 {% block body %}
-WIP
+<div class="dashboard">
+{% if program %}
+<h2>{{ program.status == 'future' ? 'Next' : 'Current' }} session: {{program}}</h2>
+<div class="blocks">
+<div class="outer left"><h3>Quick links</h3><div class="inner">
+<a href="{{path('program_index')}}#{{ program.anchor }}">Session programme</a>
+    {% for session in program.session %}
+        {% for talk in session.presentations|filter((a) => a.type == 'posters') %}
+            <br/><a href="{{path('poster_index')}}#{{talk.PosterSession.anchor}}">View posters</a>
+        {% endfor %}
+    {% endfor %}
+</div></div>
+
+<div class="outer right"><h3>Help</h3>
+<div class="inner">
+<a href="{{path('help', {'help':'zoom'})}}">Connect to Live session (Zoom)</a><br/>
+<a href="{{path('help', {'help':'wonder.me'})}}">Connect to Coffee Room (Wonder.me)</a>
+</div>
+</div>
+
+<div class="outer">
+<h3>Connect to live session</h3>
+<div class="inner">
+<table>
+<tr><th>Quick connect link</th><td><a href="{{program.SessionUrl}}">Click here</a></td></tr>
+<tr><th>Meeting id</th><td>{{program.ZoomId}}</td></tr>
+<tr><th>Password</th><td>{{program.ZoomPass}}</td></tr>
+<tr><th>Pin (for phone users)</th><td>{{program.ZoomPassPhone}}</td></tr>
+</table>
+The meeting room will open for participants at least 5 minutes before the session starts. The time listed above is the starting time of the session.
+</div></div>
+
+<div class="outer"><h3>Chat etiquette</h3><div class="inner">Zoom chat is available during the meetings.<br/>We kindly request that only questions about the current talk are publicly posted in the chat.<br/>In case of technical difficulties please send a private chat message to the host. The host can be found at the top of the participants list.</div></div>
+</div>
+{% else %}
+IMDIS 2021 has ended.
+{% endif %}
+</div>
 {% endblock %}

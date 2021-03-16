@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\UserRepository;
 use App\Repository\ThemeRepository;
 use App\Repository\ImdisAbstractRepository;
+use App\Repository\ProgramBlockRepository;
 
 class PageController extends AbstractController
 {
@@ -26,13 +27,14 @@ class PageController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(UserRepository $users, ThemeRepository $themes, ImdisAbstractRepository $abstracts): Response
+    public function index(UserRepository $users, ThemeRepository $themes, ImdisAbstractRepository $abstracts, ProgramBlockRepository $program): Response
     {
         if($this->getParameter('app.dashboard') && $this->isGranted($this->getParameter('app.dashboard_role'))){
             return $this->render('page/dashboard.html.twig', [
                 'users' => $users->findAllStatistics(),
                 'themes' => $themes->findAll(),
-                'abstracts' => $abstracts->findAll()
+                'abstracts' => $abstracts->findAll(),
+                'program' => $program->findOneByCurrentOrNext()
             ]);
         } else {
             return $this->render('page/index.html.twig', [

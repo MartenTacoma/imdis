@@ -53,4 +53,23 @@ class ProgramBlockRepository extends ServiceEntityRepository
         ;
     }
     */
+    
+    public function findOneByCurrentOrNext(): ?ProgramBlock
+    {
+        $ts = time() + (15 * 60);
+        $q = $this->createQueryBuilder('p');
+        return $q->where($q->expr()->orX(
+                $q->expr()->gt('p.date', ':date'),
+                $q->expr()->andX(
+                    $q->expr()->eq('p.date', ':date'),
+                    $q->expr()->gt('p.time_end', ':time')
+                )
+            ))
+            ->setParameter('date', date('Y-m-d', $ts))
+            ->setParameter('time', date('H:i', $ts))
+            ->orderBy('p.date, p.time_start', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

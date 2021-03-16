@@ -49,8 +49,7 @@ class MenuBuilder
         $uri = $this->router->generate('program_index');
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $title = $block->__toString();
-            $anchor = $block->getDate()->format('Ymd') . 
-                $block->getTimeStart()->format('Hi');
+            $anchor = $block->getAnchor();
             $menu['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
         
@@ -58,8 +57,7 @@ class MenuBuilder
         $uri = $this->router->generate('poster_index');
         foreach($this->registry->getRepository(PosterSession::class)->findAll() as $session){
             $title = $session->__toString();
-            $anchor = $session->getDate()->format('Ymd') . 
-                $session->getTimeStart()->format('Hi');
+            $anchor = $session->getAnchor();
             $menu['Posters']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
         

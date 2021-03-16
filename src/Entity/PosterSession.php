@@ -192,5 +192,10 @@ class PosterSession
             . $this->time_start->format('H:i') . ' - '
             . $this->time_end->format('H:i');
     }
+    
+    public function getAnchor(): string
+    {
+        return $this->date->format('Ymd') . $this->time_start->format('Hi');
+    }
 
 }
