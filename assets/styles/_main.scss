@@ -449,4 +449,11 @@ table.table {
     th {
         text-align: left;
     }
+    ul {
+        margin: 0px;
+        padding-left: 0px;
+        li {
+            list-style: none;
+        }
+    }
 }

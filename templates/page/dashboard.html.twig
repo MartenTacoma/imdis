@@ -2,6 +2,15 @@
 
 {% set pagetitle = 'Welcome to IMDIS 2021' %}
 
+{% macro frontblock(icon, label, link, value) %}
+    <div class="statblock" title="{{label}}"><div onclick="window.location='{{ link }}'">
+        <span class="icon icon-{{ icon }}"></span>
+        <span class="value">{{ value }}</span>
+        <span class="label">{{ label }}</span>
+    </div></div>
+{% endmacro %}
+
+
 {% block head %}
     <div class="timezone"><span class="icon-clock"></span> All times are listed in CEST (UTC+2)</div>
 {% endblock %}
@@ -19,19 +28,23 @@
 {% if program %}
 <h2>{{ program.status == 'future' ? 'Next' : 'Current' }} session: {{program}}</h2>
 <div class="blocks">
-<div class="outer left"><h3>Quick links</h3><div class="inner">
-<a href="{{path('program_index')}}#{{ program.anchor }}">Session programme</a>
+<div class="outer left"><h3>Session info</h3><div class="inner">
+<ul>
+<li><a href="{{path('program_index')}}#{{ program.anchor }}">Session programme</a></li>
     {% for session in program.session %}
         {% for talk in session.presentations|filter((a) => a.type == 'posters') %}
-            <br/><a href="{{path('poster_index')}}#{{talk.PosterSession.anchor}}">View posters</a>
+            <li><a href="{{path('poster_index')}}#{{talk.PosterSession.anchor}}">Posters</a></li>
         {% endfor %}
     {% endfor %}
+    </ul>
 </div></div>
 
 <div class="outer right"><h3>Help</h3>
 <div class="inner">
-<a href="{{path('help', {'help':'zoom'})}}">Connect to Live session (Zoom)</a><br/>
-<a href="{{path('help', {'help':'wonder.me'})}}">Connect to Coffee Room (Wonder.me)</a>
+<ul>
+    <li><a href="{{path('zoom')}}">Live session (Zoom)</a></li>
+    <li><a href="{{path('wonderme')}}">Coffee Room (Wonder.me)</a></li>
+</ul>
 </div>
 </div>
 
@@ -47,7 +60,25 @@
 The meeting room will open for participants at least 5 minutes before the session starts. The time listed above is the starting time of the session.
 </div></div>
 
-<div class="outer"><h3>Chat etiquette</h3><div class="inner">Zoom chat is available during the meetings.<br/>We kindly request that only questions about the current talk are publicly posted in the chat.<br/>In case of technical difficulties please send a private chat message to the host. The host can be found at the top of the participants list.</div></div>
+<div class="outer"><h3>Zoom chat etiquette</h3><div class="inner">
+<ul>
+    <li>Zoom chat is available during the meetings.</li>
+    <li>We kindly request that only questions about the current talk are publicly posted in the chat.</li>
+    <li>During the poster session the chat can also be used to <a href="{{path('zoom')}}#breakout_host">ask to be moved to a breakout room</a></li>
+    <li>In case of technical difficulties please send an email to <a href="mailto:imdis@seadatanet.org">imdis@seadatanet.org</a>.</li>
+</ul></div></div>
+
+
+<div class="outer"><h3>Coffee room</h3><div class="inner">As IMDIS2021 is online we are not able to provide drinks and snacks. We can however provide a place for the conversations that usually take place over coffee. You can join our coffee room on Wonder.me using the link that will be provided in the Zoom chat at the start of the coffee breaks.</div></div>
+
+<div class="outer"><h3>Social media</h3><div class="inner">
+<ul>
+    <li>The hastag for IMDIS 2021 is #IMDIS2021</li>
+    <li>If an author indicates certain content shouldn't be posted on social media please respect that</li>
+</ul>
+</div></div>
+
+
 </div>
 {% else %}
 IMDIS 2021 has ended.
