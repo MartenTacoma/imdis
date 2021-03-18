@@ -9,7 +9,7 @@ $(function() {
     }
     
     $('ul.subform').each(function(){
-        $(this).data('index', $(this).find('input').length);
+        $(this).data('index', $(this).find('li').length);
         $(this).find('li').each(function() {
             addDelete($(this));
         });
