@@ -36,7 +36,7 @@ class ImdisAbstract
     private $imdisId;
 
     /**
-     * @ORM\OneToMany(targetEntity=AbstractPerson::class, mappedBy="abstract", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=AbstractPerson::class, mappedBy="abstract", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $people;

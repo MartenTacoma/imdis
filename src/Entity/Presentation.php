@@ -57,7 +57,7 @@ class Presentation
     private $poster_session;
 
     /**
-     * @ORM\OneToMany(targetEntity=PresentationPerson::class, mappedBy="presentation", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=PresentationPerson::class, mappedBy="presentation", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $presentationPeople;
