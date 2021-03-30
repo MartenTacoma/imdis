@@ -12,6 +12,8 @@ parameters:
     app.dashboard_role: '%env(DASHBOARD_ROLE)%'
     env(DASHBOARD): 'false'
     app.dashboard: '%env(bool:DASHBOARD)%'
+    env(DETAILS_ROLE): 'ROLE_ADMIN'
+    app.details_role: '%env(DETAILS_ROLE)%'
 
 
 services:
