@@ -55,11 +55,6 @@ class ProgramBlock
      */
     private $ZoomPass;
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
-    private $ZoomPassPhone;
-
     public function __construct()
     {
         $this->session = new ArrayCollection();
@@ -201,18 +196,6 @@ class ProgramBlock
     public function setZoomPass(?string $ZoomPass): self
     {
         $this->ZoomPass = $ZoomPass;
-
-        return $this;
-    }
-
-    public function getZoomPassPhone(): ?string
-    {
-        return $this->ZoomPassPhone;
-    }
-
-    public function setZoomPassPhone(?string $ZoomPassPhone): self
-    {
-        $this->ZoomPassPhone = $ZoomPassPhone;
 
         return $this;
     }

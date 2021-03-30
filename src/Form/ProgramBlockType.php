@@ -28,11 +28,7 @@ class ProgramBlockType extends AbstractType
             ])
             ->add('zoom_pass', TextType::class, [
                 'required' => false,
-                'label' => 'Password'
-            ])
-            ->add('zoom_pass_phone', TextType::class, [
-                'required' => false,
-                'label' => 'Numeric password'
+                'label' => 'Passcode'
             ])
         ;
     }
