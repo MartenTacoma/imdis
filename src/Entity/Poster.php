@@ -176,8 +176,8 @@ class Poster
     public function getRoomName(): ?String
     {
         $title = $this->abstract->getImdisId() . '. ' . $this->abstract->getTitle();
-        if(strlen($title) > 32){
-            $title = substr($title, 0, 29) . '...';
+        if(strlen($title) > 36){
+            $title = substr($title, 0, 33) . '...';
         }
         return $title;
     }
