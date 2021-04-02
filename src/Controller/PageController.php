@@ -17,6 +17,7 @@ class PageController extends AbstractController
         'conditions' => 'Privacy & Terms',
         'cookies' => 'Cookie Policy',
         'codeofconduct' => 'Code of Conduct',
+        'credits' => 'Copyright & Credits'
     ];
     public static $helppages = [
         'poster' => 'Poster Presentations',
