@@ -55,7 +55,7 @@
                     
                 {% endapply %}</div>
                 <div class="interactive">
-            {% if is_granted(imdis.details_role) %}
+            {% if is_granted('ROLE_USER') %}
                 {% if poster.VideoUrl %}
                     <div class="video">
                         <a href="{{ poster.VideoUrl }}">
@@ -82,6 +82,33 @@
                         <span class="label">Comments</span>
                     </div>
                 {% endif %}
+            {% else %}
+                {% if poster.VideoUrl %}
+                    <div class="video login">
+                        <a href="{{ path('app_login') }}">
+                            <span class="icon-lock"></span>
+                            <span class="label">Pitch video</span>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="video none">
+                        <span class="icon-video-camera"></span>
+                        <span class="label">Pitch video</span>
+                    </div>
+                {% endif %}
+                {% if poster.CommentUrl %}
+                    <div class="comment login">
+                        <a href="{{ path('app_login') }}">
+                            <span class="icon-lock"></span>
+                            <span class="label">Comments</span>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="comment none">
+                        <span class="icon-bubble"></span>
+                        <span class="label">Comments</span>
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
             </div>
@@ -95,6 +122,7 @@
                     No preview available
                 {% endif %}
                 {% if not is_granted('ROLE_USER') %}
+                    <a href="{{ path('app_login') }}"><span class="icon-lock"></span> <span>Log in to download poster</span></a>
                 {% elseif poster.DownloadUrl %}
                     <a href="{{ poster.DownloadUrl }}"><span class="icon-download3"></span> <span>Download poster</span></a>
                 {% else %}

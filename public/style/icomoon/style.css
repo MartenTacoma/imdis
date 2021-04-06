@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?5t3rid');
-  src:  url('fonts/icomoon.eot?5t3rid#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?5t3rid') format('truetype'),
-    url('fonts/icomoon.woff?5t3rid') format('woff'),
-    url('fonts/icomoon.svg?5t3rid#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?ufpa4u');
+  src:  url('fonts/icomoon.eot?ufpa4u#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?ufpa4u') format('truetype'),
+    url('fonts/icomoon.woff?ufpa4u') format('woff'),
+    url('fonts/icomoon.svg?ufpa4u#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -46,9 +46,6 @@
 .icon-clock:before {
   content: "\e94e";
 }
-.icon-clock2:before {
-  content: "\e94f";
-}
 .icon-display:before {
   content: "\e956";
 }
@@ -70,6 +67,9 @@
 .icon-key:before {
   content: "\e98d";
 }
+.icon-lock:before {
+  content: "\e98f";
+}
 .icon-bin:before {
   content: "\e9ac";
 }
@@ -90,22 +90,4 @@
 }
 .icon-checkmark:before {
   content: "\ea10";
-}
-.icon-share2:before {
-  content: "\ea82";
-}
-.icon-facebook2:before {
-  content: "\ea91";
-}
-.icon-twitter1:before {
-  content: "\ea96";
-}
-.icon-youtube:before {
-  content: "\ea9d";
-}
-.icon-vimeo2:before {
-  content: "\eaa1";
-}
-.icon-linkedin:before {
-  content: "\eac9";
 }

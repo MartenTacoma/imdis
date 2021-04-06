@@ -298,7 +298,12 @@ section {
         }
         .discussion a::after{
             content: 'Participate in the virtual discussion';
-        }    
+        }
+        .login a {
+            &::after {
+                content: 'Please log in to access this content';
+            }
+        }
         @media screen and (max-width: $mobile) {
             .video, .comment, .discussion {
                 .label {
