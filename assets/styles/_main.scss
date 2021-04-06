@@ -249,6 +249,9 @@ section {
                     text-decoration: underline dotted;
                     color: $link-color;
                 }
+                .icon-lock{
+                    color: $blue;
+                }
             }
         }
         @media screen and (max-width: $mobile){
@@ -302,6 +305,9 @@ section {
         .login a {
             &::after {
                 content: 'Please log in to access this content';
+            }
+            .icon-lock{
+                color: $blue;
             }
         }
         @media screen and (max-width: $mobile) {
