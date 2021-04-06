@@ -11,7 +11,7 @@
 {% block side %}
     <div class="sticky">
     {% if is_granted('ROLE_EDIT_PROGRAM') or is_granted('ROLE_CONSENT') %}
-        <div class="admin"><h3>Maintainance <span class="icon-lock"></span></h3><ul>
+        <div class="admin"><h3>Maintainance</h3><ul>
         {% if is_granted('ROLE_EDIT_PROGRAM') %}<li><a href="{{path('program_block_index')}}">Edit programme</a></li>{% endif %}
         {% if is_granted('ROLE_CONSENT') %}<li><a href="{{path('presentation_consent')}}">View oral presenters consent list</a></li>{% endif %}
         </ul></div>
