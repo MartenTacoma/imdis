@@ -29,9 +29,9 @@
         {% endfor %}
         </ul></div>
         
+        {% if not is_granted('ROLE_USER') %}<div>To download posters, watch pitch clips and leave comments registration and login is required</div>{% endif %}
 
-        <div><span class="mobile">When an icon is dark a link is available, you can click the icon to open the link. If the icon is light no link is available.<br/></span>
-            During the poster session each poster will have a breakout room in zoom. You will be able to <a href="{{path('zoom')}}">select breakout rooms yourself and move between rooms</a>. The room name will be the id (the number on the right) and the start of the title of the poster.<br/>
+        <div>During the poster session each poster will have a breakout room in zoom. You will be able to <a href="{{path('zoom')}}">select breakout rooms yourself and move between rooms</a>. The room name will be the id (the number on the right) and the start of the title of the poster.<br/>
             <span class="icon-video-camera"></span> All authors have been given the option to record a pitch video to present their poster.<br/>
             <span class="icon-bubble"></span> Using this link you can leave comments on the poster on Google Drive. Please leave your name with your comments.
             </div>
