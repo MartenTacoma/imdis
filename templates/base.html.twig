@@ -18,6 +18,7 @@
         <div id="content">
             <div class="content">
                 <h1>{{ pagetitle ?? 'Welcome' }}</h1>
+                <div class="takedown">This website will go offline early July 2021. All presentations (oral and poster) are and will remain available at the <a href="https://imdis.seadatanet.org">main IMDIS website.</a></div>
                 {% for message in app.flashes('success') %}
                     <div class="alert alert-success">
                         {{ message }}
