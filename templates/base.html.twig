@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ pagetitle ?? 'Welcome' }}{% if pagetitle is not defined or pagetitle != '' %} - {% endif %}IMDIS 2021 - Online, 12-14 April</title>
+        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ pagetitle ?? 'Welcome' }}{% if pagetitle is not defined or pagetitle != '' %} - {% endif %}PDF IV - september 2021 - online</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Marten Tacoma, NIOZ Royal Netherlands Institute for Sea Research">
         {% block stylesheets %}
@@ -18,7 +18,7 @@
         <div id="content">
             <div class="content">
                 <h1>{{ pagetitle ?? 'Welcome' }}</h1>
-                <div class="takedown">This website will go offline early July 2021. All presentations (oral and poster) are and will remain available at the <a href="https://imdis.seadatanet.org">main IMDIS website.</a></div>
+                {#<div class="takedown">This website will go offline early July 2021. All presentations (oral and poster) are and will remain available at the <a href="https://imdis.seadatanet.org">main IMDIS website.</a></div>#}
                 {% for message in app.flashes('success') %}
                     <div class="alert alert-success">
                         {{ message }}
