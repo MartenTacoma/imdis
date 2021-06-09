@@ -33,7 +33,7 @@
     <tr><th>Registrations without country</th><td>{{ stats.no_country }}</td></tr>
 </table>
 {% else %}
-There are {{stats.total}} registrations for IMDIS 2021. So far we expect participants from {{stats.countries}} different countries.
+There are {{stats.total}} registrations for Polar Data Forum IV. So far we expect participants from {{stats.countries}} different countries.
 
 {% if stats.hide > 0 or (stats.login > 0 and not is_granted('ROLE_USER')) %}</div><div>
     Not all registrations are displayed as some participants have chosen not to be listed.{% endif %}

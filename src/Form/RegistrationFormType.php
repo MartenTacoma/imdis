@@ -97,7 +97,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('registrationType', ChoiceType::class, [
                 'mapped' => false,
-                'label' => 'Are you presenter at IMDIS 2021?',
+                'label' => 'Are you presenter at Polar Data Forum IV?',
                     'help' => 'You are presenter if your name is bold on the program or poster list',
                     'choices' => [
                         'No'=>'no',
