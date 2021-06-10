@@ -1,5 +1,5 @@
 #menu {
-    background: $blue;
+    background: $accent1;
     // overflow: auto;
     z-index: 99;
     position: sticky;
@@ -111,7 +111,7 @@
             &.current {
                 > span,
                 > a {
-                    color: $accentcolor;
+                    color: $accent3;
                 }
             }
             ul {
@@ -139,7 +139,7 @@
                     transition-delay: 0s,.5s;
                     opacity: 0;
                     visibility: hidden;
-                    background: $blue;
+                    background: $accent1;
                     li {
                         float: none;
                         position: relative;
@@ -160,7 +160,7 @@
                 span,
                 a {
                     color: white;
-                    border-bottom: solid 3px $darkblue;
+                    border-bottom: solid 3px $accent2;
                     transition: border-color .2s ease;
                     text-transform: uppercase;
                     font-size: 14px;
@@ -169,13 +169,13 @@
                 &.current_ancestor,
                 &.current {
                     > span, > a {
-                        border-color: $accentcolor;
-                        color: $accentcolor;
+                        border-color: $accent3;
+                        color: $accent3;
                     }
                 }
                 &:hover {
                     > a {
-                        border-color: $accentcolor;
+                        border-color: $accent3;
                     }
                     ul {
                         visibility: visible;

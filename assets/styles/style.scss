@@ -1,11 +1,12 @@
-$link-color: #3791C6;
+$accent1: #57B9A8;
+$accent2: darken($accent1, 10);
+$accent3: #fceb2e;
+
+$link-color: $accent2;
 $text-color: #333;
-$grey: #e3e3e3;
+$grey: lighten($accent1, 30);
 $lightGrey: #f0f0f0;
 $na-color: #999;
-$blue: #093564;
-$darkblue: #062240;
-$accentcolor: #fceb2e;
 
 $desktop: 800px;
 $mobile: $desktop - 1;

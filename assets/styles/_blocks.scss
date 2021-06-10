@@ -130,7 +130,7 @@
                             right: 20px;
                             color: white;
                             &:hover {
-                                color: $accentcolor;
+                                color: $accent3;
                             }
                             > span {
                                 display: inline-block;
@@ -169,7 +169,7 @@
     }
 }
 #top {
-    background: $blue;
+    background: $accent1;
     color: white;
     padding: 20px 10px;
     img {
@@ -222,7 +222,7 @@
 }
 
 #foot {
-    background: $blue;
+    background: $accent1;
     color: white;
     padding: 10px;
     font-size: 14px;
@@ -257,7 +257,7 @@
         .grid {
             display: flex;
             flex-flow: row wrap;
-            background: $darkblue;
+            background: $accent2;
             padding: 5px;
             margin: 10px;
             max-width: 470px;
@@ -307,13 +307,13 @@
         bottom: 0px;
         left: 0px;
         right: 0px;
-        background: $blue;
+        background: $accent1;
         color: white;
         padding-top: calc(11% - 15px);
         font-size: 2em;
         text-transform: uppercase;
         &:hover {
-            background-color: $darkblue;
+            background-color: $accent2;
         }
     }
     @media screen and (min-width: $desktop){

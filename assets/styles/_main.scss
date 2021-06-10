@@ -64,7 +64,7 @@ section {
 .day {
     padding: 10px;
     td {padding: 10px !important;}
-    background: $blue;
+    background: $accent1;
     margin-top: 15px;
     color: white;
     position: sticky;
@@ -250,7 +250,7 @@ section {
                     color: $link-color;
                 }
                 .icon-lock{
-                    color: $blue;
+                    color: $accent1;
                 }
             }
         }
@@ -307,7 +307,7 @@ section {
                 content: 'Please log in to access this content';
             }
             .icon-lock{
-                color: $blue;
+                color: $accent1;
             }
         }
         @media screen and (max-width: $mobile) {
@@ -345,7 +345,7 @@ table.table {
     thead {
         a {
             text-decoration: none;
-            color: $blue;
+            color: $accent1;
             &.sort-asc::after {
                 content: ' \25bc';
             }
@@ -436,11 +436,11 @@ table.table {
     .blocks {
         margin: -10px;
         div.outer {
-            border: 2px solid $blue;
+            border: 2px solid $accent1;
             margin: 10px;
             h3 {
                 color: white;
-                background: $blue;
+                background: $accent1;
                 padding: 5px;
                 margin: 0px;
             }
