@@ -75,14 +75,14 @@ class UserController extends AbstractController
     private function map(){
         $this->colors = [
             'min' => [
-                'r'=> 143,
-                'g'=> 192,
-                'b'=> 245
+                'r'=> 0,
+                'g'=> 167,
+                'b'=> 217
             ],
             'max' => [
-                'r'=> 9,
-                'g'=> 53,
-                'b'=> 100
+                'r'=> 2,
+                'g'=> 92,
+                'b'=> 109
             ]
         ];
         $counts = [];
