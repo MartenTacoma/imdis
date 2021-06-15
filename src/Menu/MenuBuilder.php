@@ -44,7 +44,6 @@ class MenuBuilder
     {
         $menu = $this->factory->createItem('root');
         $menu->addChild('Home', ['route' => 'index']);
-        
         $menu->addChild('Programme', ['route' => 'program_index']);
         $uri = $this->router->generate('program_index');
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
@@ -52,13 +51,30 @@ class MenuBuilder
             $anchor = $block->getAnchor();
             $menu['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
+        $menu->addChild('SO Decade', ['route' => 'sodecade']);
+        $menu['SO Decade']->addChild('Programme', ['route' => 'program_index']);
+        $uri = $this->router->generate('program_index');
+        foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
+            $title = $block->__toString();
+            $anchor = $block->getAnchor();
+            $menu['SO Decade']['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
+        };
         
-        $menu->addChild('Posters', ['route' => 'poster_index']);
+        $menu->addChild('PDF IV', ['route' => 'pdfiv']);
+        $menu['PDF IV']->addChild('Programme', ['route' => 'program_index']);
+        $uri = $this->router->generate('program_index');
+        foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
+            $title = $block->__toString();
+            $anchor = $block->getAnchor();
+            $menu['PDF IV']['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
+        };
+        
+        $menu['PDF IV']->addChild('Posters', ['route' => 'poster_index']);
         $uri = $this->router->generate('poster_index');
         foreach($this->registry->getRepository(PosterSession::class)->findAll() as $session){
             $title = $session->__toString();
             $anchor = $session->getAnchor();
-            $menu['Posters']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
+            $menu['PDF IV']['Posters']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
         
         $infoLabel = 'Conference Information';
@@ -74,9 +90,9 @@ class MenuBuilder
         // 'wonder.me' => 'Access Informal Sessions of Polar Data Forum IV (Wonder.me)',
         
         $helpName = 'Guidelines';
-        $menu->addChild($helpName, ['route'=>'help_index']);
+        $menu['PDF IV']->addChild($helpName, ['route'=>'help_index']);
         foreach(PageController::$helppages as $id=>$label){
-            $menu[$helpName]->addChild($label, ['route'=>'help', 'routeParameters' => ['help' => $id]]);
+            $menu['PDF IV'][$helpName]->addChild($label, ['route'=>'help', 'routeParameters' => ['help' => $id]]);
         
         }
         if($this->registration_status !== 'future'){

@@ -124,7 +124,8 @@ class PageController extends AbstractController
         return $this->render(
             'page/menu.html.twig',
             [
-                'pagetitle' => 'Guidelines'
+                'pagetitle' => 'Guidelines',
+                'menu' => ['main', 'PDF IV', 'Guidelines']
             ]
         );
     }
@@ -138,6 +139,32 @@ class PageController extends AbstractController
             'page/menu.html.twig',
             [
                 'pagetitle' => 'Conference Information'
+            ]
+        );
+    }
+    
+    /**
+     * @Route("/sodecade", name="sodecade")
+     */
+    public function sodecade(): Response
+    {
+        return $this->render(
+            'page/menu.html.twig',
+            [
+                'pagetitle' => 'SO Decade'
+            ]
+        );
+    }
+    
+    /**
+     * @Route("/pdfiv", name="pdfiv")
+     */
+    public function pdfiv(): Response
+    {
+        return $this->render(
+            'page/menu.html.twig',
+            [
+                'pagetitle' => 'PDF IV'
             ]
         );
     }
