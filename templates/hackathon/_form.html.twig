@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+    {{form_row(form.event)}}
+    {{form_row(form.title)}}
+    {{form_row(form.description)}}
+
+<div class="togglefield field_hackathon_contact field_multi">
+<strong>People (name | email)</strong>
+    <ul class="subform contact" data-prototype="{{ form_widget(form.contact.vars.prototype)|e('html_attr') }}">
+    {% for contact in form.contact %}
+    <li>{{ form_row(contact) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="contact"><span class="icon-plus"></span> Add a person</button>
+</div>
+<br/><br/>
+    
+<div class="togglefield field_hackathon_session field_multi">
+<strong>Session (date | time start | time end)</strong>
+    <ul class="subform session" data-prototype="{{ form_widget(form.session.vars.prototype)|e('html_attr') }}">
+    {% for session in form.session %}
+    <li>{{ form_row(session) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="session"><span class="icon-plus"></span> Add a person</button>
+</div>
+<br/><br/>
+    
+    <button class="btn"><span class="icon-floppy-disk"></span> {{ button_label|default('Save') }}</button>
+    <div class="formEnd">
+{{ form_end(form) }}
+</div>

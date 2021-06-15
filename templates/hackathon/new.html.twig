@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle='Add hackaton' %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+
+{% block body %}
+    {{ include('hackathon/_form.html.twig') }}
+{% endblock %}

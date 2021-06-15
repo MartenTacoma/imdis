@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hackathon{% endblock %}
+
+{% block body %}
+    <h1>Hackathon</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ hackathon.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ hackathon.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ hackathon.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('hackathon_index') }}">back to list</a>
+
+    <a href="{{ path('hackathon_edit', {'id': hackathon.id}) }}">edit</a>
+
+    {{ include('hackathon/_delete_form.html.twig') }}
+{% endblock %}
