@@ -1,10 +1,22 @@
-$accent1: #42889c;
-$accent2: #2a758a;
-$accent3: #4bb96c;
+$teal: #005c6d;
+$blue: #00a7d9;
 
-$link-color: $accent2;
+$midblue: #007dbb;
+$darkblue: #1a3668;
+$brightred: #ea1d2d;
+$deepred: #c22033;
+$brightgreen: #2d9a47;
+$darkgreen: #48773c;
+$mustard: #d19f2a;
+
+
+$accent1: $teal;
+$accent2: $darkgreen;
+$accent3: $mustard;
+
+$link-color: $brightgreen;
 $text-color: #333;
-$grey: #9fcedc;
+$grey: $blue;
 $lightGrey: #a5e7b9;
 $na-color: #999;
 

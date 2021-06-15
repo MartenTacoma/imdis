@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ pagetitle ?? 'Welcome' }}{% if pagetitle is not defined or pagetitle != '' %} - {% endif %}PDF IV - september 2021 - online</title>
+        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ pagetitle ?? 'Welcome' }}{% if pagetitle is not defined or pagetitle != '' %} - {% endif %}Polar Data & Science Week 2021 - september 2021 - online</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Marten Tacoma, NIOZ Royal Netherlands Institute for Sea Research">
         {% block stylesheets %}
@@ -10,7 +10,7 @@
             {{ encore_entry_link_tags('app') }}{% endblock %}
         {{ encore_entry_script_tags('app') }}
         {% block javascripts %}{% endblock %}
-        {% if app.environment == 'dev' %}<style>#top, #menu {background-color: darkorange}</style>{% endif %}
+        {# {% if app.environment == 'dev' %}<style>#top, #menu {background: darkorange}</style>{% endif %} #}
     </head>
     <body tabIndex=0>
         {% include 'base/blocks/top.twig' %}

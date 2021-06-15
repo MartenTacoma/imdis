@@ -11,7 +11,8 @@
 {% endmacro %}
 
 {% block body %}
-
+Welcome to the Polar Data & Science Week 2021.
+{# 
 <div class="row">
 <div class="stats">
 <div class="left">
@@ -46,5 +47,5 @@
         {% if not app.user and imdis.registration_status == 'open' %}<div class="register"><div onclick="window.location='{{path('app_register')}}';"><span class="icon-user-plus"></span> Register now</div></div>{% endif %}
     </div>
 {% endif %}
-<div style="clear:both"></div>
+<div style="clear:both"></div> #}
 {% endblock %}
