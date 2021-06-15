@@ -12,11 +12,11 @@ $mustard: #d19f2a;
 
 $accent1: $teal;
 $accent2: $darkgreen;
-$accent3: $mustard;
+$accent3: $brightgreen;
 
-$link-color: $brightgreen;
+$link-color: $darkgreen;
 $text-color: #333;
-$grey: $blue;
+$grey: $darkgreen;
 $lightGrey: #a5e7b9;
 $na-color: #999;
 
@@ -51,6 +51,9 @@ h3 {
 a {
     color: $link-color;
     text-decoration: underline dotted;
+    &:hover {
+        color: $brightgreen;
+    }
 }
 
 .clear {

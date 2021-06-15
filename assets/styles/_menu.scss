@@ -15,6 +15,9 @@
         text-decoration: none;
         display: block;
         padding: 9px 1.1vw;
+        &:hover {
+            color: $brightgreen;
+        }
     }
     ul {
         margin: 0px;

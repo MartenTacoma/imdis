@@ -28,7 +28,7 @@
                 }
                 > div {
                     padding: 10px;
-                    background: $grey;
+                    border-left: solid 1px $grey;
                     margin-top: 15px;
                     h4 {
                         margin: 0px;
@@ -69,7 +69,7 @@
                         background: white;
                         cursor: pointer;
                         path {
-                            fill: $grey;
+                            fill: #ddd;
                             opacity: 1;
                             stroke-width: 0.5px;
                             stroke: white;
@@ -200,6 +200,9 @@
         float: right;
         a {
             color: white;
+            &:hover {
+                color: $brightgreen;
+            }
         }
     }
 }
@@ -232,7 +235,7 @@
         > div {
             flex-grow: 1;
             &:not(:first-child){
-                border-left: solid 1px rgba(255,255,255,0.75);
+                border-left: solid 1px rgba(255,255,255,0.5);
                 padding-left: 10px;
                 margin-left: 10px;
             }
@@ -243,6 +246,9 @@
     }
     a {
         color: white;
+        &:hover {
+            color: $brightgreen;
+        }
     }
     #legal,
     #bottomMenu {

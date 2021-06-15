@@ -97,7 +97,7 @@ section {
     tr {
         border-top: solid 1px $grey;
         &.session {
-            background: $grey;
+            background: $brightgreen;
             padding: 10px;
             padding-bottom: 5px;
             h3 {
@@ -105,7 +105,7 @@ section {
             }
         }
         &.break {
-            background: $lightGrey;
+            background: $brightgreen;
             text-align: center;
             .time {
                 text-align: left;
@@ -118,7 +118,10 @@ section {
             }
         }
         &.postersession {
-            background: $grey;
+            background: $darkgreen;
+            a {
+                color: $blue
+            }
         }
         &.spacer {
             background-color: white;

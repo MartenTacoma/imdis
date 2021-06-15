@@ -18,7 +18,7 @@
         <div id="content">
             <div class="content">
                 <h1>{{ pagetitle ?? 'Welcome' }}</h1>
-                <div class="takedown">This website is a under construction. No guarantee can be given that information on this website is accurate.</div>
+                {# <div class="takedown">This website is a under construction. No guarantee can be given that information on this website is accurate.</div> #}
                 {% for message in app.flashes('success') %}
                     <div class="alert alert-success">
                         {{ message }}
