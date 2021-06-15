@@ -52,8 +52,8 @@ class MenuBuilder
             $menu['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
         $menu->addChild('SO Decade', ['route' => 'sodecade']);
-        $menu['SO Decade']->addChild('Programme', ['route' => 'program_index']);
-        $uri = $this->router->generate('program_index');
+        $menu['SO Decade']->addChild('Programme', ['route' => 'program_index_event', 'routeParameters' => ['event' => 'sodecade']]);
+        $uri = $this->router->generate('program_index_event', ['event' => 'sodecade']);
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $title = $block->__toString();
             $anchor = $block->getAnchor();
@@ -61,8 +61,8 @@ class MenuBuilder
         };
         
         $menu->addChild('PDF IV', ['route' => 'pdfiv']);
-        $menu['PDF IV']->addChild('Programme', ['route' => 'program_index']);
-        $uri = $this->router->generate('program_index');
+        $menu['PDF IV']->addChild('Programme', ['route' => 'program_index_event', 'routeParameters' => ['event' => 'pdfiv']]);
+        $uri = $this->router->generate('program_index_event', ['event' => 'pdfiv']);
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $title = $block->__toString();
             $anchor = $block->getAnchor();
@@ -78,16 +78,13 @@ class MenuBuilder
         };
         
         $infoLabel = 'Conference Information';
-        $menu->addChild($infoLabel, ['route'=>'conference_info']);
+        $menu['PDF IV']->addChild($infoLabel, ['route'=>'conference_info']);
         // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
-        $menu[$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
-        $menu[$infoLabel]->addChild('Access Live Sessions of Polar Data Forum IV (Zoom)', ['route'=>'zoom']);
-        $menu[$infoLabel]->addChild('Access Informal Sessions of Polar Data Forum IV (Wonder.me)', ['route'=>'wonderme']);
-        $menu[$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
-        $menu[$infoLabel]->addChild('Contact', ['route'=>'contact']);
-        
-        // 'zoom' => 'Access Live Sessions of Polar Data Forum IV (Zoom)',
-        // 'wonder.me' => 'Access Informal Sessions of Polar Data Forum IV (Wonder.me)',
+        $menu['PDF IV'][$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
+        $menu['PDF IV'][$infoLabel]->addChild('Access Live Sessions of Polar Data Forum IV (Zoom)', ['route'=>'zoom']);
+        $menu['PDF IV'][$infoLabel]->addChild('Access Informal Sessions of Polar Data Forum IV (Wonder.me)', ['route'=>'wonderme']);
+        $menu['PDF IV'][$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
+        $menu['PDF IV'][$infoLabel]->addChild('Contact', ['route'=>'contact']);
         
         $helpName = 'Guidelines';
         $menu['PDF IV']->addChild($helpName, ['route'=>'help_index']);
@@ -101,8 +98,6 @@ class MenuBuilder
                 $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
             }
         }
-        
-        $menu[$infoLabel]->addChild('Previous Editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
         
         if ($this->auth->isGranted('ROLE_EDIT_PROGRAM') && false) {
             $menu->addChild('Admin', ['route'=>'admin']);

@@ -25,8 +25,9 @@ class ProgramController extends AbstractController
 {
     /**
      * @Route("/", name="program_index", methods={"GET"})
+     * @Route("/{event}", name="program_index_event", methods={"GET"})
      */
-    public function program_index(ProgramBlockRepository $programBlockRepository){
+    public function program_index(ProgramBlockRepository $programBlockRepository, $event = null){
         return $this->render(
             'program/public.html.twig',
             [
