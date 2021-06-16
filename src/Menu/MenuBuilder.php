@@ -52,9 +52,9 @@ class MenuBuilder
             $menu['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
         $menu->addChild('SO Decade', ['route' => 'sodecade']);
-        $menu['SO Decade']->addChild('Programme', ['route' => 'program_index_event', 'routeParameters' => ['event' => 'sodecade']]);
+        $menu['SO Decade']->addChild('Programme', ['route' => 'program_index', 'routeParameters' => ['event' => 'sodecade']]);
         $menu['SO Decade']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'sodecade']]);
-        $uri = $this->router->generate('program_index_event', ['event' => 'sodecade']);
+        $uri = $this->router->generate('program_index', ['event' => 'sodecade']);
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $title = $block->__toString();
             $anchor = $block->getAnchor();
@@ -62,8 +62,8 @@ class MenuBuilder
         };
         
         $menu->addChild('PDF IV', ['route' => 'pdfiv']);
-        $menu['PDF IV']->addChild('Programme', ['route' => 'program_index_event', 'routeParameters' => ['event' => 'pdfiv']]);
-        $uri = $this->router->generate('program_index_event', ['event' => 'pdfiv']);
+        $menu['PDF IV']->addChild('Programme', ['route' => 'program_index', 'routeParameters' => ['event' => 'pdfiv']]);
+        $uri = $this->router->generate('program_index', ['event' => 'pdfiv']);
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $title = $block->__toString();
             $anchor = $block->getAnchor();

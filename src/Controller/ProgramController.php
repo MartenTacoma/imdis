@@ -11,6 +11,7 @@ use App\Repository\ProgramBlockRepository;
 use App\Entity\Presentation;
 use App\Form\PresentationType as PresentationForm;
 use App\Repository\PresentationRepository;
+use App\Repository\EventRepository;
 use App\Entity\PresentationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class ProgramController extends AbstractController
 {
+    /**
+     * @Route("/{event}", name="program_index", methods={"GET"}, requirements={"event"="pdfiv|sodecade"})
+     */
+    public function program_index(ProgramBlockRepository $programBlockRepository, EventRepository $eventRepository, $event = null){
+        if(empty($event)){
+            return $this->render(
+                'program/public.html.twig',
+                [
+                    'program' => $programBlockRepository->findAll()
+                ]
+            );
+        } else {
+            $event = $eventRepository->findOneBySlug($event);
+            return $this->render(
+                'program/public.html.twig',
+                [
+                    'title' => 'Programme - ' . $event->getName(),
+                    'program' => $event->getProgramBlocks()
+                ]
+            );
+        }
+    }
+    
     /**
      * @Route("/consent", name="presentation_consent", methods={"GET"})
      * @IsGranted("ROLE_CONSENT");
@@ -270,18 +294,4 @@ class ProgramController extends AbstractController
 
         return $this->redirectToRoute('program_session_show', ['id' => $presentation->getProgramSession()->getId()]);
     }
-    
-    /**
-     * @Route("/", name="program_index", methods={"GET"})
-     * @Route("/{event}", name="program_index_event", methods={"GET"})
-     */
-    public function program_index(ProgramBlockRepository $programBlockRepository, $event = null){
-        return $this->render(
-            'program/public.html.twig',
-            [
-                'program' => $programBlockRepository->findAll()
-            ]
-        );
-    }
-    
 }

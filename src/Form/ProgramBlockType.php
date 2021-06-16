@@ -18,6 +18,14 @@ class ProgramBlockType extends AbstractType
             ->add('date', DateType::class, ['widget' => 'single_text'])
             ->add('time_start', TimeType::class, ['widget'=> 'single_text'])
             ->add('time_end', TimeType::class, ['widget'=> 'single_text'])
+            ->add(
+                'event',
+                null,
+                [
+                    'expanded' => true,
+                    'required'=>true
+                ]
+            )
             ->add('session_url', TextType::class, [
                 'required' => false,
                 'label' => 'Meeting url',

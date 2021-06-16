@@ -39,9 +39,15 @@ class Event
      */
     private $hackathons;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=ProgramBlock::class, mappedBy="event")
+     */
+    private $programBlocks;
+
     public function __construct()
     {
         $this->hackathons = new ArrayCollection();
+        $this->programBlocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,5 +120,32 @@ class Event
     
     public function __toString(){
         return $this->name;
+    }
+
+    /**
+     * @return Collection|ProgramBlock[]
+     */
+    public function getProgramBlocks(): Collection
+    {
+        return $this->programBlocks;
+    }
+
+    public function addProgramBlock(ProgramBlock $programBlock): self
+    {
+        if (!$this->programBlocks->contains($programBlock)) {
+            $this->programBlocks[] = $programBlock;
+            $programBlock->addEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgramBlock(ProgramBlock $programBlock): self
+    {
+        if ($this->programBlocks->removeElement($programBlock)) {
+            $programBlock->removeEvent($this);
+        }
+
+        return $this;
     }
 }

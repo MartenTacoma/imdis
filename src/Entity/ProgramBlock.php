@@ -55,9 +55,15 @@ class ProgramBlock
      */
     private $ZoomPass;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="programBlocks")
+     */
+    private $event;
+
     public function __construct()
     {
         $this->session = new ArrayCollection();
+        $this->event = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -196,6 +202,30 @@ class ProgramBlock
     public function setZoomPass(?string $ZoomPass): self
     {
         $this->ZoomPass = $ZoomPass;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->event->contains($event)) {
+            $this->event[] = $event;
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        $this->event->removeElement($event);
 
         return $this;
     }
