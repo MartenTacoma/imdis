@@ -3,6 +3,7 @@
 namespace App\Menu;
 
 use App\Entity\ProgramBlock;
+use App\Entity\Event;
 use App\Entity\PosterSession;
 use App\Controller\PageController;
 use Knp\Menu\FactoryInterface;
@@ -55,7 +56,7 @@ class MenuBuilder
         $menu['SO Decade']->addChild('Programme', ['route' => 'program_index', 'routeParameters' => ['event' => 'sodecade']]);
         $menu['SO Decade']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'sodecade']]);
         $uri = $this->router->generate('program_index', ['event' => 'sodecade']);
-        foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
+        foreach($this->registry->getRepository(Event::class)->findOneBySlug('sodecade')->getProgramBlocks()  as $block){
             $title = $block->__toString();
             $anchor = $block->getAnchor();
             $menu['SO Decade']['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
@@ -64,7 +65,7 @@ class MenuBuilder
         $menu->addChild('PDF IV', ['route' => 'pdfiv']);
         $menu['PDF IV']->addChild('Programme', ['route' => 'program_index', 'routeParameters' => ['event' => 'pdfiv']]);
         $uri = $this->router->generate('program_index', ['event' => 'pdfiv']);
-        foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
+        foreach($this->registry->getRepository(Event::class)->findOneBySlug('pdfiv')->getProgramBlocks() as $block){
             $title = $block->__toString();
             $anchor = $block->getAnchor();
             $menu['PDF IV']['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
