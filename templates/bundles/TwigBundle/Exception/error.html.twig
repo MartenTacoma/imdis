@@ -35,7 +35,7 @@ a{ color: #48773c}</style>
 {% if status_code|slice(0,1) == 4 %}
     We can't show you this page, however, the server is working like it should.<br/>Check for any URL misspelling or <a href="{{ path('index') }}">return to the homepage</a>
 {% elseif status_code|slice(0,1) == 5 %}
-    The server isn't feeling well, please try again later.<br/>If the downtime lasts more than a few minutes and you need urgent information please contact us at <a href="mailto:imdis@seadatanet.org">imdis@seadatanet.org</a>
+    The server isn't feeling well, please try again later.
 {% endif %}
 {% endblock %}
 </div>
