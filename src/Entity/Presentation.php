@@ -72,6 +72,31 @@ class Presentation
      */
     private $users;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Hackathon::class, inversedBy="presentations")
+     */
+    private $hackathon;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $timeEnd;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $meetingUrl;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $meetingId;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $meetingPasscode;
+
     public function __construct()
     {
         $this->presentationPeople = new ArrayCollection();
@@ -249,6 +274,66 @@ class Presentation
                 $user->setPresentation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHackathon(): ?Hackathon
+    {
+        return $this->hackathon;
+    }
+
+    public function setHackathon(?Hackathon $hackathon): self
+    {
+        $this->hackathon = $hackathon;
+
+        return $this;
+    }
+
+    public function getTimeEnd(): ?\DateTimeInterface
+    {
+        return $this->timeEnd;
+    }
+
+    public function setTimeEnd(?\DateTimeInterface $timeEnd): self
+    {
+        $this->timeEnd = $timeEnd;
+
+        return $this;
+    }
+
+    public function getMeetingUrl(): ?string
+    {
+        return $this->meetingUrl;
+    }
+
+    public function setMeetingUrl(string $meetingUrl): self
+    {
+        $this->meetingUrl = $meetingUrl;
+
+        return $this;
+    }
+
+    public function getMeetingId(): ?string
+    {
+        return $this->meetingId;
+    }
+
+    public function setMeetingId(string $meetingId): self
+    {
+        $this->meetingId = $meetingId;
+
+        return $this;
+    }
+
+    public function getMeetingPasscode(): ?string
+    {
+        return $this->meetingPasscode;
+    }
+
+    public function setMeetingPasscode(string $meetingPasscode): self
+    {
+        $this->meetingPasscode = $meetingPasscode;
 
         return $this;
     }

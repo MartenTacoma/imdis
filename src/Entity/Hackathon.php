@@ -54,11 +54,17 @@ class Hackathon
      */
     private $intro;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Presentation::class, mappedBy="hackathon")
+     */
+    private $presentations;
+
     public function __construct()
     {
         $this->contact = new ArrayCollection();
         $this->session = new ArrayCollection();
         $this->event = new ArrayCollection();
+        $this->presentations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,6 +200,36 @@ class Hackathon
     public function setIntro(string $intro): self
     {
         $this->intro = $intro;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Presentation[]
+     */
+    public function getPresentations(): Collection
+    {
+        return $this->presentations;
+    }
+
+    public function addPresentation(Presentation $presentation): self
+    {
+        if (!$this->presentations->contains($presentation)) {
+            $this->presentations[] = $presentation;
+            $presentation->setHackathon($this);
+        }
+
+        return $this;
+    }
+
+    public function removePresentation(Presentation $presentation): self
+    {
+        if ($this->presentations->removeElement($presentation)) {
+            // set the owning side to null (unless already changed)
+            if ($presentation->getHackathon() === $this) {
+                $presentation->setHackathon(null);
+            }
+        }
 
         return $this;
     }
