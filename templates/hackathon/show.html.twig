@@ -1,30 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hackathon{% endblock %}
+{% set pagetitle=hackathon.title ~ ' - Hackathon' %}
 
-{% block body %}
-    <h1>Hackathon</h1>
+{% block main %}
+<p><strong>{{hackathon.intro}}</strong></p>
+{{hackathon.description|raw}}
+{% endblock %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ hackathon.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ hackathon.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ hackathon.description }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block side %}
+<div class="sticky">
+<div><ul>
+{% for event in hackathon.event %}
+<li>{{event}}</li>
+{% endfor %}
+</ul></div>
+<div><h3>Contact</h3>
+<ul>
+{% for contact in hackathon.contact %}
+<li>{{contact.name}} - <a href="mailto:{{contact.email}}">{{contact.email}}</a></li>
+{% endfor %}
+</ul>
+</div>
 
-    <a href="{{ path('hackathon_index') }}">back to list</a>
+<div><h3>Sessions</h3>
+<div class="timezone"><span class="icon-clock"></span> All times are listed in UTC</div>
+<ul>
+{% for session in hackathon.session %}
+<li>{{session.date|date('l d F')}} {{session.timeStart|date('H:i')}} - {{session.timeEnd|date('H:i')}}</li>
+{% endfor %}
+</ul>
+</div>
 
-    <a href="{{ path('hackathon_edit', {'id': hackathon.id}) }}">edit</a>
-
-    {{ include('hackathon/_delete_form.html.twig') }}
+</div>
 {% endblock %}

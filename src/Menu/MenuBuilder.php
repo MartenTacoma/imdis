@@ -53,6 +53,7 @@ class MenuBuilder
         };
         $menu->addChild('SO Decade', ['route' => 'sodecade']);
         $menu['SO Decade']->addChild('Programme', ['route' => 'program_index_event', 'routeParameters' => ['event' => 'sodecade']]);
+        $menu['SO Decade']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'sodecade']]);
         $uri = $this->router->generate('program_index_event', ['event' => 'sodecade']);
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $title = $block->__toString();
@@ -70,6 +71,7 @@ class MenuBuilder
         };
         
         $menu['PDF IV']->addChild('Posters', ['route' => 'poster_index']);
+        $menu['PDF IV']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'pdfiv']]);
         $uri = $this->router->generate('poster_index');
         foreach($this->registry->getRepository(PosterSession::class)->findAll() as $session){
             $title = $session->__toString();

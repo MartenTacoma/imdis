@@ -24,19 +24,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ProgramController extends AbstractController
 {
     /**
-     * @Route("/", name="program_index", methods={"GET"})
-     * @Route("/{event}", name="program_index_event", methods={"GET"})
-     */
-    public function program_index(ProgramBlockRepository $programBlockRepository, $event = null){
-        return $this->render(
-            'program/public.html.twig',
-            [
-                'program' => $programBlockRepository->findAll()
-            ]
-        );
-    }
-    
-    /**
      * @Route("/consent", name="presentation_consent", methods={"GET"})
      * @IsGranted("ROLE_CONSENT");
      */
@@ -283,4 +270,18 @@ class ProgramController extends AbstractController
 
         return $this->redirectToRoute('program_session_show', ['id' => $presentation->getProgramSession()->getId()]);
     }
+    
+    /**
+     * @Route("/", name="program_index", methods={"GET"})
+     * @Route("/{event}", name="program_index_event", methods={"GET"})
+     */
+    public function program_index(ProgramBlockRepository $programBlockRepository, $event = null){
+        return $this->render(
+            'program/public.html.twig',
+            [
+                'program' => $programBlockRepository->findAll()
+            ]
+        );
+    }
+    
 }

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle=title ?? 'Hackathons' %}
+
+{% block side %}
+<div class="sticky">
+{% if is_granted('ROLE_EDIT_PROGRAM') %}
+    <div class="admin"><h3>Maintainance</h3>
+    <ul>
+    </ul>
+</div>
+{% endif %}
+<div>
+<h3>Hackathons</h3>
+Some info on what a hackathon is
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+{% for hackathon in hackathons %}
+<h2><a href="{{path('hackathon_show', {slug:hackathon.slug})}}">{{hackathon.title}}</a></h2>
+<p>{{hackathon.intro|raw}}... <a href="{{path('hackathon_show', {slug:hackathon.slug})}}">Read more</a></p>
+<hr>
+{% endfor %}
+{% endblock %}

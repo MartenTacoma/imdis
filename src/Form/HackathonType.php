@@ -22,13 +22,15 @@ class HackathonType extends AbstractType
                 ]
             )
             ->add('title')
-            ->add('description')
+            ->add('intro', null, ['label' => 'Introduction text', 'help'=>'Shown on list and as first paragraph on hackathon page'])
+            ->add('description', null, ['label' => 'Description', 'help'=>'Shown after intro on hackathon page'])
+            ->add('slug', null, ['label'=>'Url slug (the part after hackathon/)'])
             ->add(
                 'contact',
                 CollectionType::class,
                 [
                     'entry_type' => HackathonContactType::class,
-                    'entry_options' => ['label' => false],
+                    'entry_options' => ['label' => true],
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false

@@ -31,7 +31,27 @@ class HackathonSession
     /**
      * @ORM\Column(type="time")
      */
-    private $time;
+    private $timeStart;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $timeEnd;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $meetingUrl;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $meetingId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $meetingPasscode;
 
     public function getId(): ?int
     {
@@ -62,14 +82,62 @@ class HackathonSession
         return $this;
     }
 
-    public function getTime(): ?\DateTimeInterface
+    public function getTimeStart(): ?\DateTimeInterface
     {
-        return $this->time;
+        return $this->timeStart;
     }
 
-    public function setTime(\DateTimeInterface $time): self
+    public function setTimeStart(\DateTimeInterface $timeEnd): self
     {
-        $this->time = $time;
+        $this->timeStart = $timeEnd;
+
+        return $this;
+    }
+
+    public function getTimeEnd(): ?\DateTimeInterface
+    {
+        return $this->timeEnd;
+    }
+
+    public function setTimeEnd(\DateTimeInterface $timeEnd): self
+    {
+        $this->timeEnd = $timeEnd;
+
+        return $this;
+    }
+
+    public function getMeetingUrl(): ?string
+    {
+        return $this->meetingUrl;
+    }
+
+    public function setMeetingUrl(?string $meetingUrl): self
+    {
+        $this->meetingUrl = $meetingUrl;
+
+        return $this;
+    }
+
+    public function getMeetingId(): ?string
+    {
+        return $this->meetingId;
+    }
+
+    public function setMeetingId(?string $meetingId): self
+    {
+        $this->meetingId = $meetingId;
+
+        return $this;
+    }
+
+    public function getMeetingPasscode(): ?string
+    {
+        return $this->meetingPasscode;
+    }
+
+    public function setMeetingPasscode(string $meetingPasscode): self
+    {
+        $this->meetingPasscode = $meetingPasscode;
 
         return $this;
     }

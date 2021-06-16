@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Hackathon;
 use App\Form\HackathonType;
 use App\Repository\HackathonRepository;
+use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/hackathon")
@@ -16,9 +18,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class HackathonController extends AbstractController
 {
     /**
-     * @Route("/", name="hackathon_index", methods={"GET"})
+     * @Route("/{event}", name="hackathon_public", methods={"GET"}, requirements={"event"="pdfiv|sodecade"})
      */
-    public function index(HackathonRepository $hackathonRepository): Response
+    public function index(HackathonRepository $hackathonRepository, EventRepository $eventRepository, $event=null): Response
+    {
+        if (empty($event)){
+            return $this->render('hackathon/public.html.twig', [
+                'hackathons' => $hackathonRepository->findAll(),
+            ]);
+        } else {
+            $event = $eventRepository->findOneBySlug($event);
+            return $this->render('hackathon/public.html.twig', [
+                'title' => 'Hackathons - ' . $event->getName(),
+                'hackathons' => $event->getHackathons(),
+            ]);
+        }
+    }
+    
+    
+    /**
+     * @Route("/manage", name="hackathon_index", methods={"GET"})
+     * @IsGranted("ROLE_EDIT_PROGRAM")
+     */
+    public function manage(HackathonRepository $hackathonRepository): Response
     {
         return $this->render('hackathon/index.html.twig', [
             'hackathons' => $hackathonRepository->findAll(),
@@ -27,6 +49,7 @@ class HackathonController extends AbstractController
 
     /**
      * @Route("/new", name="hackathon_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function new(Request $request): Response
     {
@@ -49,7 +72,7 @@ class HackathonController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="hackathon_show", methods={"GET"})
+     * @Route("/{slug}", name="hackathon_show", methods={"GET"})
      */
     public function show(Hackathon $hackathon): Response
     {
@@ -60,6 +83,7 @@ class HackathonController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="hackathon_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function edit(Request $request, Hackathon $hackathon): Response
     {
@@ -80,6 +104,7 @@ class HackathonController extends AbstractController
 
     /**
      * @Route("/{id}", name="hackathon_delete", methods={"POST"})
+     * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function delete(Request $request, Hackathon $hackathon): Response
     {

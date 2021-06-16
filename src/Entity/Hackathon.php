@@ -30,12 +30,12 @@ class Hackathon
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=HackathonContact::class, mappedBy="hackathon", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=HackathonContact::class, mappedBy="hackathon", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $contact;
 
     /**
-     * @ORM\OneToMany(targetEntity=HackathonSession::class, mappedBy="hackathon", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=HackathonSession::class, mappedBy="hackathon", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $session;
 
@@ -43,6 +43,16 @@ class Hackathon
      * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="hackathons")
      */
     private $event;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $intro;
 
     public function __construct()
     {
@@ -160,6 +170,30 @@ class Hackathon
     public function removeEvent(Event $event): self
     {
         $this->event->removeElement($event);
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getIntro(): ?string
+    {
+        return $this->intro;
+    }
+
+    public function setIntro(string $intro): self
+    {
+        $this->intro = $intro;
 
         return $this;
     }

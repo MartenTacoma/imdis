@@ -21,7 +21,7 @@
                 <td>{{ hackathon.title }}</td>
                 <td>{{ hackathon.description }}</td>
                 <td>
-                    <a href="{{ path('hackathon_show', {'id': hackathon.id}) }}">show</a>
+                    <a href="{{ path('hackathon_show', {'slug': hackathon.slug}) }}">show</a>
                     <a href="{{ path('hackathon_edit', {'id': hackathon.id}) }}">edit</a>
                 </td>
             </tr>

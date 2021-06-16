@@ -9,7 +9,7 @@
 <div class="togglefield field_slides_url">{{form_row(form.slides_url)}}</div>
 <div class="togglefield field_poster_session">{{form_row(form.poster_session)}}</div>
 <div class="togglefield field_presentation_people field_multi">
-<strong>People (name | sort | role)</strong>
+<strong>Presenters</strong>
     <ul class="subform people" data-prototype="{{ form_widget(form.presentationPeople.vars.prototype)|e('html_attr') }}">
     {% for chair in form.presentationPeople %}
     <li>{{ form_row(chair) }}</li>
