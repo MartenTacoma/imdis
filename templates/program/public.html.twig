@@ -63,6 +63,8 @@
                 <tr class="break"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td>{{talk.title}}</td></tr>
             {% elseif talk.type == 'posters' %}
                 <tr class="postersession"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td>Poster session {{ talk.PosterSession.theme|join(' / ') }}, <nobr><a href="{{path('poster_index')}}#{{ block.date|date('Ymd') }}{{ talk.PosterSession.TimeStart|date('Hi') }}">view posters here</a></nobr></td></tr>
+            {% elseif talk.type == 'hackathon' %}
+                <tr class="hackathon"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td><span class="id">{% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('presentation_edit', {'id': talk.id})}}"><span class="icon-pencil"></span></a></li>{% endif %}</span><a href="{{path('hackathon_show', {slug: talk.hackathon.slug})}}">{{ talk.hackathon }}</a><br/>Hackathon | {{ talk.TimeStart|date('H:i') }} - {{ talk.TimeEnd|date('H:i') }}</td></tr>
             {% else %}
                 <tr class="talk {% if talk.type == 'keynote' %}keynote{% endif %}">
                 {% set anchor = talk.abstract.ImdisId ?? (block.date|date('d') ~ talk.timeStart|date('Hi')) %}
@@ -81,7 +83,7 @@
                     <td>
                         {{ shareButtons(url('program_index') ~ '#' ~ anchor, talk.abstract.title ?? talk.title) }}
                         <span class="id">{% if talk.abstract %}{{talk.abstract.ImdisId}}{% endif %} {% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('presentation_edit', {'id': talk.id})}}"><span class="icon-pencil"></span></a></li>{% endif %}</span>
-                        <span class="title">{% if talk.abstract and talk.abstract.url %}<a href="{{talk.abstract.url}}">{{ talk.abstract.title ?? talk.title }}</a>{% else %}{{ talk.abstract.title ?? talk.title }}{% endif %}</span>
+                        <span class="title">{% if talk.abstract and talk.abstract.url %}<a href="{{talk.abstract.url}}">{{ talk.abstract.title }}</a>{% else %}{{ talk.abstract.title ?? talk.title }}{% endif %}</span>
                     <span class="authors">{% apply spaceless %}
                     {% if talk.abstract %}
                         {%- for person in talk.abstract.people %}{%- if not loop.first %}{%- if loop.last %} and {% else %}, {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}

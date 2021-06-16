@@ -35,11 +35,6 @@ class Hackathon
     private $contact;
 
     /**
-     * @ORM\OneToMany(targetEntity=HackathonSession::class, mappedBy="hackathon", orphanRemoval=true, cascade={"persist", "remove"})
-     */
-    private $session;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="hackathons")
      */
     private $event;
@@ -62,7 +57,6 @@ class Hackathon
     public function __construct()
     {
         $this->contact = new ArrayCollection();
-        $this->session = new ArrayCollection();
         $this->event = new ArrayCollection();
         $this->presentations = new ArrayCollection();
     }
@@ -120,36 +114,6 @@ class Hackathon
             // set the owning side to null (unless already changed)
             if ($contact->getHackathon() === $this) {
                 $contact->setHackathon(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|HackathonSession[]
-     */
-    public function getSession(): Collection
-    {
-        return $this->session;
-    }
-
-    public function addSession(HackathonSession $session): self
-    {
-        if (!$this->session->contains($session)) {
-            $this->session[] = $session;
-            $session->setHackathon($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSession(HackathonSession $session): self
-    {
-        if ($this->session->removeElement($session)) {
-            // set the owning side to null (unless already changed)
-            if ($session->getHackathon() === $this) {
-                $session->setHackathon(null);
             }
         }
 

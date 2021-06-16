@@ -231,6 +231,8 @@ class Presentation
             return $this->abstract->getTitle();
         } elseif (!empty($this->poster_session)) {
             return $this->poster_session->__toString();
+        } elseif (!empty($this->hackathon)) {
+            return $this->hackathon->__toString();
         } else {
             return $this->title;
         }
