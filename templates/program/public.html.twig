@@ -16,9 +16,9 @@
         {% if is_granted('ROLE_CONSENT') %}<li><a href="{{path('presentation_consent')}}">View oral presenters consent list</a></li>{% endif %}
         </ul></div>
     {% endif %}
-        <div><a href="{{ url('index') }}files/IMDIS2021_programme.pdf"><span class="icon-download3"></span> Download the program as PDF</a>
+        {#<div><a href="{{ url('index') }}files/IMDIS2021_programme.pdf"><span class="icon-download3"></span> Download the program as PDF</a>
         {% if is_granted(imdis.details_role) %}<br/><a href="{{ url('index') }}files/IMDIS2021_chats.pdf"><span class="icon-download3"></span> Download the Questions and Answers from the chat</a>{% endif %}
-        </div>
+        </div>#}
         <div><h3>Sessions</h3><ul>
         {% set past = false %}
         {% for block in program %}
