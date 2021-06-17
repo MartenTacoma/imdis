@@ -28,7 +28,7 @@
             <li><a href="#{{ block.anchor }}">{{ block }}</a></li>
         {% endfor %}
         </ul></div>
-        <div>Welcome to Southern Ocean Decade Workshop & Polar Data Forum Week 2021. Southern Ocean Decade Workshop & Polar Data Forum Week 2021 is entirely online. Every session has it's own connection link, only the link for the next session will be available here and only for registered and logged in participants. The last 3 minutes of every talk are reserved for Q&amp;A, we will use the Zoom chat function for that.</div>
+        <div>Welcome to Southern Ocean Decade & Polar Data Forum Week 2021. Southern Ocean Decade & Polar Data Forum Week 2021 is entirely online. Every session has it's own connection link, only the link for the next session will be available here and only for registered and logged in participants. The last 3 minutes of every talk are reserved for Q&amp;A, we will use the Zoom chat function for that.</div>
         {% if past %}
             <div>
                 Below the starting time of the past presentations you can find the following icons, these are links:<br/>
@@ -52,6 +52,7 @@
         {% if is_granted(imdis.details_role) %}<div class="connect">{% if block.status == 'past' %}This session has ended{% elseif block.SessionUrl and shown==false %}<a href="{{block.SessionUrl}}"><span class="icon-link"></span> Join this session</a>{% set shown=true %}{% elseif block.SessionUrl %}Connection info not yet available{% endif %}</div>{% endif %}
         <h2>{{ block.date|date('l d F') }}</h2>
         <span class="time">{{ block.TimeStart|date('H:i') }}</span> - <span class="time">{{ block.TimeEnd|date('H:i') }}</span>
+        {% if title is not defined %} | {{block.event|join(' & ')}}{% endif %}
     </td></tr>
     {%- for session in block.session %}
         <tr class="session">

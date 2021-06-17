@@ -84,8 +84,8 @@ class MenuBuilder
         $menu['PDF IV']->addChild($infoLabel, ['route'=>'conference_info']);
         // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
         $menu['PDF IV'][$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
-        $menu['PDF IV'][$infoLabel]->addChild('Access Live Sessions of Southern Ocean Decade Workshop & Polar Data Forum Week 2021 (Zoom)', ['route'=>'zoom']);
-        $menu['PDF IV'][$infoLabel]->addChild('Access Informal Sessions of Southern Ocean Decade Workshop & Polar Data Forum Week 2021 (Wonder.me)', ['route'=>'wonderme']);
+        $menu['PDF IV'][$infoLabel]->addChild('Access Live Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Zoom)', ['route'=>'zoom']);
+        $menu['PDF IV'][$infoLabel]->addChild('Access Informal Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Wonder.me)', ['route'=>'wonderme']);
         $menu['PDF IV'][$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
         $menu['PDF IV'][$infoLabel]->addChild('Contact', ['route'=>'contact']);
         
