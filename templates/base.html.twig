@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ pagetitle ?? 'Welcome' }}{% if pagetitle is not defined or pagetitle != '' %} - {% endif %}Southern Ocean Decade Workshop & Polar Data Forum Week 2021 - September 2021 - online</title>
+        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ pagetitle ?? 'Welcome' }}{% if pagetitle is not defined or pagetitle != '' %} | {% endif %}SO Decade & PDF IV Week 2021 | 20 - 24 September 2021 | online</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Marten Tacoma, NIOZ Royal Netherlands Institute for Sea Research">
         {% block stylesheets %}

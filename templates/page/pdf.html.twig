@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block side %}
+<div class="sidebar">{{knp_menu_render(menu ?? ['main', 'PDF IV']) }}</div>
+{% endblock %}
+
+{% block main %}
+Welcome to Polar Data Forum IV.
+{% endblock %}
