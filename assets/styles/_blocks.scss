@@ -20,6 +20,14 @@
             flex-flow: row-reverse;
         }
         .side {
+            .sidebar {
+                border-left: solid 3px $grey;
+                padding: 10px;
+                padding-left: 0px;
+                li {
+                    list-style: none;
+                }
+            }
             .sticky {
                 position: sticky;
                 top: 61px;

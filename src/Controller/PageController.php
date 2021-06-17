@@ -150,9 +150,9 @@ class PageController extends AbstractController
     public function sodecade(): Response
     {
         return $this->render(
-            'page/menu.html.twig',
+            'page/sodecade.html.twig',
             [
-                'pagetitle' => 'SO Decade'
+                'pagetitle' => 'Southern Ocean Decade Workshop'
             ]
         );
     }
@@ -163,9 +163,9 @@ class PageController extends AbstractController
     public function pdfiv(): Response
     {
         return $this->render(
-            'page/menu.html.twig',
+            'page/pdf.html.twig',
             [
-                'pagetitle' => 'PDF IV'
+                'pagetitle' => 'Polar Data Forum IV'
             ]
         );
     }
