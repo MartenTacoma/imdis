@@ -61,7 +61,7 @@ class MenuBuilder
             $anchor = $block->getAnchor();
             $menu['SO Decade']['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
         };
-        $menu['SO Decade']->addChild('Registration', ['route'=>'user_index', 'routeParameters' => ['event' => 'sodecade']]);
+        $menu['SO Decade']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'sodecade']]);
         
         
         $menu->addChild('PDF IV', ['route' => 'pdfiv']);
@@ -91,7 +91,7 @@ class MenuBuilder
         $menu['PDF IV'][$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
         $menu['PDF IV'][$infoLabel]->addChild('Contact', ['route'=>'contact']);
         
-        $menu['PDF IV']->addChild('Registration', ['route'=>'user_index', 'routeParameters' => ['event' => 'pdfiv']]);
+        $menu['PDF IV']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'pdfiv']]);
         $helpName = 'Guidelines';
         $menu['PDF IV']->addChild($helpName, ['route'=>'help_index']);
         foreach(PageController::$helppages as $id=>$label){
