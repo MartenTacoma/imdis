@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
+use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,36 +26,41 @@ class UserController extends AbstractController
     ];
     
     /**
-     * @Route("/list", name="user_index", methods={"GET"})
+     * @Route("/{event}/", name="user_index", methods={"GET"}, requirements={"event"="list|pdfiv|sodecade"})
      */
-    public function index(UserRepository $userRepository, $admin = false): Response
+    public function index(UserRepository $userRepository, EventRepository $eventRepository, $admin = false, $event='list'): Response
     {
-        $options = [];
-        if(empty($_GET['sort'])){
-            $users = $userRepository->findAll();
+        $sort = empty($_GET['sort']) ? [] : [$_GET['sort']=>$_GET['dir']];
+        $sort['name'] = $_GET['dir'] ?? 'asc';
+        $sort['email'] = $_GET['dir'] ?? 'asc';
+        if($event == 'list'){
+            $users = $userRepository->findBy([], $sort);
+            $event = null;
         } else {
-            $users = $userRepository->findBy([], [$_GET['sort']=>$_GET['dir'], 'name'=>$_GET['dir'], 'email'=>$_GET['dir']]);
+            $event = $eventRepository->findOneBySlug($event);
+            $users = $userRepository->findByEvent($event, $sort);
         }
-        $this->countries = $userRepository->findAllCountries();
+        $this->countries = $userRepository->findAllCountries($event);
         $this->map();
         return $this->render('user/index.html.twig', [
             'users' => $users,
             'admin' => $admin,
             'sort' => $_GET['sort'] ?? 'name',
             'dir' => $_GET['dir'] ?? 'asc',
-            'stats' => $userRepository->findAllStatistics(),
+            'stats' => $userRepository->findAllStatistics($event),
             'countries' => $this->countries,
             'colors' => $this->colors ?? [],
-            'labels' => $this->labels ?? []
+            'labels' => $this->labels ?? [],
+            'event' => empty($event) ? 'Southern Ocean Decade & Polar Data Forum Week 2021' : $event->getName()
         ]);
     }
     /**
      * @Route("/admin", name="user_admin", methods={"GET"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function admin(UserRepository $userRepository): Response
+    public function admin(UserRepository $userRepository, EventRepository $eventRepository): Response
     {
-        return $this->index($userRepository, true);
+        return $this->index($userRepository, $eventRepository, true);
     }
     
     /**

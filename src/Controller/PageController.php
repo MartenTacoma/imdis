@@ -32,14 +32,14 @@ class PageController extends AbstractController
     {
         if($this->getParameter('app.dashboard') && $this->isGranted($this->getParameter('app.dashboard_role'))){
             return $this->render('page/dashboard.html.twig', [
-                'users' => $users->findAllStatistics(),
+                'users' => $users->findAllStatistics(null),
                 'themes' => $themes->findAll(),
                 'abstracts' => $abstracts->findAll(),
                 'program' => $program->findOneByCurrentOrNext()
             ]);
         } else {
             return $this->render('page/index.html.twig', [
-                'users' => $users->findAllStatistics(),
+                'users' => $users->findAllStatistics(null),
                 'themes' => $themes->findAll(),
                 'abstracts' => $abstracts->findAll()
             ]);

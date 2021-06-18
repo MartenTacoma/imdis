@@ -69,7 +69,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if(is_array($orderBy) && array_key_exists('country', $orderBy)){
             return $this->createQueryBuilder('u')
                 ->join('u.country', 'c')
-                ->orderBy('c.name, u.name, u.email', $orderBy['country'])
+                ->orderBy('c.name', $orderBy['country'])
+                ->orderBy('u.name', $orderBy['name'])
+                ->orderBy('u.email', $orderBy['name'])
                 ->getQuery()
                 ->getResult();
         } else {
@@ -84,8 +86,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
     
-    public function findAllStatistics(){
-        return $this->createQueryBuilder('u')
+    public function findAllStatistics($event){
+        $q = $this->createQueryBuilder('u')
             ->select(
                 "count(u.id) AS total",
                 "count(distinct(u.country)) AS countries",
@@ -93,13 +95,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 "sum(CASE WHEN u.show_in_list='login' THEN 1 ELSE 0 END) AS login",
                 "sum(CASE WHEN u.show_in_list='hide' THEN 1 ELSE 0 END) AS hide",
                 "count(u.id)-count(u.country) AS no_country"
-                )
-            ->getQuery()
+            );
+        if (!empty($event)){
+            $q->join('u.event', 'e')
+                ->andWhere('e.id = '.$event->getId());
+        }
+        return $q->getQuery()
             ->getResult()[0];
     }
     
-    public function findAllCountries(){
-        return $this->createQueryBuilder('u')
+    public function findAllCountries($event){
+        $q = $this->createQueryBuilder('u')
             ->join('u.country', 'c')
             ->select(
                 'c.id, c.continent, c.name',
@@ -109,8 +115,29 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 "sum(CASE WHEN u.show_in_list='hide' THEN 1 ELSE 0 END) AS hide"
             )
             ->groupBy('c.continent, c.id, c.name')
-            ->orderBy('c.continent, c.name', 'ASC')
-            ->getQuery()
+            ->orderBy('c.continent, c.name', 'ASC');
+        if (!empty($event)){
+            $q->join('u.event', 'e')
+                ->andWhere('e.id = '.$event->getId());
+        }
+        return $q->getQuery()
             ->getResult();
+    }
+    
+    public function findByEvent($event, $orderBy = null) {
+        $q = $this->createQueryBuilder('u')
+            ->join('u.event', 'e')
+            ->andWhere('e.id = '.$event->getId());
+            if(is_array($orderBy) && array_key_exists('country', $orderBy)){
+                $q->join('u.country', 'c')
+                ->orderBy('c.name', $orderBy['country'])
+                ->addOrderBy('u.name', $orderBy['name'])
+                ->addOrderBy('u.email', $orderBy['name']);
+            } else {
+                foreach($orderBy as $key=>$dir){
+                    $q->addOrderBy('u.' . $key, $dir);
+                }
+            }
+            return $q->getQuery()->getResult();
     }
 }
