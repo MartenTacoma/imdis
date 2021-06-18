@@ -27,6 +27,16 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add('name')
             ->add('affiliation')
+            ->add(
+                'event',
+                null,
+                [
+                    'expanded' => true,
+                    'required'=>true,
+                    'label' => 'I want to register for:',
+                    'help' => 'You can select multiple options'
+                ]
+            )
             ->add('country',
             EntityType::class,
             [

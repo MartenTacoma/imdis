@@ -44,10 +44,16 @@ class Event
      */
     private $programBlocks;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="event")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->hackathons = new ArrayCollection();
         $this->programBlocks = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +150,33 @@ class Event
     {
         if ($this->programBlocks->removeElement($programBlock)) {
             $programBlock->removeEvent($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeEvent($this);
         }
 
         return $this;

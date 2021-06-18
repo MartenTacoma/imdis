@@ -85,12 +85,18 @@ class User implements UserInterface
      */
     private $maillist;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="users")
+     */
+    private $event;
+
     public function __construct(){
         if(empty($this->registration_time)){
             $this->registration_time = new \DateTime();
         }
         $this->presentations = new ArrayCollection();
         $this->posters = new ArrayCollection();
+        $this->event = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -328,5 +334,29 @@ class User implements UserInterface
             $return[] = array_search($role, UserController::$roles);
         }
         return $return;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->event->contains($event)) {
+            $this->event[] = $event;
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        $this->event->removeElement($event);
+
+        return $this;
     }
 }

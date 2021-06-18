@@ -21,10 +21,11 @@
 <hr class="light" />
     {{ form_row(form.show_in_list)}}
 <div class="togglefield field_show_email">{{ form_row(form.show_email)}}</div>
-<hr class="light"/>
-{{ form_row(form.maillist)}}
+{# <hr class="light"/>
+{{ form_row(form.maillist)}} #}
 <hr />
-<h2>Presenting</h2>
+{{form_row(form.event)}}
+{# <h2>Presenting</h2>
 {{form_row(form.registrationType)}}
 <div class="togglefield field_presentations">
 <hr class="light" />
@@ -46,7 +47,7 @@ For more information on this consent form, please click <a href="{{ url('index')
     <li>{{ form_row(chair) }}</li>
     {% endfor %}
     </ul><button type="button" class="add_item_link" data-collection-holder-class="poster"><span class="icon-plus"></span> Add a poster</button>
-</div>
+</div> #}
 <hr/>
 
 <button type="submit" class="btn">Update</button>

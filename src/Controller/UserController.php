@@ -160,7 +160,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->remove('agreeTerms')->remove('plainPassword');
-        $form->get('registrationType')->setData($user->getRegistrationType());
+        // $form->get('registrationType')->setData($user->getRegistrationType());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
