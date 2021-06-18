@@ -189,6 +189,7 @@
     h1 {
         margin-top: 0px;
         margin-bottom: 5px;
+        color: white;
     }
    
     span {
@@ -209,7 +210,7 @@
         a {
             color: white;
             &:hover {
-                color: $brightgreen;
+                color: $blue;
             }
         }
     }
@@ -219,6 +220,7 @@
     padding: 10px 20px;
     margin: 0px auto;
     padding-bottom: 20px;
+    background: white;
     @media screen and (max-width: $mobile){
         padding: 10px;
     }
@@ -237,13 +239,14 @@
     color: white;
     padding: 10px;
     font-size: 14px;
+    margin-bottom: 10px;
     > div {
         display: flex;
         flex-flow: row wrap;
         > div {
             flex-grow: 1;
             &:not(:first-child){
-                border-left: solid 3px $darkgreen;
+                border-left: solid 3px $blue;
                 padding-left: 10px;
                 margin-left: 10px;
             }
@@ -251,11 +254,14 @@
     }
     .header {
         font-size: 1rem;
+        color: $blue;
+        font-weight: bold;
     }
     a {
         color: white;
+        text-decoration: none;
         &:hover {
-            color: $brightgreen;
+            color: $blue;
         }
     }
     #legal,

@@ -11,12 +11,12 @@ $mustard: #d19f2a;
 
 
 $accent1: $teal;
-$accent2: $darkgreen;
-$accent3: $brightgreen;
+$accent2: $blue;
+$accent3: $midblue;
 
-$link-color: $darkgreen;
+$link-color: $brightgreen;
 $text-color: #333;
-$grey: $darkgreen;
+$grey: $blue;
 $lightGrey: #a5e7b9;
 $na-color: #999;
 
@@ -33,6 +33,11 @@ html, body {
     font-size: 16px;
     line-height: 1.42857143;
     color: $text-color;
+    background: $blue;
+}
+
+h1, h2, h3 {
+    color: $darkblue;
 }
 
 h1 {
@@ -44,6 +49,7 @@ h2 {
     font-size: 20px;
     a {
         text-decoration: none;
+        color: $darkblue;
     }
 }
 
@@ -55,7 +61,7 @@ a {
     color: $link-color;
     text-decoration: underline dotted;
     &:hover {
-        color: $brightgreen;
+        color: $darkgreen;
     }
 }
 
