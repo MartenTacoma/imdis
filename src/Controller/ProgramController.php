@@ -41,7 +41,8 @@ class ProgramController extends AbstractController
                 'program/public.html.twig',
                 [
                     'title' => 'Programme - ' . $event->getName(),
-                    'program' => $event->getProgramBlocks()
+                    'program' => $event->getProgramBlocks(),
+                    'event' => $event
                 ]
             );
         }
