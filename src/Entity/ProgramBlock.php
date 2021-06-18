@@ -163,7 +163,11 @@ class ProgramBlock
         $string = $this->date->format('l d F') . ' '
             . $this->time_start->format('H:i') . ' - '
             . $this->time_end->format('H:i');
-            
+        $events = [];
+        foreach($this->getEvent() as $event){
+            $events[] = $event->getAlias();
+        }
+        $string .= ' | ' . implode(' / ', $events);
         $themes = [];
         
         foreach($this->session as $session){
