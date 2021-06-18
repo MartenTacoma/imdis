@@ -163,7 +163,7 @@ class ProgramSession
         $string = $this->block->__toString(). ' | ';
         if(!empty($this->title)) {
             $string .= $this->title;
-        } else {
+        } elseif (!empty($this->theme)) {
             $string .= $this->theme->__toString();
         }
         return $string;

@@ -36,6 +36,17 @@ class HackathonType extends AbstractType
                     'by_reference' => false
                 ]
             )
+            ->add(
+                'links',
+                CollectionType::class,
+                [
+                    'entry_type' => HackathonLinkType::class,
+                    'entry_options' => ['label' => true],
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false
+                ]
+            )
         ;
     }
 

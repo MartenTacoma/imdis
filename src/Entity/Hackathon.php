@@ -54,11 +54,17 @@ class Hackathon
      */
     private $presentations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=HackathonLink::class, mappedBy="hackathon", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $links;
+
     public function __construct()
     {
         $this->contact = new ArrayCollection();
         $this->event = new ArrayCollection();
         $this->presentations = new ArrayCollection();
+        $this->links = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,5 +206,35 @@ class Hackathon
     
     public function __tostring(){
         return $this->title;
+    }
+
+    /**
+     * @return Collection|HackathonLink[]
+     */
+    public function getLinks(): Collection
+    {
+        return $this->links;
+    }
+
+    public function addLink(HackathonLink $link): self
+    {
+        if (!$this->links->contains($link)) {
+            $this->links[] = $link;
+            $link->setHackathon($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLink(HackathonLink $link): self
+    {
+        if ($this->links->removeElement($link)) {
+            // set the owning side to null (unless already changed)
+            if ($link->getHackathon() === $this) {
+                $link->setHackathon(null);
+            }
+        }
+
+        return $this;
     }
 }
