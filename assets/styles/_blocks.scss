@@ -19,7 +19,7 @@
         &.reverse {
             flex-flow: row-reverse;
         }
-        .side {
+        aside {
             .sidebar {
                 border-left: solid 3px $grey;
                 padding: 10px;
@@ -176,7 +176,7 @@
         }
     }
 }
-#top {
+header {
     background: $accent1;
     color: white;
     padding: 20px 10px;
@@ -216,7 +216,7 @@
     }
 }
 
-#content {
+main {
     padding: 10px 20px;
     margin: 0px auto;
     padding-bottom: 20px;
@@ -234,7 +234,7 @@
     }
 }
 
-#foot {
+footer {
     background: $accent1;
     color: white;
     padding: 10px;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ pagetitle ?? 'Welcome' }}{% if pagetitle is not defined or pagetitle != '' %} | {% endif %}SO Decade & PDF IV Week 2021 | 20 - 24 September 2021 | online</title>
@@ -10,12 +10,12 @@
             {{ encore_entry_link_tags('app') }}{% endblock %}
         {{ encore_entry_script_tags('app') }}
         {% block javascripts %}{% endblock %}
-        {% if app.environment == 'dev' %}<style>#top, #menu {background: darkorange}</style>{% endif %}
+        {% if app.environment == 'dev' %}<style>header, nav {background: darkorange}</style>{% endif %}
     </head>
     <body tabIndex=0>
         {% include 'base/blocks/top.twig' %}
         {% include 'base/blocks/menu.twig' %}
-        <div id="content">
+        <main>
             <div class="content">
                 <h1>{{ pagetitle ?? 'Welcome' }}</h1>
                 {# <div class="takedown">This website is a under construction. No guarantee can be given that information on this website is accurate.</div> #}
@@ -28,12 +28,12 @@
         
                 {% block body %}
                     <div class="cols reverse">
-                        <div class="side">{% block side %}{% endblock %}</div>
+                        <aside>{% block side %}{% endblock %}</aside>
                         <div class="main">{% block main %}{{ content }}{% endblock %}</div>
                     </div>
                 {% endblock %}
             </div>
-        </div>
+        </main>
         {% include 'base/blocks/foot.twig' %}
     </body>
 </html>
