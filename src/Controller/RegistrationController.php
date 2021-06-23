@@ -57,7 +57,7 @@ class RegistrationController extends AbstractController
                     ->to($user->getEmail())
                     ->subject('Registration confirmation Southern Ocean Decade & Polar Data Forum Week 2021')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
-                    ->replyTo(new Address('imdis@seadatanet.org', 'Southern Ocean Decade & Polar Data Forum Week 2021'));
+                    ->replyTo(new Address('info@sodecade.org', 'Southern Ocean Decade & Polar Data Forum Week 2021'));
                 $context = $email->getContext();
                 $context['user'] = $user;
 
