@@ -136,10 +136,11 @@ class UserController extends AbstractController
      * @Route("/registrations.csv", name="user_csv")
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function csv(UserRepository $userRepository): Response
+    public function csv(UserRepository $userRepository, EventRepository $eventRepository): Response
     {
         $users = $userRepository->findAll();
-        $response = $this->render('user/export.csv.twig', ['users'=>$users]);
+        $events = $eventRepository->findAll();
+        $response = $this->render('user/export.csv.twig', ['users'=>$users, 'events'=>$events]);
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_registration_v'.date('Ymd_His').'.csv"');
         return $response;
