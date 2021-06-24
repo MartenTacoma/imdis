@@ -51,16 +51,19 @@ class UserController extends AbstractController
             'countries' => $this->countries,
             'colors' => $this->colors ?? [],
             'labels' => $this->labels ?? [],
-            'event' => empty($event) ? 'Southern Ocean Decade & Polar Data Forum Week 2021' : $event->getName()
+            'eventName' => empty($event) ? 'Southern Ocean Decade & Polar Data Forum Week 2021' : $event->getName(),
+            'event' => $event,
+            'events' => $eventRepository->findAll()
         ]);
     }
     /**
      * @Route("/admin", name="user_admin", methods={"GET"})
+     * @Route("/{event}/admin", name="user_event_admin", methods={"GET"}, requirements={"event"="pdfiv|sodecade"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function admin(UserRepository $userRepository, EventRepository $eventRepository): Response
+    public function admin(UserRepository $userRepository, EventRepository $eventRepository, $event = 'list'): Response
     {
-        return $this->index($userRepository, $eventRepository, true);
+        return $this->index($userRepository, $eventRepository, true, $event);
     }
     
     /**
@@ -133,16 +136,22 @@ class UserController extends AbstractController
     }
     
     /**
-     * @Route("/registrations.csv", name="user_csv")
+     * @Route("/registrations.csv", name="user_csv", methods={"GET"})
+     * @Route("/{event}/registrations.csv", name="user_csv_event", methods={"GET"}, requirements={"event"="pdfiv|sodecade"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function csv(UserRepository $userRepository, EventRepository $eventRepository): Response
+    public function csv(UserRepository $userRepository, EventRepository $eventRepository, $event = null): Response
     {
-        $users = $userRepository->findAll();
+        if(empty($event)){
+            $users = $userRepository->findAll();
+        } else {
+            $event = $eventRepository->findOneBySlug($event);
+            $users = $event->getUsers();
+        }
         $events = $eventRepository->findAll();
-        $response = $this->render('user/export.csv.twig', ['users'=>$users, 'events'=>$events]);
+        $response = $this->render('user/export.csv.twig', ['users'=>$users, 'events'=>$events, 'event'=>$event]);
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_registration_v'.date('Ymd_His').'.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
         return $response;
     }
     

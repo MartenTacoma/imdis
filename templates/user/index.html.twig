@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% if admin %}
-    {% set pagetitle = 'Registrations admin' %}
+    {% set pagetitle = 'Registrations admin ' ~ eventName %}
 {% else %}
-    {% set pagetitle = 'Registrations ' ~ event %}
+    {% set pagetitle = 'Registrations ' ~ eventName %}
 {% endif %}
 
 {% block side %}
@@ -11,7 +11,7 @@
 {% if not admin %}
     {% if is_granted('ROLE_ALL_REGISTRATIONS') %}
             <div class="admin"><h3>Maintainance</h3><ul>
-            <li><a href="{{path('user_admin')}}">Manage registrations</a> (and view hidden info)</li>
+            <li><a href="{{ event ? path('user_event_admin', {'event': event.slug}) : path('user_admin')}}">Manage registrations</a> (and view hidden info)</li>
             </ul></div>
         {% endif %}
     {% if is_granted('ROLE_USER') %}
@@ -20,7 +20,7 @@
 {% endif %}
 <div>
 {% if admin %}
-<a href="{{path('user_csv')}}">Download as csv</a>
+<a href="{{ event ? path('user_csv_event', {'event': event.slug}) : path('user_csv')}}">Download as csv</a>
 </div>
 <div>
 <h2>Statistics</h2>
@@ -33,19 +33,26 @@
     <tr><th>Registrations without country</th><td>{{ stats.no_country }}</td></tr>
 </table>
 {% else %}
-There are {{stats.total}} registrations for {{event}}. So far we expect participants from {{stats.countries}} different countries.
+There are {{stats.total}} registrations for {{eventName}}. So far we expect participants from {{stats.countries}} different countries.
 
 {% if stats.hide > 0 or (stats.login > 0 and not is_granted('ROLE_USER')) %}</div><div>
     Not all registrations are displayed as some participants have chosen not to be listed.{% endif %}
 {% endif %}
 </div>
+
+{% if not event %}
+<div><h2>Registrations per event</h2><table class="table" style="width:100%">{% for e in events %}
+    <tr><th><a href="{{ path(admin ? 'user_event_admin' : 'user_index', {'event': e.slug}) }}">{{ e.name }}</a></th><td>{{ e.users|length }}</td></tr>
+{% endfor %}</table></div>
+{% endif %}
+<div>
+
 {% if stats.countries > 0 %}
 {% include 'user/map.html.twig' %}
 {% endif %}
 
 </div>
 {% endblock %}
-
 
 
 {% block main %}
