@@ -24,7 +24,7 @@
         <a href="{{ event ? path('user_csv_event', {'event': event.slug}) : path('user_csv')}}">Download as csv</a>
     </div>
     <div>
-        <h2>Statistics</h2>
+        <h3>Statistics</h3>
         <table class="table" style="width:100%">
             <tr><th>Number of registrations</th><td>{{ stats.total }}</td></tr>
             <tr><th>Public visible registrations</th><td>{{ stats.public}}</td></tr>
@@ -44,7 +44,7 @@
 
     {% if not event %}
         <div>
-            <h2>Registrations per event</h2>
+            <h3>Registrations per event</h3>
             <table class="table" style="width:100%">
             {% for e in events %}
                 <tr><th><a href="{{ path(admin ? 'user_event_admin' : 'user_index', {'event': e.slug}) }}">{{ e.name }}</a></th><td>{{ e.users|length }}</td></tr>
