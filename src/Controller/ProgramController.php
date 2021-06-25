@@ -25,30 +25,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ProgramController extends AbstractController
 {
     /**
-     * @Route("/{event}", name="program_index", methods={"GET"}, requirements={"event"="pdfiv|sodecade"})
-     */
-    public function program_index(ProgramBlockRepository $programBlockRepository, EventRepository $eventRepository, $event = null){
-        if(empty($event)){
-            return $this->render(
-                'program/public.html.twig',
-                [
-                    'program' => $programBlockRepository->findAll()
-                ]
-            );
-        } else {
-            $event = $eventRepository->findOneBySlug($event);
-            return $this->render(
-                'program/public.html.twig',
-                [
-                    'title' => 'Programme - ' . $event->getName(),
-                    'program' => $event->getProgramBlocks(),
-                    'event' => $event
-                ]
-            );
-        }
-    }
-    
-    /**
      * @Route("/consent", name="presentation_consent", methods={"GET"})
      * @IsGranted("ROLE_CONSENT");
      */
@@ -294,5 +270,32 @@ class ProgramController extends AbstractController
         }
 
         return $this->redirectToRoute('program_session_show', ['id' => $presentation->getProgramSession()->getId()]);
+    }
+    
+    /**
+     * @Route("/{event}", name="program_index", methods={"GET"})
+     */
+    public function program_index(ProgramBlockRepository $programBlockRepository, EventRepository $eventRepository, $event = null){
+        if(empty($event)){
+            return $this->render(
+                'program/public.html.twig',
+                [
+                    'program' => $programBlockRepository->findAll()
+                ]
+            );
+        } else {
+            $event = $eventRepository->findOneBySlug($event);
+            if (empty($event)){
+                throw $this->createNotFoundException();
+            }
+            return $this->render(
+                'program/public.html.twig',
+                [
+                    'title' => 'Programme - ' . $event->getName(),
+                    'program' => $event->getProgramBlocks(),
+                    'event' => $event
+                ]
+            );
+        }
     }
 }

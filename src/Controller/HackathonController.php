@@ -18,25 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class HackathonController extends AbstractController
 {
     /**
-     * @Route("/{event}", name="hackathon_public", methods={"GET"}, requirements={"event"="pdfiv|sodecade"})
-     */
-    public function index(HackathonRepository $hackathonRepository, EventRepository $eventRepository, $event=null): Response
-    {
-        if (empty($event)){
-            return $this->render('hackathon/public.html.twig', [
-                'hackathons' => $hackathonRepository->findAll(),
-            ]);
-        } else {
-            $event = $eventRepository->findOneBySlug($event);
-            return $this->render('hackathon/public.html.twig', [
-                'title' => 'Hackathons - ' . $event->getName(),
-                'hackathons' => $event->getHackathons(),
-            ]);
-        }
-    }
-    
-    
-    /**
      * @Route("/manage", name="hackathon_index", methods={"GET"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
@@ -115,5 +96,27 @@ class HackathonController extends AbstractController
         }
 
         return $this->redirectToRoute('hackathon_index');
+    }
+    
+    /**
+     * @Route("/{event}", name="hackathon_public", methods={"GET"})
+     */
+    public function index(HackathonRepository $hackathonRepository, EventRepository $eventRepository, $event=null): Response
+    {
+        if (empty($event)){
+            return $this->render('hackathon/public.html.twig', [
+                'hackathons' => $hackathonRepository->findAll(),
+            ]);
+        } else {
+            $event = $eventRepository->findOneBySlug($event);
+            if (empty($event)){
+                throw $this->createNotFoundException();
+            }
+            
+            return $this->render('hackathon/public.html.twig', [
+                'title' => 'Hackathons - ' . $event->getName(),
+                'hackathons' => $event->getHackathons(),
+            ]);
+        }
     }
 }

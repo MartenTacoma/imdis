@@ -25,46 +25,6 @@ class UserController extends AbstractController
         'View presentation consent lists' => 'ROLE_CONSENT'
     ];
     
-    /**
-     * @Route("/{event}/", name="user_index", methods={"GET"}, requirements={"event"="list|pdfiv|sodecade"})
-     */
-    public function index(UserRepository $userRepository, EventRepository $eventRepository, $admin = false, $event='list'): Response
-    {
-        $sort = empty($_GET['sort']) ? [] : [$_GET['sort']=>$_GET['dir']];
-        $sort['name'] = $_GET['dir'] ?? 'asc';
-        $sort['email'] = $_GET['dir'] ?? 'asc';
-        if($event == 'list'){
-            $users = $userRepository->findBy([], $sort);
-            $event = null;
-        } else {
-            $event = $eventRepository->findOneBySlug($event);
-            $users = $userRepository->findByEvent($event, $sort);
-        }
-        $this->countries = $userRepository->findAllCountries($event);
-        $this->map();
-        return $this->render('user/index.html.twig', [
-            'users' => $users,
-            'admin' => $admin,
-            'sort' => $_GET['sort'] ?? 'name',
-            'dir' => $_GET['dir'] ?? 'asc',
-            'stats' => $userRepository->findAllStatistics($event),
-            'countries' => $this->countries,
-            'colors' => $this->colors ?? [],
-            'labels' => $this->labels ?? [],
-            'eventName' => empty($event) ? 'Southern Ocean Decade & Polar Data Forum Week 2021' : $event->getName(),
-            'event' => $event,
-            'events' => $eventRepository->findAll()
-        ]);
-    }
-    /**
-     * @Route("/admin", name="user_admin", methods={"GET"})
-     * @Route("/{event}/admin", name="user_event_admin", methods={"GET"}, requirements={"event"="pdfiv|sodecade"})
-     * @IsGranted("ROLE_ALL_REGISTRATIONS")
-     */
-    public function admin(UserRepository $userRepository, EventRepository $eventRepository, $event = 'list'): Response
-    {
-        return $this->index($userRepository, $eventRepository, true, $event);
-    }
     
     /**
      * @Route("/countries", name="user_countries", methods={"GET"})
@@ -136,26 +96,6 @@ class UserController extends AbstractController
     }
     
     /**
-     * @Route("/registrations.csv", name="user_csv", methods={"GET"})
-     * @Route("/{event}/registrations.csv", name="user_csv_event", methods={"GET"}, requirements={"event"="pdfiv|sodecade"})
-     * @IsGranted("ROLE_ALL_REGISTRATIONS")
-     */
-    public function csv(UserRepository $userRepository, EventRepository $eventRepository, $event = null): Response
-    {
-        if(empty($event)){
-            $users = $userRepository->findAll();
-        } else {
-            $event = $eventRepository->findOneBySlug($event);
-            $users = $event->getUsers();
-        }
-        $events = $eventRepository->findAll();
-        $response = $this->render('user/export.csv.twig', ['users'=>$users, 'events'=>$events, 'event'=>$event]);
-        $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
-        return $response;
-    }
-    
-    /**
      * @Route("/", name="user_self", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
@@ -217,7 +157,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
+     * @Route("/{id<\d+>}", name="user_show", methods={"GET"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function show(User $user): Response
@@ -228,7 +168,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/{id<\d+>}/edit", name="user_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function edit(Request $request, User $user): Response
@@ -261,5 +201,73 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('user_index');
+    }
+    
+    /**
+     * @Route("/admin", name="user_admin", methods={"GET"})
+     * @Route("/{event}/admin", name="user_event_admin", methods={"GET"})
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
+     */
+    public function admin(UserRepository $userRepository, EventRepository $eventRepository, $event = 'list'): Response
+    {
+        return $this->index($userRepository, $eventRepository, true, $event);
+    }
+    
+    /**
+     * @Route("/{event}/", name="user_index", methods={"GET"})
+     */
+    public function index(UserRepository $userRepository, EventRepository $eventRepository, $admin = false, $event='list'): Response
+    {
+        $sort = empty($_GET['sort']) ? [] : [$_GET['sort']=>$_GET['dir']];
+        $sort['name'] = $_GET['dir'] ?? 'asc';
+        $sort['email'] = $_GET['dir'] ?? 'asc';
+        if($event == 'list'){
+            $users = $userRepository->findBy([], $sort);
+            $event = null;
+        } else {
+            $event = $eventRepository->findOneBySlug($event);
+            if (empty($event)){
+                throw $this->createNotFoundException();
+            }
+            $users = $userRepository->findByEvent($event, $sort);
+        }
+        $this->countries = $userRepository->findAllCountries($event);
+        $this->map();
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+            'admin' => $admin,
+            'sort' => $_GET['sort'] ?? 'name',
+            'dir' => $_GET['dir'] ?? 'asc',
+            'stats' => $userRepository->findAllStatistics($event),
+            'countries' => $this->countries,
+            'colors' => $this->colors ?? [],
+            'labels' => $this->labels ?? [],
+            'eventName' => empty($event) ? 'Southern Ocean Decade & Polar Data Forum Week 2021' : $event->getName(),
+            'event' => $event,
+            'events' => $eventRepository->findAll()
+        ]);
+    }
+    
+    /**
+     * @Route("/registrations.csv", name="user_csv", methods={"GET"})
+     * @Route("/{event}/registrations.csv", name="user_csv_event", methods={"GET"})
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
+     */
+    public function csv(UserRepository $userRepository, EventRepository $eventRepository, $event = null): Response
+    {
+        if(empty($event)){
+            $users = $userRepository->findAll();
+        } else {
+            $event = $eventRepository->findOneBySlug($event);
+            if (empty($event)){
+                throw $this->createNotFoundException();
+            }
+            $users = $event->getUsers();
+        }
+        $events = $eventRepository->findAll();
+        $response = $this->render('user/export.csv.twig', ['users'=>$users, 'events'=>$events, 'event'=>$event]);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
+        return $response;
     }
 }

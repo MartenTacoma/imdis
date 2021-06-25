@@ -8,49 +8,56 @@
 
 {% block side %}
 <div class="sticky">
-{% if not admin %}
-    {% if is_granted('ROLE_ALL_REGISTRATIONS') %}
-            <div class="admin"><h3>Maintainance</h3><ul>
-            <li><a href="{{ event ? path('user_event_admin', {'event': event.slug}) : path('user_admin')}}">Manage registrations</a> (and view hidden info)</li>
-            </ul></div>
+    {% if not admin %}
+        {% if is_granted('ROLE_ALL_REGISTRATIONS') %}
+                <div class="admin"><h3>Maintainance</h3><ul>
+                <li><a href="{{ event ? path('user_event_admin', {'event': event.slug}) : path('user_admin')}}">Manage registrations</a> (and view hidden info)</li>
+                </ul></div>
+            {% endif %}
+        {% if is_granted('ROLE_USER') %}
+            <div><a href="{{path('user_self')}}">My registration</a>{% if app.user.ShowInList == 'hide' %}<br/><em>As you have requested not to be included in the registration list your are not included in the list on this page</em>{% endif %}</div>
         {% endif %}
-    {% if is_granted('ROLE_USER') %}
-        <div><a href="{{path('user_self')}}">My registration</a>{% if app.user.ShowInList == 'hide' %}<br/><em>As you have requested not to be included in the registration list your are not included in the list on this page</em>{% endif %}</div>
     {% endif %}
-{% endif %}
-<div>
-{% if admin %}
-<a href="{{ event ? path('user_csv_event', {'event': event.slug}) : path('user_csv')}}">Download as csv</a>
-</div>
-<div>
-<h2>Statistics</h2>
-<table class="table" style="width:100%">
-    <tr><th>Number of registrations</th><td>{{ stats.total }}</td></tr>
-    <tr><th>Public visible registrations</th><td>{{ stats.public}}</td></tr>
-    <tr><th>Registration only visible when logged in</th><td>{{ stats.login}}</td></tr>
-    <tr><th>Hidden registrations</th><td>{{ stats.hide}}</td></tr>
-    <tr><th>Countries</th><td>{{ stats.countries }}</td></tr>
-    <tr><th>Registrations without country</th><td>{{ stats.no_country }}</td></tr>
-</table>
-{% else %}
-There are {{stats.total}} registrations for {{eventName}}. So far we expect participants from {{stats.countries}} different countries.
+    
+    <div>
+    {% if admin %}
+        <a href="{{ event ? path('user_csv_event', {'event': event.slug}) : path('user_csv')}}">Download as csv</a>
+    </div>
+    <div>
+        <h2>Statistics</h2>
+        <table class="table" style="width:100%">
+            <tr><th>Number of registrations</th><td>{{ stats.total }}</td></tr>
+            <tr><th>Public visible registrations</th><td>{{ stats.public}}</td></tr>
+            <tr><th>Registration only visible when logged in</th><td>{{ stats.login}}</td></tr>
+            <tr><th>Hidden registrations</th><td>{{ stats.hide}}</td></tr>
+            <tr><th>Countries</th><td>{{ stats.countries }}</td></tr>
+            <tr><th>Registrations without country</th><td>{{ stats.no_country }}</td></tr>
+        </table>
+    {% else %}
+        There are {{stats.total}} registrations for {{eventName}}. So far we expect participants from {{stats.countries}} different countries.
 
-{% if stats.hide > 0 or (stats.login > 0 and not is_granted('ROLE_USER')) %}</div><div>
-    Not all registrations are displayed as some participants have chosen not to be listed.{% endif %}
-{% endif %}
-</div>
+        {% if stats.hide > 0 or (stats.login > 0 and not is_granted('ROLE_USER')) %}</div><div>
+            Not all registrations are displayed as some participants have chosen not to be listed.
+        {% endif %}
+    {% endif %}
+    </div>
 
-{% if not event %}
-<div><h2>Registrations per event</h2><table class="table" style="width:100%">{% for e in events %}
-    <tr><th><a href="{{ path(admin ? 'user_event_admin' : 'user_index', {'event': e.slug}) }}">{{ e.name }}</a></th><td>{{ e.users|length }}</td></tr>
-{% endfor %}</table></div>
-{% endif %}
-<div>
+    {% if not event %}
+        <div>
+            <h2>Registrations per event</h2>
+            <table class="table" style="width:100%">
+            {% for e in events %}
+                <tr><th><a href="{{ path(admin ? 'user_event_admin' : 'user_index', {'event': e.slug}) }}">{{ e.name }}</a></th><td>{{ e.users|length }}</td></tr>
+            {% endfor %}
+            </table>
+        </div>
+    {% endif %}
 
-{% if stats.countries > 0 %}
-{% include 'user/map.html.twig' %}
-{% endif %}
-
+    {% if stats.countries > 0 %}
+        <div>
+            {% include 'user/map.html.twig' %}
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
 
