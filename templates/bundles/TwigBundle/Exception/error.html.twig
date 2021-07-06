@@ -16,8 +16,8 @@
 .container { background: white;margin: 10vh auto; width: 90vw; max-width: 600px; padding: 0px;border-bottom:solid 5px #005c6d}
 .top {
     background: #005c6d;
-    padding: 5px;
-    font-size: 28px;
+    padding: 15px 5px;
+    font-size: 23px;
     color: white;
 }
 .main {
@@ -29,7 +29,7 @@ a{ color: #48773c}</style>
 </head>
 <body>
 <div class="container">
-<div class="top">Southern Ocean Decade & Polar Data Forum Week 2021<br/>September 2021 - online</div>
+<div class="top">Southern Ocean Decade & Polar Data Forum Week 2021</div>
 <div class="main"><h1>{{status_code ~ ' - ' ~ status_text}}</h1>
 {% block message %}
 {% if status_code|slice(0,1) == 4 %}
