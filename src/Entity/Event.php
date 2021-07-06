@@ -41,6 +41,7 @@ class Event
 
     /**
      * @ORM\ManyToMany(targetEntity=ProgramBlock::class, mappedBy="event")
+     * @ORM\OrderBy({"date" = "ASC", "time_start" = "ASC", "time_end" = "ASC"})
      */
     private $programBlocks;
 
