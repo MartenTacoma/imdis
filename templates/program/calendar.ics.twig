@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//{{url('index') }}
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+DTSTAMP:{{block.date|date('Ymd') }}T{{ block.timeStart|date('His') }}Z
+UID:{{url('program_index') }}/{{block.anchor}}
+DTSTART:{{block.date|date('Ymd') }}T{{ block.timeStart|date('His') }}Z
+DTEND:{{block.date|date('Ymd') }}T{{ block.timeEnd|date('His') }}Z
+SUMMARY:{{block.event|join(' & ')|raw}}
+DESCRIPTION:Join using {{block.sessionUrl}} (Session id: {{block.ZoomId}}, passcode: {{block.ZoomPass}})\n\nThe session program can be found at {{url('program_index')}}#{{block.anchor}}
+END:VEVENT
+END:VCALENDAR

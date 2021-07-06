@@ -44,7 +44,7 @@ class ProgramController extends AbstractController
             'talks' => $presentationRepository->findByConsent(),
         ]);
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_poster_consent_v'.date('Ymd_His').'.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="WORKINGNAME_poster_consent_v'.date('Ymd_His').'.csv"');
         return $response;
     }
     
@@ -272,10 +272,39 @@ class ProgramController extends AbstractController
         return $this->redirectToRoute('program_session_show', ['id' => $presentation->getProgramSession()->getId()]);
     }
     
+    
+    
+    /**
+     * @Route("/{block}.ics", name="block_ics", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function program_block_ics(
+        ProgramBlockRepository $programBlockRepository,
+        EventRepository $eventRepository,
+        $block
+    ){
+        $parts = explode('_', $block);
+        preg_match('((?P<year>[0-9]{4})(?P<month>[0-9]{2})(?P<day>[0-9]{2})(?P<hour>[0-9]{2})(?P<minute>[0-9]{2}))', $parts[0], $time);
+        array_shift($parts);
+        $programBlock = $programBlockRepository->findOneByAnchor(
+            $time['year'] . '-' . $time['month'] . '-' . $time['day'],
+            $time['hour'] . ':' . $time['minute'],
+            $parts
+        );
+        $response = $this->render('program/calendar.ics.twig', ['block'=>$programBlock]);
+        $response->headers->set('Content-Type', 'text/calendar');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $block . '.ics"');
+        return $response;
+    }
+    
     /**
      * @Route("/{event}", name="program_index", methods={"GET"})
      */
-    public function program_index(ProgramBlockRepository $programBlockRepository, EventRepository $eventRepository, $event = null){
+    public function program_index(
+        ProgramBlockRepository $programBlockRepository,
+        EventRepository $eventRepository,
+        $event = null
+    ){
         if(empty($event)){
             return $this->render(
                 'program/public.html.twig',

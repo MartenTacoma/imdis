@@ -267,7 +267,7 @@ class UserController extends AbstractController
         $events = $eventRepository->findAll();
         $response = $this->render('user/export.csv.twig', ['users'=>$users, 'events'=>$events, 'event'=>$event]);
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="WORKINGNAME_'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
         return $response;
     }
 }

@@ -69,6 +69,18 @@ a {
     clear: both;
 }
 
+@media screen and (max-width: $mobile){
+    .nomobile {
+        display: none;
+    }
+}
+
+@media screen and (min-width: $desktop){
+    .mobile {
+        display: none;
+    }
+}
+
 @import '_menu.scss';
 @import '_blocks.scss';
 @import '_main.scss';

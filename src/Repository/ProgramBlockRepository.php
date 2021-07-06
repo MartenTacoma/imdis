@@ -72,4 +72,32 @@ class ProgramBlockRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+    
+    public function findOneByAnchor($date, $time, $events){
+        $q = $this->createQueryBuilder('p');
+        $result = $q->where(
+            $q->expr()->andX(
+                $q->expr()->eq('p.date', ':date'),
+                $q->expr()->eq('p.time_start', ':time')
+            )
+        )
+        ->setParameter('date', $date)
+        ->setParameter('time', $time)
+        ->getQuery()
+        ->getResult();
+        if(count($result) == 1){
+            return $result[0];
+        } else {
+            foreach($result as $block){
+                $blockEvents = [];
+                foreach ($block->getEvent() as $blockEvent) {
+                    $blockEvents[] = $blockEvent->getSlug();
+                }
+                if(count(array_diff($blockEvents, $events)) == 0 && count(array_diff($events, $blockEvents)) == 0){
+                    return $block;
+                }
+            }
+            return null;
+        }
+    }
 }

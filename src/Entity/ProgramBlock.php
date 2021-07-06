@@ -183,7 +183,11 @@ class ProgramBlock
     
     public function getAnchor(): string
     {
-        return $this->date->format('Ymd') . $this->time_start->format('Hi');
+        $anchor = $this->date->format('Ymd') . $this->time_start->format('Hi');
+        foreach ($this->event as $event){
+            $anchor .= '_'.$event->getSlug();
+        }
+        return $anchor;
     }
 
     public function getZoomId(): ?string
