@@ -19,17 +19,24 @@
         {#<div><a href="{{ url('index') }}files/WORKINGNAME_programme.pdf"><span class="icon-download3"></span> Download the program as PDF</a>
         {% if is_granted(imdis.details_role) %}<br/><a href="{{ url('index') }}files/WORKINGNAME_chats.pdf"><span class="icon-download3"></span> Download the Questions and Answers from the chat</a>{% endif %}
         </div>#}
-        <div><h3>Sessions</h3><ul>
+        <div><h3>Sessions</h3>
         {% set past = false %}
+        {% set lastDate = null %}
         {% for block in program %}
             {% if block.status == 'past' %}
                 {% set past = true %}
             {% endif %}
-            <li><a href="#{{ block.anchor }}">{{ block }}</a></li>
+            {% if block.date!=lastDate %}
+                {% set lastDate = block.date %}
+                {% if not loop.first %}</ul><hr class="light"/>{% endif %}
+                <h4>{{block.date|date('l d F')}}</h4>
+                <ul>
+            {% endif %}
+            <li><a href="#{{ block.anchor }}">{{ block.timeStart|date('H:i') }} - {{ block.timeEnd|date('H:i') }} | {{ block.event|join(' & ')}}</a></li>
         {% endfor %}
         </ul></div>
-        <div>Welcome to Southern Ocean Decade & Polar Data Forum Week 2021. Southern Ocean Decade & Polar Data Forum Week 2021 is entirely online. Every session has it's own connection link, only the link for the next session will be available here and only for registered and logged in participants. The last 3 minutes of every talk are reserved for Q&amp;A, we will use the Zoom chat function for that.</div>
-        {% if is_granted(imdis.details_role) %}<div>Click the <span class="icon-calendar"></span> calendar icon to download the session and connection information as .ics file to import into your calendar. Most calendar applications will automatically convert the event to the timezone of your calendar application.</div>{% endif %}
+        <div>{{ intro }}</div>
+        {% if is_granted(imdis.details_role) %}<div>Click the <span class="icon-calendar"></span> calendar icon on a session to download the session and connection information as .ics file to import into your calendar. Most calendar applications will automatically convert the event to the timezone of your calendar application.</div>{% endif %}
         {% if past %}
             <div>
                 Below the starting time of the past presentations you can find the following icons, these are links:<br/>

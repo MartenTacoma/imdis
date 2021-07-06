@@ -1,8 +1,8 @@
 hr {
     border: none;
-    border-top: solid 1px $text-color;
+    border-top: solid 1px $darkblue;
     &.light {
-        border-color: #ccc;
+        border-color: $blue;
     }
 }
 
