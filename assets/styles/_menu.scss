@@ -157,6 +157,14 @@ nav {
                         }
                         &:hover ul{
                             display: block;
+                            li {
+                                ul {
+                                    display: none;
+                                }
+                                &:hover ul {
+                                    display: block;
+                                }
+                            }
                         }
                     }
                 }

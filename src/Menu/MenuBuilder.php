@@ -41,38 +41,77 @@ class MenuBuilder
         return $this->doCreateMenu($options);
     }
     
+    private function createEventProgram($menu, $slug, $label){
+        $date = null;
+        $uri = $this->router->generate('program_index', ['event' => $slug]);
+        $menu[$label]->addChild('Programme', ['route' => 'program_index', 'routeParameters' => ['event' => $slug]]);
+        foreach($this->registry->getRepository(Event::class)->findOneBySlug($slug)->getProgramBlocks()  as $block){
+            $anchor = $block->getAnchor();
+            if($block->getDate() != $date){
+                $menu[$label]['Programme']->addChild($block->getDate()->format('l d F'));
+                $date = $block->getDate();
+            }
+            $title = $block->getTimeStart()->format('H:i') . ' - ' . $block->getTimeEnd()->format('H:i');
+            foreach($block->getEvent() as $event){
+                if($event->getSlug() != $slug){
+                    $title .= ' | with ' . $event->getAlias();
+                }
+            }
+            foreach($block->getSession() as $session){
+                if(!empty($session->getTitle())) {
+                    $title .= ' | ' . $session->getTitle();
+                } elseif (!empty($session->getTheme())) {
+                    $string .= $session->getTheme()->__toString();
+                }
+            }
+            $menu[$label]['Programme'][$block->getDate()->format('l d F')]->addChild(
+                $title,
+                ['uri'=> $uri . '#' . $anchor]
+            );
+        };
+        return $menu;
+    }
+    
     private function doCreateMenu(array $options, $last_empty = false): ItemInterface
     {
         $menu = $this->factory->createItem('root');
         $menu->addChild('Home', ['route' => 'index']);
-        $menu->addChild('Programme', ['route' => 'program_index']);
+        
+        $date = null;
         $uri = $this->router->generate('program_index');
+        $menu->addChild('Programme', ['route' => 'program_index']);
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
-            $title = $block->__toString();
             $anchor = $block->getAnchor();
-            $menu['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
+            if($block->getDate() != $date){
+                $menu['Programme']->addChild($block->getDate()->format('l d F'));
+                $date = $block->getDate();
+            }
+            $title = $block->getTimeStart()->format('H:i') . ' - ' . $block->getTimeEnd()->format('H:i');
+            $events = [];
+            foreach($block->getEvent() as $event){
+                $events[] =  $event->getAlias();
+            }
+            $title .= ' | ' . implode(' & ', $events);
+            foreach($block->getSession() as $session){
+                if(!empty($session->getTitle())) {
+                    $title .= ' | ' . $session->getTitle();
+                } elseif (!empty($session->getTheme())) {
+                    $string .= $session->getTheme()->__toString();
+                }
+            }
+            $menu['Programme'][$block->getDate()->format('l d F')]->addChild(
+                $title,
+                ['uri'=> $uri . '#' . $anchor]
+            );
         };
+        
         $menu->addChild('SO Decade', ['route' => 'sodecade']);
-        $menu['SO Decade']->addChild('Programme', ['route' => 'program_index', 'routeParameters' => ['event' => 'sodecade']]);
+        $menu = $this->createEventProgram($menu, 'sodecade', 'SO Decade');
         $menu['SO Decade']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'sodecade']]);
-        $uri = $this->router->generate('program_index', ['event' => 'sodecade']);
-        foreach($this->registry->getRepository(Event::class)->findOneBySlug('sodecade')->getProgramBlocks()  as $block){
-            $title = $block->__toString();
-            $anchor = $block->getAnchor();
-            $menu['SO Decade']['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
-        };
         $menu['SO Decade']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'sodecade']]);
         
-        
         $menu->addChild('PDF IV', ['route' => 'pdfiv']);
-        $menu['PDF IV']->addChild('Programme', ['route' => 'program_index', 'routeParameters' => ['event' => 'pdfiv']]);
-        $uri = $this->router->generate('program_index', ['event' => 'pdfiv']);
-        foreach($this->registry->getRepository(Event::class)->findOneBySlug('pdfiv')->getProgramBlocks() as $block){
-            $title = $block->__toString();
-            $anchor = $block->getAnchor();
-            $menu['PDF IV']['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
-        };
-        
+        $menu = $this->createEventProgram($menu, 'pdfiv', 'PDF IV');
         $menu['PDF IV']->addChild('Posters', ['route' => 'poster_index']);
         $menu['PDF IV']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'pdfiv']]);
         $uri = $this->router->generate('poster_index');
