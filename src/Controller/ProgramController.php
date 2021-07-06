@@ -323,7 +323,8 @@ class ProgramController extends AbstractController
                 [
                     'title' => 'Programme - ' . $event->getName(),
                     'program' => $event->getProgramBlocks(),
-                    'event' => $event
+                    'event' => $event,
+                    'intro' => 'TODO: add intro to event in db'
                 ]
             );
         }

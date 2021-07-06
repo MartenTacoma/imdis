@@ -32,7 +32,7 @@
                 <h4>{{block.date|date('l d F')}}</h4>
                 <ul>
             {% endif %}
-            <li><a href="#{{ block.anchor }}">{{ block.timeStart|date('H:i') }} - {{ block.timeEnd|date('H:i') }} | {{ block.event|join(' & ')}}</a></li>
+            <li><a href="#{{ block.anchor }}">{{ block.timeStart|date('H:i') }} - {{ block.timeEnd|date('H:i') }}{% if title is not defined %} | {{block.event|join(' & ')}}{% else %}{% set otherevent=block.event|filter((a) => a!=event) %}{% if otherevent|length %} | Together with {{otherevent|join(' & ')}}{% endif %}{% endif %}</a></li>
         {% endfor %}
         </ul></div>
         <div>{{ intro }}</div>
