@@ -13,22 +13,14 @@
 {% block body %}
 <p>This week will be dedicated to the 2<sup>nd</sup> Southern Ocean Regional Workshop for the UN Ocean Decade and the 4<sup>th</sup> edition of the Polar Data Forum.</p>
 <div class="cols">
+{% for event in events %}
     <div>
-        <h2><a href="{{ path('sodecade') }}">2<sup>nd</sup> Southern Ocean Regional Workshop</a></h2>
-        <p>In the framework of the <a href="https://www.oceandecade.org/">United Nations Decade of Ocean Science for Sustainable Development</a>, the Southern Ocean Community engaged in a stakeholder-oriented process to develop the Southern Ocean Action Plan. This Action Plan will provide a framework for Southern Ocean stakeholders to formulate and develop concrete activities that support the <a href="https://www.oceandecade.org/about#top_of_page">Decade vision</a>.</p>
-        <p>Following a successful <a href="https://oceandecade.org/resource/84/Summary-Report-of-the-Southern-Ocean-Regional-Workshop#:~:text=The%201st%20Southern%20Ocean%20Regional,Meeting%20to%20engage%20diverse%20participation.">First Southern Ocean Regional Workshop</a> held in San Diego, CA, USA in early 2020, the <a href="https://www.sodecade.org/about/">Southern Ocean Task Force</a> is pleased to announce that the <strong>2<sup>nd</sup> Southern Ocean Regional Workshop</strong> will be co-hosted by the Royal Belgian Institute of Natural Sciences (<a href="https://www.naturalsciences.be/en/museum/home">RBINS</a>) and the European Polar Board (<a href="https://www.europeanpolarboard.org/">EPB</a>) and held online from <strong>September 20<sup>th</sup> to 22<sup>nd</sup>, 2021</strong>.</p>
-        <p>The development process of the Southern Ocean Action Plan aims to engage a broad community spanning from the scientific research community to the business and industry sector, and governance and management bodies. Through this combined effort, we will identify synergies in priorities over the next decade and identify tangible actions and deliverables to achieve these priorities as a community.</p>
-        <p>For all information relevant to the 2<sup>nd</sup> Southern Ocean Decade Workshop, see <a href="{{ path('sodecade') }}">SOdecade</a>.</p>
+        <h2><a href="{{ path('event_intro', {'event': event.slug}) }}">{{ event.name|raw }}</a></h2>
+        {{ event.introMain|raw}}
+        <p>For all information relevant to the {{event.name|raw}}, see <a href="{{ path('event_intro', {'event': event.slug })}}">{{ event.alias }}</a>.
     </div>
-    <div>
-        <h2><a href="{{ path('pdfiv') }}">Polar Data Forum IV</a></h2>
-        <p>Polar Data Forum (PDF) is a place where polar data holders get together and make more use of data. The Forum has two main components: the Conference, where the border between funding, policy and data is explored through presentations and posters; and Workshop Sessions &amp; Hackathons, where the Polar Data Community opens the dialogue to make progress on their shared objectives.</p>
-        <p>After a long period of uncertainty due to the current Covid-19 crisis, we are pleased to announce that <strong>Polar Data Forum IV </strong>(<a href="https://polar-data-forum.org/">PDF IV</a>) will be co-hosted by the Royal Belgian Institute of Natural Sciences (<a href="https://www.naturalsciences.be/en/museum/home">RBINS</a>) and the European Polar Board (<a href="https://www.europeanpolarboard.org/">EPB</a>) and held online from <strong>September 20<sup>th</sup> to 24<sup>th</sup>, 2021</strong>.&nbsp;</p>
-        <p>The meeting will be co-organized with regional partners including the Southern Ocean Observing System, Standing Committee on Antarctic Data Management, the World Data System, EuroGOOS, and many other organizations engaged in polar data management.</p>
-        <p>Based on the activities and discussions from PDF III, and particularly, on a <a href="https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpolar-data-forum.org%2Fworkshops-hackathons%2Fworkshop-on-marine-data%2F&amp;data=04%7C01%7Cajanssen%40naturalsciences.be%7Cfabec2fdfe0549ea921908d8f5d54831%7C4da8d35db472419c9e15665786aadbfb%7C0%7C0%7C637529643682766028%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&amp;sdata=KzfObmk%2FLUTol82iYo5AO%2FXxHA9gU8raorWeRo9gH9A%3D&amp;reserved=0">workshop</a> focused on marine data, the focus of PDF IV will be put on the polar oceans. This also enables the Forum to be aligned with the launch of the UN Decade of Ocean Science for Sustainable Development.</p>
-        <p>PDF IV will consist of a series of workshops and hackathons from September 20<sup>th</sup> to 22<sup>nd</sup> to build on the development work done during previous meetings, followed by a 2-day plenary conference to be held from September 23<sup>rd</sup> to 24<sup>th</sup> in support of information exchange.</p>
-        <p>For all information relevant to Polar Data Forum IV, see <a href="{{ path('pdfiv') }}">PDF IV</a>.</p>
-    </div>
+{% endfor %}
+    
 </div>
 {# 
 <div class="row">

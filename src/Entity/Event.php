@@ -50,6 +50,21 @@ class Event
      */
     private $users;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $introMain;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $introProgram;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $intro;
+
     public function __construct()
     {
         $this->hackathons = new ArrayCollection();
@@ -179,6 +194,42 @@ class Event
         if ($this->users->removeElement($user)) {
             $user->removeEvent($this);
         }
+
+        return $this;
+    }
+
+    public function getIntroMain(): ?string
+    {
+        return $this->introMain;
+    }
+
+    public function setIntroMain(string $introMain): self
+    {
+        $this->introMain = $introMain;
+
+        return $this;
+    }
+
+    public function getIntroProgram(): ?string
+    {
+        return $this->introProgram;
+    }
+
+    public function setIntroProgram(string $introProgram): self
+    {
+        $this->introProgram = $introProgram;
+
+        return $this;
+    }
+
+    public function getIntro(): ?string
+    {
+        return $this->intro;
+    }
+
+    public function setIntro(string $intro): self
+    {
+        $this->intro = $intro;
 
         return $this;
     }

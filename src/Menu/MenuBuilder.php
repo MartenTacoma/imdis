@@ -105,12 +105,12 @@ class MenuBuilder
             );
         };
         
-        $menu->addChild('SO Decade', ['route' => 'sodecade']);
+        $menu->addChild('SO Decade', ['route' => 'event_intro', 'routeParameters' => ['event' => 'sodecade']]);
         $menu = $this->createEventProgram($menu, 'sodecade', 'SO Decade');
         $menu['SO Decade']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'sodecade']]);
         $menu['SO Decade']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'sodecade']]);
         
-        $menu->addChild('PDF IV', ['route' => 'pdfiv']);
+        $menu->addChild('PDF IV', ['route' => 'event_intro', 'routeParameters' => ['event' => 'pdfiv']]);
         $menu = $this->createEventProgram($menu, 'pdfiv', 'PDF IV');
         $menu['PDF IV']->addChild('Posters', ['route' => 'poster_index']);
         $menu['PDF IV']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'pdfiv']]);

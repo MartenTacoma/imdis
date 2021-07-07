@@ -15,6 +15,9 @@ class EventType extends AbstractType
             ->add('name')
             ->add('alias')
             ->add('slug')
+            ->add('introMain')
+            ->add('introProgram')
+            ->add('intro')
         ;
     }
 

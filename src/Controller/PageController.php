@@ -10,6 +10,7 @@ use App\Repository\UserRepository;
 use App\Repository\ThemeRepository;
 use App\Repository\ImdisAbstractRepository;
 use App\Repository\ProgramBlockRepository;
+use App\Repository\EventRepository;
 
 class PageController extends AbstractController
 {
@@ -28,7 +29,13 @@ class PageController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(UserRepository $users, ThemeRepository $themes, ImdisAbstractRepository $abstracts, ProgramBlockRepository $program): Response
+    public function index(
+        UserRepository $users,
+        ThemeRepository $themes,
+        ImdisAbstractRepository $abstracts,
+        ProgramBlockRepository $program,
+        EventRepository $eventRepository
+    ): Response
     {
         if($this->getParameter('app.dashboard') && $this->isGranted($this->getParameter('app.dashboard_role'))){
             return $this->render('page/dashboard.html.twig', [
@@ -41,7 +48,8 @@ class PageController extends AbstractController
             return $this->render('page/index.html.twig', [
                 'users' => $users->findAllStatistics(null),
                 'themes' => $themes->findAll(),
-                'abstracts' => $abstracts->findAll()
+                'abstracts' => $abstracts->findAll(),
+                'events' => $eventRepository->findAll()
             ]);
         }
     }
@@ -145,27 +153,15 @@ class PageController extends AbstractController
     }
     
     /**
-     * @Route("/sodecade", name="sodecade")
+     * @Route("/{event}", name="event_intro")
      */
-    public function sodecade(): Response
+    public function event_intro(EventRepository $eventRepository, $event): Response
     {
+        $event = $eventRepository->findOneBySlug($event);
         return $this->render(
-            'page/sodecade.html.twig',
+            'page/event.html.twig',
             [
-                'pagetitle' => 'Southern Ocean Decade Workshop'
-            ]
-        );
-    }
-    
-    /**
-     * @Route("/pdfiv", name="pdfiv")
-     */
-    public function pdfiv(): Response
-    {
-        return $this->render(
-            'page/pdf.html.twig',
-            [
-                'pagetitle' => 'Polar Data Forum IV'
+                'event' => $event
             ]
         );
     }
