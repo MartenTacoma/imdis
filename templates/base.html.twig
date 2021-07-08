@@ -10,7 +10,7 @@
             {{ encore_entry_link_tags('app') }}{% endblock %}
         {{ encore_entry_script_tags('app') }}
         {% block javascripts %}{% endblock %}
-        {% if app.environment == 'dev' %}<style>header, nav {background: darkorange}</style>{% endif %}
+        {# {% if app.environment == 'dev' %}<style>header, nav {background-color: darkorange}</style>{% endif %} #}
     </head>
     <body tabIndex=0>
         {% include 'base/blocks/top.twig' %}

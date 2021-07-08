@@ -1,5 +1,6 @@
 nav {
     background: $accent1;
+    background-image: linear-gradient(to top, $accent2 3px, transparent 3px);
     // overflow: auto;
     z-index: 99;
     position: sticky;
