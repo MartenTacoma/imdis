@@ -19,7 +19,7 @@
         {% for event in events %}
             <tr>
                 <td>{{ event.id }}</td>
-                <td>{{ event.name }}</td>
+                <td>{{ event.name|raw }}</td>
                 <td>{{ event.alias }}</td>
                 <td>{{ event.slug }}</td>
                 <td>
