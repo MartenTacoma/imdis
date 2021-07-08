@@ -55,7 +55,7 @@ class User implements UserInterface
     private $affiliation;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Country::class)
+     * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="users")
      * @ORM\JoinColumn(name="country", referencedColumnName="id")
      */
     private $country;
