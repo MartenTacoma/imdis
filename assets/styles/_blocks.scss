@@ -223,7 +223,7 @@ main {
     padding: 10px 20px;
     margin: 0px auto;
     padding-bottom: 20px;
-    background: white;
+    background: $background;
     @media screen and (max-width: $mobile){
         padding: 10px;
     }
@@ -231,7 +231,7 @@ main {
         font-style: italic;
         position: sticky;
         top: 41px;
-        background-color: white;
+        background-color: $background;
         z-index: 9;
         padding-top: 2px;
     }
