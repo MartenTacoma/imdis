@@ -298,7 +298,7 @@ class ProgramController extends AbstractController
     }
     
     /**
-     * @Route("/{event}", name="program_index", methods={"GET"})
+     * @Route("/overview/{event}", name="program_index", methods={"GET"})
      */
     public function program_index(
         ProgramBlockRepository $programBlockRepository,

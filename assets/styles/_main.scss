@@ -75,13 +75,22 @@ section {
         margin-top: 5px;
         color: white;
     }
-    a {
-        color: white;
-    }
+    
+}
+.block {
+    background: $accent2;
+    margin-top: 15px;
+    color: white;
+    position: sticky;
+    z-index: 2;
+    top: 115px;
     .connect {
         float: right;
         max-width: 40%;
         text-align: right;
+    }
+    a {
+        color: white;
     }
 }
 

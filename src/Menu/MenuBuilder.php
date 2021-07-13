@@ -48,7 +48,10 @@ class MenuBuilder
         foreach($this->registry->getRepository(Event::class)->findOneBySlug($slug)->getProgramBlocks()  as $block){
             $anchor = $block->getAnchor();
             if($block->getDate() != $date){
-                $menu[$label]['Programme']->addChild($block->getDate()->format('l d F'));
+                $menu[$label]['Programme']->addChild(
+                    $block->getDate()->format('l d F'),
+                    ['uri' => $uri . '#' . $block->getDate()->format('Ymd')]
+                );
                 $date = $block->getDate();
             }
             $title = $block->getTimeStart()->format('H:i') . ' - ' . $block->getTimeEnd()->format('H:i');
@@ -83,7 +86,9 @@ class MenuBuilder
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $anchor = $block->getAnchor();
             if($block->getDate() != $date){
-                $menu['Programme']->addChild($block->getDate()->format('l d F'));
+                $menu['Programme']->addChild(
+                    $block->getDate()->format('l d F'),
+                    ['uri' => $uri . '#' . $block->getDate()->format('Ymd')]);
                 $date = $block->getDate();
             }
             $title = $block->getTimeStart()->format('H:i') . ' - ' . $block->getTimeEnd()->format('H:i');
