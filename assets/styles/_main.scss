@@ -116,6 +116,8 @@ section {
         }
         &.fill {
             background: $background;
+            z-index: 2;
+            position: sticky;
         }
         &.break {
             background: $brightgreen;
