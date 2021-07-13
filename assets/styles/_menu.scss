@@ -151,27 +151,30 @@ nav {
                             position: absolute;
                             left: 100%;
                             top: 0;
-                            display: none;
                             border-left: solid 3px transparent;
+                            margin-top: -3px;
+                            transition-property: opacity,visibility;
+                            transition-duration: .25s,0s;
+                            transition-delay: 0s,.5s;
+                            opacity: 0;
+                            visibility: hidden;
                             li {
                                 white-space: nowrap;
                                 &.first {
                                     border-left:solid 3px $accent3;
                                     // border-top: solid 3px $accent3;
                                     margin-left: -3px;
+                                    border-top: solid 3px $accent3;
+                            
                                 }
                             }
                         }
-                        &:hover ul{
-                            display: block;
-                            li {
-                                ul {
-                                    display: none;
-                                }
-                                &:hover ul {
-                                    display: block;
-                                }
-                            }
+                        &:hover > ul{
+                            visibility: visible;
+                            transition-property: visibility,opacity;
+                            transition-duration: 0s,.25s;
+                            transition-delay: 0s,0s;
+                            opacity: 1;
                         }
                         span, a {
                             border-color: $accent2;
