@@ -106,6 +106,7 @@ section {
     }
     tr {
         border-top: solid 1px $grey;
+        background-color: white;
         &.session {
             background: $brightgreen;
             padding: 10px;
