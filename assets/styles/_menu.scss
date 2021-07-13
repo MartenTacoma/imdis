@@ -16,9 +16,6 @@ nav {
         text-decoration: none;
         display: block;
         padding: 9px 1.1vw;
-        &:hover {
-            color: $blue;
-        }
     }
     ul {
         margin: 0px;
@@ -121,6 +118,12 @@ nav {
             ul {
                 display: none;
             }
+            &:hover {
+                > a, >span {
+                    color: $blue;
+                }
+            }
+            
         }
     }
     @media screen and (min-width: $desktop){
@@ -143,10 +146,14 @@ nav {
                     transition-delay: 0s,.5s;
                     opacity: 0;
                     visibility: hidden;
+                    margin-top: -3px;
                     li {
                         float: none;
                         position: relative;
                         background: mix($accent1, $background, 5%);
+                        &.first {
+                            border-top: solid 3px $accent3;
+                        }
                         ul {
                             position: absolute;
                             left: 100%;
@@ -164,8 +171,6 @@ nav {
                                     border-left:solid 3px $accent3;
                                     // border-top: solid 3px $accent3;
                                     margin-left: -3px;
-                                    border-top: solid 3px $accent3;
-                            
                                 }
                             }
                         }
@@ -195,7 +200,6 @@ nav {
                     color: white;
                     border-bottom: solid 3px $accent2;
                     transition: border-color .2s ease;
-                    // text-transform: uppercase;
                     font-size: 14px;
 
                 }
@@ -206,7 +210,9 @@ nav {
                     }
                 }
                 &:hover {
-                    > a {
+                    background: $accent2;
+                    > a, >span {
+                        color: white;
                         border-color: $accent3;
                     }
                     ul {
