@@ -47,7 +47,7 @@
             <h3>Registrations per event</h3>
             <table class="table" style="width:100%">
             {% for e in events %}
-                <tr><th><a href="{{ path(admin ? 'user_event_admin' : 'user_index', {'event': e.slug}) }}">{{ e.name }}</a></th><td>{{ e.users|length }}</td></tr>
+                <tr><th><a href="{{ path(admin ? 'user_event_admin' : 'user_index', {'event': e.slug}) }}">{{ e.name|raw }}</a></th><td>{{ e.users|length }}</td></tr>
             {% endfor %}
             </table>
         </div>

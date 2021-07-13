@@ -180,7 +180,7 @@
     }
 }
 header {
-    background: $accent1;
+    background: $accent2;
     color: white;
     padding: 20px 10px;
     img {
@@ -239,7 +239,7 @@ main {
 
 footer {
     background: $accent1;
-    border-top: solid 3px $accent2;
+    // border-top: solid 3px $accent2;
     color: white;
     padding: 10px;
     font-size: 14px;
@@ -508,5 +508,7 @@ footer {
     display: none;
     padding: 3px;
     font-size: 0.7em;
-    background: $blue;
+    background: #ddd;
+    border: solid 1px $teal;
+    border-radius: 2px;
 }
