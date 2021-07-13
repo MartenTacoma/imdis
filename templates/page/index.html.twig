@@ -12,7 +12,7 @@
 
 {% block body %}
 <p>This week will be dedicated to the 2<sup>nd</sup> Southern Ocean Regional Workshop for the UN Ocean Decade and the 4<sup>th</sup> edition of the Polar Data Forum.</p>
-<div class="cols">
+<div class="cols equal">
 {% for event in events %}
     <div>
         <h2><a href="{{ path('event_intro', {'event': event.slug}) }}">{{ event.name|raw }}</a></h2>

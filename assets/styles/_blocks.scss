@@ -177,6 +177,18 @@
         @media screen and (max-width: $mobile) {
             display: block;
         }
+        @media screen and (min-width: $desktop) {
+            &.equal {
+                gap: 0px;
+                div:first-child {
+                    margin-right: 15px;
+                }
+                div:not(:first-child) {
+                    padding-left: 15px;
+                    border-left: solid 3px $accent2;
+                }
+            }
+        }
     }
 }
 header {
@@ -213,7 +225,7 @@ header {
         a {
             color: white;
             &:hover {
-                color: $blue;
+                color: $darkgreen;
             }
         }
     }
