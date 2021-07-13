@@ -146,6 +146,19 @@ section {
                 }
             }
         }
+        &.blockspacer {
+            background-color: $background;
+            td {
+                position: relative;
+                a {
+                    position: absolute;
+                    top: -32px;
+                    @media screen and (min-width: $desktop){
+                        top: -70px;
+                    }
+                }
+            } 
+        }
     }
     td {
         padding: 10px;

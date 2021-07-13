@@ -64,7 +64,7 @@
         </td></tr>
         <tr><td colspan="2"></td></tr>
     {% else %}
-    <tr class="spacer"><td colspan="2"><a name="{{ block.anchor }}"></a>&nbsp;</td></tr>
+    <tr class="blockspacer"><td colspan="2"><a name="{{ block.anchor }}"></a>&nbsp;</td></tr>
     {% endif %}
     <tr class="block"><td colspan="2">
         {% if is_granted(imdis.details_role) %}<div class="connect"><a href="{{ path('block_ics', {'block': block.anchor }) }}" title="Add to calendar"><span class="icon-calendar"></span><span class="nomobile"> Add to calendar</span></a></div>
