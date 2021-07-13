@@ -106,7 +106,6 @@ section {
     }
     tr {
         border-top: solid 1px $grey;
-        background-color: white;
         &.session {
             background: $brightgreen;
             padding: 10px;
@@ -114,6 +113,9 @@ section {
             h3 {
                 margin: 0px;
             }
+        }
+        &.fill {
+            background: $background;
         }
         &.break {
             background: $brightgreen;
