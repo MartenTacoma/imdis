@@ -6,6 +6,7 @@ nav {
     position: sticky;
     top: 0px;
     padding: 0 10px;
+    border-top: solid 1px $accent1;
     > div {
         max-width: 1400px;
         margin: 0px auto;
