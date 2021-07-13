@@ -149,6 +149,14 @@ nav {
                     visibility: hidden;
                     margin-top: -3px;
                     li {
+                        &.current_ancestor,
+                        &.current {
+                            > span, > a {
+                                border-color: $accent3;
+                                font-weight: bold;
+                            }
+                        }
+                        
                         float: none;
                         position: relative;
                         background: mix($accent1, $background, 5%);
@@ -208,6 +216,7 @@ nav {
                 &.current {
                     > span, > a {
                         border-color: $accent3;
+                        font-weight: bold;
                     }
                 }
                 &:hover {

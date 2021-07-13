@@ -81,8 +81,8 @@ class MenuBuilder
         $menu->addChild('Home', ['route' => 'index']);
         
         $date = null;
-        $uri = $this->router->generate('program_index');
-        $menu->addChild('Programme', ['route' => 'program_index']);
+        $uri = $this->router->generate('program_index_short');
+        $menu->addChild('Programme', ['route' => 'program_index_short']);
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $anchor = $block->getAnchor();
             if($block->getDate() != $date){
