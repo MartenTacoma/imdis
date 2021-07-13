@@ -131,14 +131,15 @@ nav {
             display: none;
         }
         div > ul {
-            li {
-                float: left;
-                &.last {
-                    float: none;
-                    span::after {
-                        content: '\00a0';
-                    }
+            border-top: solid 1px $accent2;
+            > li.last {
+                span::after {
+                    content: '\00a0';
                 }
+            }
+            
+            > li:not(.last) {
+                float: left;
                 ul.menu_level_1 {
                     position: absolute;
                     transition-property: opacity,visibility;
