@@ -19,7 +19,7 @@
         {#<div><a href="{{ url('index') }}files/WORKINGNAME_programme.pdf"><span class="icon-download3"></span> Download the program as PDF</a>
         {% if is_granted(imdis.details_role) %}<br/><a href="{{ url('index') }}files/WORKINGNAME_chats.pdf"><span class="icon-download3"></span> Download the Questions and Answers from the chat</a>{% endif %}
         </div>#}
-        <div>{{ intro }}</div>
+        <div>{{ intro|raw }}</div>
         <div class="mobile"><h3>Sessions</h3>
         {% set past = false %}
         {% set lastDate = null %}
