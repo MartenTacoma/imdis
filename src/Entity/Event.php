@@ -36,7 +36,7 @@ class Event
 
     /**
      * @ORM\ManyToMany(targetEntity=Hackathon::class, mappedBy="event")
-     * @ORM\OrderBy({"title" = "ASC})
+     * @ORM\OrderBy({"title" = "ASC"})
      */
     private $hackathons;
 
