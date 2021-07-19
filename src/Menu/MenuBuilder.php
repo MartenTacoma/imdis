@@ -112,7 +112,7 @@ class MenuBuilder
         
         $menu->addChild('SO Decade', ['route' => 'event_intro', 'routeParameters' => ['event' => 'sodecade']]);
         $menu = $this->createEventProgram($menu, 'sodecade', 'SO Decade');
-        $menu['SO Decade']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'sodecade']]);
+        $menu['SO Decade']->addChild('Working Groups', ['route'=> 'wg_public', 'routeParameters' => ['event' => 'sodecade']]);
         $menu['SO Decade']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'sodecade']]);
         
         $menu->addChild('PDF IV', ['route' => 'event_intro', 'routeParameters' => ['event' => 'pdfiv']]);

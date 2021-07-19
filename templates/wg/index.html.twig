@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Working Group index{% endblock %}
+
+{% block body %}
+    <h1>Working Group index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for wg in wgs %}
+            <tr>
+                <td>{{ wg.id }}</td>
+                <td>{{ wg.title }}</td>
+                <td>{{ wg.description }}</td>
+                <td>
+                    <a href="{{ path('wg_show', {'slug': wg.slug}) }}">show</a>
+                    <a href="{{ path('wg_edit', {'id': wg.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('wg_new') }}">Create new</a>
+{% endblock %}

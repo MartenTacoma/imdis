@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle='Edit Working Group' %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+
+{% block body %}
+<a href="{{ path('wg_index') }}">back to list</a>
+    {{ include('wg/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('wg/_delete_form.html.twig') }}
+{% endblock %}

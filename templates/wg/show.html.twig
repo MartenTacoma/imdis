@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle=wg.title ~ ' - Working Groups' %}
+
+{% block main %}
+<p><strong>{{wg.intro}}</strong></p>
+{{wg.description|raw}}
+{% endblock %}
+
+{% block side %}
+<div class="sticky">
+{% if wg.event|length %}
+<div><ul>
+{% for event in wg.event %}
+<li>{{event}}</li>
+{% endfor %}
+</ul></div>
+{% endif %}
+
+{% if wg.contact|length %}
+<div><h3>Contact</h3>
+<ul>
+{% for contact in wg.contact %}
+<li>{{contact.name}} - <a href="mailto:{{contact.email}}">{{contact.email}}</a></li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+{% if wg.presentations|length %}
+<div><h3>Sessions</h3>
+<div class="timezone"><span class="icon-clock"></span> All times are listed in UTC</div>
+<ul>
+{% for presentation in wg.presentations %}
+<li>{% if is_granted(imdis.details_role) and presentation.meetingUrl %}<a href="{{ presentation.meetingUrl }}">{{presentation.programsession.block.date|date('l d F')}} {{presentation.timeStart|date('H:i')}} - {{presentation.timeEnd|date('H:i')}}</a> {% else %}{{presentation.programsession.block.date|date('l d F')}} {{presentation.timeStart|date('H:i')}} - {{presentation.timeEnd|date('H:i')}}{% endif %}</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+{% if is_granted(imdis.details_role) and wg.links|length %}
+<div>
+<h3>Documents</h3>
+<ul>
+{% for link in wg.links %}
+<li><a href="{{ link.url }}">{{ link.label }}</a></li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+</div>
+{% endblock %}

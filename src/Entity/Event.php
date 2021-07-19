@@ -41,6 +41,12 @@ class Event
     private $hackathons;
 
     /**
+     * @ORM\ManyToMany(targetEntity=WorkingGroup::class, mappedBy="event")
+     * @ORM\OrderBy({"title" = "ASC"})
+     */
+    private $workingGroups;
+
+    /**
      * @ORM\ManyToMany(targetEntity=ProgramBlock::class, mappedBy="event")
      * @ORM\OrderBy({"date" = "ASC", "time_start" = "ASC", "time_end" = "ASC"})
      */
@@ -114,6 +120,33 @@ class Event
         return $this;
     }
 
+    /**
+     * @return Collection|WorkingGroup[]
+     */
+    public function getWorkingGroups(): Collection
+    {
+        return $this->workingGroups;
+    }
+
+    public function addWorkingGroup(WorkingGroup $workingGroup): self
+    {
+        if (!$this->workingGroups->contains($workingGroup)) {
+            $this->workingGroups[] = $workingGroup;
+            $workingGroup->addEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkingGroup(WorkingGroup $workingGroup): self
+    {
+        if ($this->workingGroups->removeElement($workingGroup)) {
+            $workingGroup->removeEvent($this);
+        }
+
+        return $this;
+    }
+    
     /**
      * @return Collection|Hackathon[]
      */

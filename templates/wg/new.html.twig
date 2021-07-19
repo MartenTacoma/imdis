@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle='Add Working Group' %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('form') }}
+{% endblock %}
+
+{% block body %}
+    {{ include('wg/_form.html.twig') }}
+{% endblock %}

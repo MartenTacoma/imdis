@@ -1,0 +1,31 @@
+{{ form_start(form) }}
+    {{form_row(form.event)}}
+    {{form_row(form.slug)}}
+    {{form_row(form.title)}}
+    {{form_row(form.intro)}}
+    {{form_row(form.description)}}
+
+<div class="togglefield field_wg_contact field_multi">
+<strong>Contact person(s)</strong>
+    <ul class="subform contact" data-prototype="{{ form_widget(form.contact.vars.prototype)|e('html_attr') }}">
+    {% for contact in form.contact %}
+    <li>{{ form_row(contact) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="contact"><span class="icon-plus"></span> Add a person</button>
+</div>
+<br/><br/>
+    
+<div class="togglefield field_wg_links field_multi">
+<strong>Document(s)</strong>
+    <ul class="subform links" data-prototype="{{ form_widget(form.links.vars.prototype)|e('html_attr') }}">
+    {% for link in form.links %}
+    <li>{{ form_row(link) }}</li>
+    {% endfor %}
+    </ul><button type="button" class="add_item_link" data-collection-holder-class="links"><span class="icon-plus"></span> Add a link</button>
+</div>
+<br/><br/>
+    
+    <button class="btn"><span class="icon-floppy-disk"></span> {{ button_label|default('Save') }}</button>
+    <div class="formEnd">
+{{ form_end(form) }}
+</div>

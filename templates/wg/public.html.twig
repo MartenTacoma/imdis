@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle=title ?? 'Working Groups' %}
+
+{% block side %}
+<div class="sticky">
+{% if is_granted('ROLE_EDIT_PROGRAM') %}
+    <div class="admin"><h3>Maintainance</h3>
+    <ul>
+    <li><a href="{{path('wg_index')}}">Manage</a></li>
+    </ul>
+</div>
+{% endif %}
+<div>
+<h3>Working Groups</h3>
+Some info on what a working Group is
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+{% for wg in wgs %}
+<h2><a href="{{path('wg_show', {slug:wg.slug})}}">{{wg.title}}</a></h2>
+<p>{{wg.intro|raw}}... <a href="{{path('wg_show', {slug:wg.slug})}}">Read more</a></p>
+<hr>
+{% endfor %}
+{% endblock %}

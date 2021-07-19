@@ -99,6 +99,7 @@ class HackathonController extends AbstractController
     }
     
     /**
+     * @Route("/", name="hackathon_public_all", methods={"GET"})
      * @Route("/list/{event}", name="hackathon_public", methods={"GET"})
      */
     public function index(HackathonRepository $hackathonRepository, EventRepository $eventRepository, $event=null): Response
