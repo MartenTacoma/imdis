@@ -124,10 +124,9 @@ section {
             z-index: 2;
             position: sticky;
         }
-        &.informal{
-            background: $lightGrey;
-        }
+        &.informal,
         &.break {
+            background: $lightGrey;
             // background: white;
             // color: $brightgreen;
             text-align: center;
