@@ -76,7 +76,7 @@
     {%- for session in block.session %}
         <tr class="session">
             <td colspan="2"><h3>{% if session.theme %}Session {{session.theme }}{% if session.theme.tagline %}: {{session.theme.tagline}}{% endif %}{% else %}{{ session.title }}{% endif %}</h3>
-            {% if session.chair|length %}Chairs: {{session.chair|join(', ')}}{% endif %}{% if session.theme %}{# <br/>{{session.theme.abstracts|filter((a) => a.presentation)|length}} orals, {{session.theme.abstracts|filter((a) => a.poster)|length}} posters{% endif %} #}</td>
+            {% if session.chair|length %}Chairs: {{session.chair|join(', ')}}{% endif %}{#{% if session.theme %} <br/>{{session.theme.abstracts|filter((a) => a.presentation)|length}} orals, {{session.theme.abstracts|filter((a) => a.poster)|length}} posters{% endif %} #}</td>
         </tr>
         {%- for talk in session.presentations %}
             {% if talk.type == 'break / end' %}
