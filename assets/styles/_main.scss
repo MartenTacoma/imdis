@@ -122,8 +122,8 @@ section {
             position: sticky;
         }
         &.break {
-            background: $brightgreen;
-            color: white;
+            // background: white;
+            // color: $brightgreen;
             text-align: center;
             .time {
                 text-align: left;
