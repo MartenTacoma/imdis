@@ -108,10 +108,12 @@ section {
         border-top: solid 1px $grey;
         &.session {
             background: $brightgreen;
+            color: white;
             padding: 10px;
             padding-bottom: 5px;
             h3 {
                 margin: 0px;
+                color: white;
             }
         }
         &.fill {
@@ -121,6 +123,7 @@ section {
         }
         &.break {
             background: $brightgreen;
+            color: white;
             text-align: center;
             .time {
                 text-align: left;
