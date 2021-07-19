@@ -81,6 +81,8 @@
         {%- for talk in session.presentations %}
             {% if talk.type == 'break / end' %}
                 <tr class="break"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td><span class="id">{% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('presentation_edit', {'id': talk.id})}}"><span class="icon-pencil"></span></a>{% endif %}</span>{{talk.title}}</td></tr>
+            {% elseif talk.type == 'informal' %}
+                <tr class="informal"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td><span class="id">{% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('presentation_edit', {'id': talk.id})}}"><span class="icon-pencil"></span></a>{% endif %}</span>{{talk.title}} (informal discussion space)</td></tr>
             {% elseif talk.type == 'posters' %}
                 <tr class="postersession"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td><span class="id">{% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('presentation_edit', {'id': talk.id})}}"><span class="icon-pencil"></span></a>{% endif %}</span>Poster session {{ talk.PosterSession.theme|join(' / ') }}, <nobr><a href="{{path('poster_index')}}#{{ block.date|date('Ymd') }}{{ talk.PosterSession.TimeStart|date('Hi') }}">view posters here</a></nobr></td></tr>
             {% elseif talk.type == 'hackathon' %}
