@@ -27,6 +27,7 @@ class PresentationType extends AbstractType
             ->add('meeting_passcode')
             ->add('time_end', TimeType::class, ['widget'=> 'single_text'])
             ->add('hackathon')
+            ->add('workingGroup')
             ->add(
                 'presentationPeople',
                 CollectionType::class,

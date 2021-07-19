@@ -97,6 +97,11 @@ class Presentation
      */
     private $meetingPasscode;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=WorkingGroup::class)
+     */
+    private $workingGroup;
+
     public function __construct()
     {
         $this->presentationPeople = new ArrayCollection();
@@ -336,6 +341,18 @@ class Presentation
     public function setMeetingPasscode(string $meetingPasscode): self
     {
         $this->meetingPasscode = $meetingPasscode;
+
+        return $this;
+    }
+
+    public function getWorkingGroup(): ?workingGroup
+    {
+        return $this->workingGroup;
+    }
+
+    public function setWorkingGroup(?WorkingGroup $workingGroup): self
+    {
+        $this->workingGroup = $workingGroup;
 
         return $this;
     }

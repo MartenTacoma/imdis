@@ -85,6 +85,8 @@
                 <tr class="postersession"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td>Poster session {{ talk.PosterSession.theme|join(' / ') }}, <nobr><a href="{{path('poster_index')}}#{{ block.date|date('Ymd') }}{{ talk.PosterSession.TimeStart|date('Hi') }}">view posters here</a></nobr></td></tr>
             {% elseif talk.type == 'hackathon' %}
                 <tr class="hackathon"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td><span class="id">{% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('presentation_edit', {'id': talk.id})}}"><span class="icon-pencil"></span></a></li>{% endif %}</span><a href="{{path('hackathon_show', {slug: talk.hackathon.slug})}}">{{ talk.hackathon }}</a><br/>Hackathon | {{ talk.TimeStart|date('H:i') }} - {{ talk.TimeEnd|date('H:i') }}</td></tr>
+            {% elseif talk.type == 'working group' %}
+                <tr class="workinggroup"><td class="time">{{ talk.TimeStart|date('H:i') }}</td><td><span class="id">{% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('presentation_edit', {'id': talk.id})}}"><span class="icon-pencil"></span></a></li>{% endif %}</span><a href="{{path('wg_show', {slug: talk.workingGroup.slug})}}">{{ talk.workingGroup }}</a><br/>Working Group | {{ talk.TimeStart|date('H:i') }} - {{ talk.TimeEnd|date('H:i') }}</td></tr>
             {% else %}
                 <tr class="talk {% if talk.type == 'keynote' %}keynote{% endif %}">
                 {% set anchor = talk.abstract.ImdisId ?? (block.date|date('d') ~ talk.timeStart|date('Hi')) %}
