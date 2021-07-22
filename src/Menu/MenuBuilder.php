@@ -64,7 +64,7 @@ class MenuBuilder
                 if(!empty($session->getTitle())) {
                     $title .= ' | ' . $session->getTitle();
                 } elseif (!empty($session->getTheme())) {
-                    $string .= $session->getTheme()->__toString();
+                    // $string .= $session->getTheme()->__toString();
                 }
             }
             $menu[$label]['Programme'][$block->getDate()->format('l d F')]->addChild(
@@ -101,7 +101,7 @@ class MenuBuilder
                 if(!empty($session->getTitle())) {
                     $title .= ' | ' . $session->getTitle();
                 } elseif (!empty($session->getTheme())) {
-                    $string .= $session->getTheme()->__toString();
+                    // $string .= $session->getTheme()->__toString();
                 }
             }
             $menu['Programme'][$block->getDate()->format('l d F')]->addChild(
