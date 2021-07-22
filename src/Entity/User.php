@@ -81,7 +81,7 @@ class User implements UserInterface
     private $posters;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $maillist;
 
