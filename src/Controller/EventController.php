@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/event")
+ * @IsGranted("ROLE_EDIT_PROGRAM")
  */
 class EventController extends AbstractController
 {

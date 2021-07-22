@@ -36,7 +36,7 @@
             <li><a href="#{{ block.anchor }}">{{ block.timeStart|date('H:i') }} - {{ block.timeEnd|date('H:i') }}{% if title is not defined %} | {{block.event|join(' & ')|raw}}{% else %}{% set otherevent=block.event|filter((a) => a!=event) %}{% if otherevent|length %} | Together with {{otherevent|join(' & ')|raw}}{% endif %}{% endif %}{% for session in block.session %}{% if session.title %} | {{ session.title }}{% elseif session.theme %} | {{ session.theme }}{% endif %}{% endfor %}</a></li>
         {% endfor %}
         </ul></div>
-        {% if is_granted(imdis.details_role) %}<div>Click the <span class="icon-calendar"></span> calendar icon on a session to download the session and connection information as .ics file to import into your calendar. Most calendar applications will automatically convert the event to the timezone of your calendar application.</div>{% endif %}
+        {% if is_granted(imdis.details_role) %}<div>Click the <span class="icon-calendar"></span> calendar icon on a session to download the session and connection information as .ics file to import into your calendar. Most calendar applications will automatically convert the event to the timezone of your calendar application.</div>{% else %}<div>When registered and logged in you can add sessions to your agenda and access the connection info for each sessions.</div>{% endif %}
         {% if past %}
             <div>
                 Below the starting time of the past presentations you can find the following icons, these are links:<br/>

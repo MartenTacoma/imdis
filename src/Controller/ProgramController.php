@@ -311,7 +311,7 @@ class ProgramController extends AbstractController
                 'program/public.html.twig',
                 [
                     'program' => $programBlockRepository->findAll(),
-                    'intro' => 'Welcome to Southern Ocean Decade & Polar Data Forum Week 2021. Southern Ocean Decade & Polar Data Forum Week 2021 is entirely online. Every session or hackathon has it\'s own connection link, connection information is only available for registered and logged in participants.'
+                    'intro' => 'Welcome to Southern Ocean Decade & Polar Data Forum Week 2021. Southern Ocean Decade & Polar Data Forum Week 2021 is entirely online.'
                 ]
             );
         } else {
