@@ -53,7 +53,7 @@ class RegistrationController extends AbstractController
                 $entityManager->flush();
                 
                 $email = new TemplatedEmail();
-                $email->from(new Address('noreply@eupeodes.nl', 'Southern Ocean Decade & Polar Data Forum Week 2021'))
+                $email->from(new Address('info@sodecade-pdf4.org', 'Southern Ocean Decade & Polar Data Forum Week 2021'))
                     ->to($user->getEmail())
                     ->subject('Registration confirmation Southern Ocean Decade & Polar Data Forum Week 2021')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
