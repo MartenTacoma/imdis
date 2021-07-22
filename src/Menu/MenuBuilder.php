@@ -120,17 +120,17 @@ class MenuBuilder
         
         $menu->addChild('PDF IV', ['route' => 'event_intro', 'routeParameters' => ['event' => 'pdfiv']]);
         $menu = $this->createEventProgram($menu, 'pdfiv', 'PDF IV');
-        $menu['PDF IV']->addChild('Posters', ['route' => 'poster_index']);
+        // $menu['PDF IV']->addChild('Posters', ['route' => 'poster_index']);
         $menu['PDF IV']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'pdfiv']]);
         foreach ($this->registry->getRepository(Event::class)->findOneBySlug('pdfiv')->getHackathons() as $hackathon){
             $menu['PDF IV']['Hackathons']->addChild($hackathon->getTitle(), ['route'=> 'hackathon_show', 'routeParameters' => ['slug' => $hackathon->getSlug()]]);
         }
-        $uri = $this->router->generate('poster_index');
-        foreach($this->registry->getRepository(PosterSession::class)->findAll() as $session){
-            $title = $session->__toString();
-            $anchor = $session->getAnchor();
-            $menu['PDF IV']['Posters']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
-        };
+        // $uri = $this->router->generate('poster_index');
+        // foreach($this->registry->getRepository(PosterSession::class)->findAll() as $session){
+        //     $title = $session->__toString();
+        //     $anchor = $session->getAnchor();
+        //     $menu['PDF IV']['Posters']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
+        // };
         
         $infoLabel = 'Conference Information';
         $menu['PDF IV']->addChild($infoLabel, ['route'=>'conference_info']);
