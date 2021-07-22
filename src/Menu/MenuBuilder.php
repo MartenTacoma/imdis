@@ -82,11 +82,11 @@ class MenuBuilder
         
         $date = null;
         $uri = $this->router->generate('program_index_short');
-        $menu->addChild('Programme', ['route' => 'program_index_short']);
+        $menu->addChild('Combined Programme', ['route' => 'program_index_short']);
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $anchor = $block->getAnchor();
             if($block->getDate() != $date){
-                $menu['Programme']->addChild(
+                $menu['Combined Programme']->addChild(
                     $block->getDate()->format('l d F'),
                     ['uri' => $uri . '#' . $block->getDate()->format('Ymd')]);
                 $date = $block->getDate();
@@ -104,7 +104,7 @@ class MenuBuilder
                     // $string .= $session->getTheme()->__toString();
                 }
             }
-            $menu['Programme'][$block->getDate()->format('l d F')]->addChild(
+            $menu['Combined Programme'][$block->getDate()->format('l d F')]->addChild(
                 $title,
                 ['uri'=> $uri . '#' . $anchor]
             );
@@ -149,9 +149,12 @@ class MenuBuilder
         
         }
         if($this->registration_status !== 'future'){
-            $menu->addChild('Registrations', ['route'=>'user_index']);
             if ($this->auth->isGranted('ROLE_USER')) {
-                $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
+                $menu->addChild('Registrations', ['route'=>'user_index']);
+                $menu['Registrations']->addChild('My Registration', ['route'=>'user_self']);
+            } else {
+                $menu->addChild('Register', ['route' => 'app_register']);
+                $menu['Register']->addChild('View Registrations', ['route'=>'user_index']);
             }
         }
         

@@ -1,3 +1,4 @@
+//Color SO Decade
 //primary
 $teal: #005c6d;
 $blue: #00a7d9;
@@ -20,9 +21,15 @@ $accent3: $midblue;
 
 $link-color: $brightgreen;
 $text-color: #333;
-$grey: $blue;
 $lightGrey: #a5e7b9;
 $na-color: #999;
+
+//Colors PDF
+$pdfblue: #0d2d62;
+$pdfgreen: #57B9A8;
+
+$grey: $accent2;
+
 
 $desktop: 800px;
 $mobile: $desktop - 1;
@@ -30,14 +37,21 @@ $mobile: $desktop - 1;
 * {
     box-sizing: border-box;
 }
-html, body {
+body {
     margin: 0px;
     padding: 0px;
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 16px;
     line-height: 1.42857143;
     color: $text-color;
-    background: $blue;
+    background: $accent2;
+    background: linear-gradient(to right, $blue, $pdfgreen);
+    &.pdfiv {
+        background: $pdfgreen;
+    }
+    &.sodecade {
+        background: $blue;
+    }
 }
 
 h1, h2, h3 {

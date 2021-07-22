@@ -153,7 +153,7 @@ class PageController extends AbstractController
     }
     
     /**
-     * @Route("/home/{event}", name="event_intro")
+     * @Route("/{event}", name="event_intro", priority=-10)
      */
     public function event_intro(EventRepository $eventRepository, $event): Response
     {

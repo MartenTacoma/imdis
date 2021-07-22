@@ -192,7 +192,6 @@
     }
 }
 header {
-    background: $accent2;
     color: white;
     padding: 20px 10px;
     img {
@@ -236,6 +235,18 @@ main {
     margin: 0px auto;
     padding-bottom: 20px;
     background: $background;
+    .breadcrumb {
+        padding: 0px;
+        li {
+            list-style: none;
+            &:not(:last-child){
+                float: left;
+                &:after {
+                    content: '\00a0\00BB\00a0';
+                }
+            }
+        }
+    }
     @media screen and (max-width: $mobile){
         padding: 10px;
     }
@@ -262,7 +273,7 @@ footer {
         > div {
             flex-grow: 1;
             &:not(:first-child){
-                border-left: solid 3px $blue;
+                border-left: solid 3px $accent2;
                 padding-left: 10px;
                 margin-left: 10px;
             }
@@ -270,14 +281,14 @@ footer {
     }
     .header {
         font-size: 1rem;
-        color: $blue;
+        color: $accent2;
         font-weight: bold;
     }
     a {
         color: white;
         text-decoration: none;
         &:hover {
-            color: $blue;
+            color: $accent2;
         }
     }
     #legal,
@@ -331,7 +342,7 @@ footer {
     }
 }
 
-.register {
+.home.register {
     text-align: center;
     line-height: 0;
     width: calc(100% - 20px);
@@ -362,7 +373,7 @@ footer {
 }
 
 .frontvideo,
-.register {
+.home.register {
     @media screen and (min-width: $desktop){
         float: left;
         width: calc(50% - 20px);

@@ -2,7 +2,7 @@ hr {
     border: none;
     border-top: solid 1px $darkblue;
     &.light {
-        border-color: $blue;
+        border-color: $accent2;
     }
 }
 
@@ -144,7 +144,7 @@ section {
         &.postersession {
             background: $darkgreen;
             a {
-                color: $blue
+                color: $accent2
             }
         }
         &.spacer {

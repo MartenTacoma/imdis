@@ -12,11 +12,28 @@
         {% block javascripts %}{% endblock %}
         {# {% if app.environment == 'dev' %}<style>header, nav {background-color: darkorange}</style>{% endif %} #}
     </head>
-    <body tabIndex=0>
+    {% set breadcrumb = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item('main')) %}
+    {% if breadcrumb|length > 1 %}
+        {% set bodyClass = breadcrumb.1.uri|replace({'/': ''}) %}
+        {% set bodyClass = bodyClass|length ? bodyClass : 'home' %}
+    {% else %}
+        {% set bodyClass = 'page' %}
+    {% endif %}
+    <body tabIndex=0 class="{{ bodyClass }}">
         {% include 'base/blocks/top.twig' %}
         {% include 'base/blocks/menu.twig' %}
         <main>
             <div class="content">
+            <ol class="breadcrumb">
+<li><a href="{{ path('index') }}">Home</a></li>
+{% if bodyClass != 'home' %}
+    {% for breadcrumb_item in knp_menu_get_breadcrumbs_array(knp_menu_get_current_item('main')) %}
+        {% if not loop.first %}
+        <li><a href="{{ breadcrumb_item.uri }}">{{ breadcrumb_item.label }}</a></li>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+</ol>
                 <h1>{% if pagetitle is defined %}{{ pagetitle|raw }}{% else %}Welcome{% endif %}</h1>
                 {# <div class="takedown">This website is a under construction. No guarantee can be given that information on this website is accurate.</div> #}
                 {% for message in app.flashes('success') %}

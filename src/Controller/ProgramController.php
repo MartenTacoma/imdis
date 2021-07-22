@@ -298,7 +298,7 @@ class ProgramController extends AbstractController
     }
     
     /**
-     * @Route("/overview/{event}", name="program_index", methods={"GET"})
+     * @Route("/{event}", name="program_index", methods={"GET"}, priority=-5)
      * @Route("/", name="program_index_short", methods={"GET"})
      */
     public function program_index(
