@@ -53,6 +53,7 @@ body {
         }
         footer > div > div:not(:first-child),
         .content .cols aside {
+            border-color: $pdfgreen;
             .sidebar,
             .sticky > div {
                 border-color: $pdfgreen;
