@@ -48,9 +48,15 @@ body {
     background: linear-gradient(to right, $blue, $pdfgreen);
     &.pdfiv {
         background: $pdfgreen;
-        footer > div > div:not(:first-child),
-        .content .cols aside .sidebar {
+        table.table tbody tr {
             border-color: $pdfgreen;
+        }
+        footer > div > div:not(:first-child),
+        .content .cols aside {
+            .sidebar,
+            .sticky > div {
+                border-color: $pdfgreen;
+            }
         }
         footer {
             .header {
