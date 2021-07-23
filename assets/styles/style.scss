@@ -48,6 +48,41 @@ body {
     background: linear-gradient(to right, $blue, $pdfgreen);
     &.pdfiv {
         background: $pdfgreen;
+        footer > div > div:not(:first-child),
+        .content .cols aside .sidebar {
+            border-color: $pdfgreen;
+        }
+        footer {
+            .header {
+                color: $pdfgreen;
+            }
+        }
+        nav div > ul > li:not(.last) {
+            &:hover > a,
+            &:hover > span,
+            ul.menu_level_1 li:hover{
+                background: $pdfgreen;
+                border-color: darken($pdfgreen, 20%);
+            }
+            ul.menu_level_1 li {
+                &.first {
+                    border-color: darken($pdfgreen, 20%);
+                }
+                a, span {
+                    border-color: $pdfgreen;
+                    &:hover {
+                        border-color: darken($pdfgreen, 20%);
+                    }
+                }
+            }
+            &.current_ancestor,
+            &.current {
+                > span,
+                > a {
+                    border-color: darken($pdfgreen, 20%);
+                }
+            }
+        }
     }
     &.sodecade {
         background: $blue;
