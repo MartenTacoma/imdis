@@ -14,10 +14,6 @@ $brightred: #ea1d2d;
 $deepred: #c22033;
 $mustard: #d19f2a;
 
-$background: white;
-$accent1: $teal;
-$accent2: $blue;
-$accent3: $midblue;
 
 $link-color: $brightgreen;
 $text-color: #333;
@@ -27,6 +23,12 @@ $na-color: #999;
 //Colors PDF
 $pdfblue: #0d2d62;
 $pdfgreen: #57B9A8;
+
+$background: white;
+$accent1: $teal;
+$accent2: mix($blue, $pdfgreen, 50%);
+$accent3: $midblue;
+
 
 $grey: $accent2;
 
@@ -103,6 +105,58 @@ body {
     }
     &.sodecade {
         background: $blue;
+        table.table tbody tr {
+            border-color: $blue;
+        }
+        footer > div > div:not(:first-child),
+        .content .cols aside {
+            border-color: $blue;
+            .sidebar,
+            .sticky > div {
+                border-color: $blue;
+            }
+        }
+        footer {
+            .header {
+                color: $blue;
+            }
+            a:hover {
+                color: $blue;
+            }
+        }
+        nav div > ul > li:not(.last) {
+            &:hover > a,
+            &:hover > span,
+            ul.menu_level_1 li:hover{
+                background: $blue;
+                border-color: darken($blue, 20%);
+                color: white;
+            }
+            ul.menu_level_1 li {
+                &.first {
+                    border-color: darken($blue, 20%);
+                }
+                &:hover {
+                    > a, > span {
+                        color: white;
+                    }
+                }
+                a, span {
+                    border-color: $blue;
+                    color: $blue;
+                    &:hover {
+                        border-color: darken($blue, 20%);
+                    }
+                }
+            }
+            &.current_ancestor,
+            &.current {
+                > span,
+                > a {
+                    border-color: darken($blue, 20%);
+                }
+            }
+        }
     }
 }
 
