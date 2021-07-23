@@ -63,6 +63,9 @@ body {
             .header {
                 color: $pdfgreen;
             }
+            a:hover {
+                color: $pdfgreen;
+            }
         }
         nav div > ul > li:not(.last) {
             &:hover > a,
@@ -70,13 +73,20 @@ body {
             ul.menu_level_1 li:hover{
                 background: $pdfgreen;
                 border-color: darken($pdfgreen, 20%);
+                color: white;
             }
             ul.menu_level_1 li {
                 &.first {
                     border-color: darken($pdfgreen, 20%);
                 }
+                &:hover {
+                    > a, > span {
+                        color: white;
+                    }
+                }
                 a, span {
                     border-color: $pdfgreen;
+                    color: $pdfgreen;
                     &:hover {
                         border-color: darken($pdfgreen, 20%);
                     }
