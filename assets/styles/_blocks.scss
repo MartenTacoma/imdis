@@ -235,6 +235,8 @@ main {
     margin: 0px auto;
     padding-bottom: 20px;
     background: $background;
+    max-width: 1440px;
+    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.2);
     .breadcrumb {
         padding: 0px;
         li {
