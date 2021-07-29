@@ -262,12 +262,15 @@ main {
     }
     .partners {
         display: flex;
-        gap: 26px;
         flex-wrap: wrap;
         .partner{
-            background: $accent2;
+            width: 350px;
+            height: 255px;
+            padding: 30px;
             img {
                 vertical-align: middle;
+                max-width: 290px;
+                max-height: 195px;
             }
             &:hover {
                 img {
