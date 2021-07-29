@@ -139,6 +139,16 @@ class PageController extends AbstractController
     }
     
     /**
+     * @Route("/partners", name="partners")
+     */
+    public function partners(): Response
+    {
+        return $this->render(
+            'page/partners.html.twig'
+        );
+    }
+    
+    /**
      * @Route("/conference", name="conference_info")
      */
     public function conference(): Response

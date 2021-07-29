@@ -260,6 +260,22 @@ main {
         z-index: 9;
         padding-top: 2px;
     }
+    .partners {
+        display: flex;
+        gap: 26px;
+        flex-wrap: wrap;
+        .partner{
+            background: $accent2;
+            img {
+                vertical-align: middle;
+            }
+            &:hover {
+                img {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
 }
 
 footer {
