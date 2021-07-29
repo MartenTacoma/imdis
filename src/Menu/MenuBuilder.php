@@ -166,6 +166,7 @@ class MenuBuilder
             $menu['Admin']->addChild('Edit posters', ['route'=>'poster_manage']);
             
         }
+        $menu->addChild('Partners', ['route'=>'partners']);
         if($last_empty){
             $menu->addChild('');//empty last item needed for correct menu rendering
         }
