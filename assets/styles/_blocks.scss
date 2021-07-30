@@ -263,11 +263,32 @@ main {
     .partners {
         display: flex;
         flex-wrap: wrap;
+        margin: auto;
+        @for $n from 1 through 8 {
+            &.n#{$n} {
+                max-width: $n * 175px;
+                @for $m from $n through 1 {
+                    @media screen and (max-width: $m * 175px + 60px){
+                        max-width: ($m - 1) * 175px;
+                    }
+                }
+            }
+        }
         &.funder {
             .partner {
                 width: 350px;
                 height: 255px;
                 padding: 30px;
+            }
+            @for $n from 1 through 4 {
+                &.n#{$n} {
+                    max-width: $n * 350px;
+                    @for $m from $n through 1 {
+                        @media screen and (max-width: $m * 350px + 35px){
+                            max-width: ($m - 1) * 350px;
+                        }
+                    }
+                }
             }
         }
         .partner{
