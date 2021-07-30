@@ -264,7 +264,7 @@ main {
         display: flex;
         flex-wrap: wrap;
         margin: auto;
-        @for $n from 1 through 8 {
+        @for $n from 8 through 8 {
             &.n#{$n} {
                 max-width: $n * 175px;
                 @for $m from $n through 1 {
@@ -284,7 +284,7 @@ main {
                 &.n#{$n} {
                     max-width: $n * 350px;
                     @for $m from $n through 1 {
-                        @media screen and (max-width: $m * 350px + 40px){
+                        @media screen and (max-width: $m * 350px + 60px){
                             max-width: ($m - 1) * 350px;
                         }
                     }
