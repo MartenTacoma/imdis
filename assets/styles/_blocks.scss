@@ -284,7 +284,7 @@ main {
                 &.n#{$n} {
                     max-width: $n * 350px;
                     @for $m from $n through 1 {
-                        @media screen and (max-width: $m * 350px + 35px){
+                        @media screen and (max-width: $m * 350px + 40px){
                             max-width: ($m - 1) * 350px;
                         }
                     }
