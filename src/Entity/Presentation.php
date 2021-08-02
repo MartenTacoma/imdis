@@ -98,7 +98,7 @@ class Presentation
     private $meetingPasscode;
 
     /**
-     * @ORM\ManyToOne(targetEntity=WorkingGroup::class)
+     * @ORM\ManyToOne(targetEntity=WorkingGroup::class, inversedBy="presentations")
      */
     private $workingGroup;
 
