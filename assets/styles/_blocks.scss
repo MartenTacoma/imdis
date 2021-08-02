@@ -294,7 +294,7 @@ main {
             }
         }
         &.funder {
-            $imgsize: 290px;
+            $imgsize: 250px;
             $padding: 30px;
             $partnersize: $imgsize + 2 * $padding;
             .partner {
@@ -399,13 +399,14 @@ footer {
     }
 }
 
-.home.register {
+.home .register {
     text-align: center;
     line-height: 0;
     width: calc(100% - 20px);
     padding-top: calc(50% / 1920 * 1080 - 20px);
     position: relative;
     cursor: pointer;
+    margin: 10px auto;
     div {
         position: absolute;
         top: 0px;
@@ -422,6 +423,7 @@ footer {
         }
     }
     @media screen and (min-width: $desktop){
+        width: calc(50% - 20px);
         padding-top: calc(25% / 1920 * 1080 - 20px);
         div {
             padding-top: calc(13% - 15px);

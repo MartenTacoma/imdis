@@ -12,6 +12,8 @@
 
 {% block body %}
 <p>This week will be dedicated to the 2<sup>nd</sup> Southern Ocean Regional Workshop for the UN Ocean Decade and the 4<sup>th</sup> edition of the Polar Data Forum.</p>
+        {% if not app.user and imdis.registration_status == 'open' %}<div class="register"><div onclick="window.location='{{path('app_register')}}';"><span class="icon-user-plus"></span> Register now</div></div>{% endif %}
+
 <div class="cols equal">
 {% for event in events %}
     <div>
