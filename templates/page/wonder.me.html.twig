@@ -6,3 +6,10 @@
 
 <p>Wonder.me works on <a href="{{ path('chrome') }}">Google Chrome</a> (including the portable version) and Microsoft Edge on desktop and laptop. Please make sure your browser is updated to the latest available version. Unfortunately Wonder.me has dropped support for mobile devices.</p>
 {% endblock %}
+
+{% block side %}
+<div class="sticky"><div class="menu">
+<h3>Conference information</h3>
+{{ knp_menu_render(['main', 'PDF IV', 'Conference Information'])}}
+</div></div>
+{% endblock %}
