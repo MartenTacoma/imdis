@@ -98,7 +98,7 @@ body {
             &.current {
                 > span,
                 > a {
-                    border-color: darken($pdfgreen, 20%);
+                    border-color: $pdfgreen;
                 }
             }
         }
@@ -129,12 +129,12 @@ body {
             &:hover > span,
             ul.menu_level_1 li:hover{
                 background: $blue;
-                border-color: darken($blue, 20%);
+                border-color: darken($blue, 10%);
                 color: white;
             }
             ul.menu_level_1 li {
                 &.first {
-                    border-color: darken($blue, 20%);
+                    border-color: darken($blue, 10%);
                 }
                 &:hover {
                     > a, > span {
@@ -145,7 +145,7 @@ body {
                     border-color: $blue;
                     color: $blue;
                     &:hover {
-                        border-color: darken($blue, 20%);
+                        border-color: darken($blue, 10%);
                     }
                 }
             }
@@ -153,7 +153,7 @@ body {
             &.current {
                 > span,
                 > a {
-                    border-color: darken($blue, 20%);
+                    border-color: $blue;
                 }
             }
         }
