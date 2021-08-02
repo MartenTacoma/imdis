@@ -168,11 +168,15 @@ class PageController extends AbstractController
     public function event_intro(EventRepository $eventRepository, $event): Response
     {
         $event = $eventRepository->findOneBySlug($event);
-        return $this->render(
-            'page/event.html.twig',
-            [
-                'event' => $event
-            ]
-        );
+        if(empty($event)){
+            throw $this->createNotFoundException();
+        } else {
+            return $this->render(
+                'page/event.html.twig',
+                [
+                    'event' => $event
+                ]
+            );
+        }
     }
 }
