@@ -6,3 +6,7 @@ twig:
           registration_status: '%app.registration_status%'
           presentation_submission: '%app.presentation_submission%'
           details_role: '%app.details_role%'
+
+when@test:
+    twig:
+        strict_variables: true
