@@ -194,6 +194,10 @@ a {
     clear: both;
 }
 
+img {
+    max-width: 100%;
+}
+
 @media screen and (max-width: $mobile){
     .nomobile {
         display: none;
