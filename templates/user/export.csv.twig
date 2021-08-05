@@ -1,4 +1,6 @@
-"Name","email","affiliation","country","registration time","visibility","show_email","add to imdis maillist"
+"Name","email","affiliation","country","registration time","visibility","show_email"{% if not event %}{% for event in events %},"{{event.alias}}"{% endfor %}{% endif %}
+
 {% for user in users %}
-"{{user.name}}","{{user.email}}","{{user.affiliation}}","{{user.country.name ?? '-'}}","{{user.RegistrationTime|date('Y-m-d H:i:s')}}","{{user.ShowInList}}","{{ user.ShowEmail ? 'show' : 'hide' }}","{{ user.maillist ? 'Yes' : 'No' }}"
+"{{user.name}}","{{user.email}}","{{user.affiliation}}","{{user.country.name ?? '-'}}","{{user.RegistrationTime|date('Y-m-d H:i:s')}}","{{user.ShowInList}}","{{ user.ShowEmail ? 'show' : 'hide' }}"{% if not event %}{% for event in events %},{% if event in user.event %}"X"{% endif %}{% endfor %}{% endif %}
+
 {% endfor %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = 'Partners' %}
+
+{% macro partner(logo, link) %}
+    <div class="partner"><a href="{{ link }}"><img src="/img/partners/{{ logo }}.png" /></a></div>
+{% endmacro %}
+
+{% block body %}
+<hr class="light">
+<h2>Funders</h2>
+<div class="partners funder n2">
+{{ _self.partner('belspo', 'https://www.belspo.be/belspo/index_en.stm')}}
+{{ _self.partner('scadm', 'https://www.scar.org/data-products/scadm/overview/')}}
+</div>
+<hr class="light">
+<h2>Conveners &amp; Sponsors</h2>
+<div class="partners n8">
+{{ _self.partner('adc', 'https://arcticdc.org/')}}
+{{ _self.partner('aoos', 'https://aoos.org/')}}
+{{ _self.partner('arctic-sdi', 'https://arctic-sdi.org/')}}
+{{ _self.partner('biodiversity.aq', 'https://www.biodiversity.aq/')}}
+{{ _self.partner('carleton-university', 'https://carleton.ca/')}}
+{{ _self.partner('clivar', 'https://www.clivar.org/')}}
+{{ _self.partner('epb', 'https://www.europeanpolarboard.org/')}}
+{{ _self.partner('eu-polarnet', 'https://eu-polarnet.eu/')}}
+{{ _self.partner('eurogoos', 'https://eurogoos.eu/')}}
+{{ _self.partner('iaato', 'https://iaato.org/')}}
+{{ _self.partner('iced', 'https://www.iced.ac.uk/')}}
+{{ _self.partner('iode', 'https://www.iode.org/')}}
+{{ _self.partner('nioz', 'https://www.nioz.nl')}}
+{{ _self.partner('nwo', 'https://www.nwo.nl/en')}}
+{{ _self.partner('rbins', 'https://www.naturalsciences.be/en/museum/home')}}
+{{ _self.partner('scar', 'https://www.scar.org/')}}
+{{ _self.partner('scor', 'https://scor-int.org/')}}
+{{ _self.partner('soos', 'https://www.soos.aq/')}}
+{{ _self.partner('undecade', 'https://www.oceandecade.org/')}}
+{{ _self.partner('wds', 'https::worlddatasystem.org')}}
+</div>
+{% endblock %}

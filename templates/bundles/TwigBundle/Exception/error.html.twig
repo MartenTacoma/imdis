@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="noindex,nofollow,noarchive" />
-    <meta name="description" content="IMDIS - International Conference on Marine Data and Information Systems - 12 to 14 April 2021" />
+    <meta name="description" content="Southern Ocean Decade & Polar Data Forum Week 2021 - september 2021 - online" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{status_code ~ ' - ' ~ status_text}}</title>
     <style>
@@ -13,27 +13,29 @@
             margin: 0;
             text-color: #333;
         }
-.container { background: white;margin: 10vh auto; width: 90vw; max-width: 600px; padding: 0px;border-bottom:solid 5px #093564}
+.container { background: white;margin: 10vh auto; width: 90vw; max-width: 600px; padding: 0px;border-bottom:solid 5px #005c6d}
 .top {
-    background: #093564;
-    padding: 5px;
+    background: #005c6d;
+    padding: 15px 5px;
+    font-size: 23px;
+    color: white;
 }
 .main {
     padding: 20px;
 }
-h1 { color: #062240; font-size: 24px; }
+h1 { color: #005c6d; font-size: 24px; }
 h2 { font-size: 18px; }
-a{ color: #3791C6}</style>
+a{ color: #48773c}</style>
 </head>
 <body>
 <div class="container">
-<div class="top"><img src="/img/logo.png" /></div>
+<div class="top">Southern Ocean Decade & Polar Data Forum Week 2021</div>
 <div class="main"><h1>{{status_code ~ ' - ' ~ status_text}}</h1>
 {% block message %}
 {% if status_code|slice(0,1) == 4 %}
     We can't show you this page, however, the server is working like it should.<br/>Check for any URL misspelling or <a href="{{ path('index') }}">return to the homepage</a>
 {% elseif status_code|slice(0,1) == 5 %}
-    The server isn't feeling well, please try again later.<br/>If the downtime lasts more than a few minutes and you need urgent information please contact us at <a href="mailto:imdis@seadatanet.org">imdis@seadatanet.org</a>
+    The server isn't feeling well, please try again later.
 {% endif %}
 {% endblock %}
 </div>

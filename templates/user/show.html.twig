@@ -13,7 +13,7 @@
 <tr><th>E-mail</th><td>{{ user.email }}</td></tr>
 <tr><th>Show details</th><td>{% if user.ShowInList == 'public' %}For everybody{% elseif user.ShowInList == 'login' %}For other (logged in) participants{% else %}Only for organizers{% endif %}</td></tr>
 {% if user.ShowInList != 'hidden' %}<tr><th>Show email for logged in users</th><td>{{user.ShowEmail ? 'Yes' : 'No' }}</td></tr>{% endif %}
-<tr><th>Add to IMDIS maillist</th><td>{{ user.maillist ? 'Yes' : 'No'}}</td></tr>
+{#<tr><th>Add to IMDIS maillist</th><td>{{ user.maillist ? 'Yes' : 'No'}}</td></tr>
 {% if user.registrationType == 'no' %}<tr><th>Are you a presenter?</th><td>No</td></tr>{% endif %}
 </table>
 
@@ -27,7 +27,7 @@
     <ul>
     {% for poster in user.posters %}<li>{{ poster.poster }}</li>{% else %}<li>No poster consent given</li>{% endfor %}
     </ul>
-
+#}
     
 
     {# {{ include('user/_delete_form.html.twig') }} #}

@@ -1,11 +1,37 @@
-$link-color: #3791C6;
+//Color SO Decade
+//primary
+$teal: #005c6d;
+$blue: #00a7d9;
+
+//secondary
+$midblue: #007dbb;
+$darkblue: #1a3668;
+$brightgreen: #2d9a47;
+$darkgreen: #48773c;
+
+//unused
+$brightred: #ea1d2d;
+$deepred: #c22033;
+$mustard: #d19f2a;
+
+
+$link-color: $brightgreen;
 $text-color: #333;
-$grey: #e3e3e3;
-$lightGrey: #f0f0f0;
+$lightGrey: #a5e7b9;
 $na-color: #999;
-$blue: #093564;
-$darkblue: #062240;
-$accentcolor: #fceb2e;
+
+//Colors PDF
+$pdfblue: #0d2d62;
+$pdfgreen: #57B9A8;
+
+$background: white;
+$accent1: $teal;
+$accent2: mix($blue, $pdfgreen, 50%);
+$accent3: $midblue;
+
+
+$grey: $accent2;
+
 
 $desktop: 800px;
 $mobile: $desktop - 1;
@@ -13,13 +39,129 @@ $mobile: $desktop - 1;
 * {
     box-sizing: border-box;
 }
-html, body {
+body {
     margin: 0px;
     padding: 0px;
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 16px;
     line-height: 1.42857143;
     color: $text-color;
+    background: $accent2;
+    background: linear-gradient(to right, $blue, $pdfgreen);
+    &.pdfiv {
+        background: $pdfgreen;
+        table.table tbody tr {
+            border-color: $pdfgreen;
+        }
+        footer > div > div:not(:first-child),
+        .content .cols aside {
+            border-color: $pdfgreen;
+            .sidebar,
+            .sticky > div {
+                border-color: $pdfgreen;
+            }
+        }
+        footer {
+            .header {
+                color: $pdfgreen;
+            }
+            a:hover {
+                color: $pdfgreen;
+            }
+        }
+        nav div > ul > li:not(.last) {
+            &:hover > a,
+            &:hover > span,
+            ul.menu_level_1 li:hover{
+                background: $pdfgreen;
+                border-color: darken($pdfgreen, 20%);
+                color: white;
+            }
+            ul.menu_level_1 li {
+                &.first {
+                    border-color: darken($pdfgreen, 20%);
+                }
+                &:hover {
+                    > a, > span {
+                        color: white;
+                    }
+                }
+                a, span {
+                    border-color: $pdfgreen;
+                    color: $pdfgreen;
+                    &:hover {
+                        border-color: darken($pdfgreen, 20%);
+                    }
+                }
+            }
+            &.current_ancestor,
+            &.current {
+                > span,
+                > a {
+                    border-color: $pdfgreen;
+                }
+            }
+        }
+    }
+    &.sodecade {
+        background: $blue;
+        table.table tbody tr {
+            border-color: $blue;
+        }
+        footer > div > div:not(:first-child),
+        .content .cols aside {
+            border-color: $blue;
+            .sidebar,
+            .sticky > div {
+                border-color: $blue;
+            }
+        }
+        footer {
+            .header {
+                color: $blue;
+            }
+            a:hover {
+                color: $blue;
+            }
+        }
+        nav div > ul > li:not(.last) {
+            &:hover > a,
+            &:hover > span,
+            ul.menu_level_1 li:hover{
+                background: $blue;
+                border-color: darken($blue, 10%);
+                color: white;
+            }
+            ul.menu_level_1 li {
+                &.first {
+                    border-color: darken($blue, 10%);
+                }
+                &:hover {
+                    > a, > span {
+                        color: white;
+                    }
+                }
+                a, span {
+                    border-color: $blue;
+                    color: $blue;
+                    &:hover {
+                        border-color: darken($blue, 10%);
+                    }
+                }
+            }
+            &.current_ancestor,
+            &.current {
+                > span,
+                > a {
+                    border-color: $blue;
+                }
+            }
+        }
+    }
+}
+
+h1, h2, h3 {
+    color: $darkblue;
 }
 
 h1 {
@@ -29,6 +171,11 @@ h1 {
 
 h2 {
     font-size: 20px;
+    margin-top: 20px;
+    a {
+        text-decoration: none;
+        color: $darkblue;
+    }
 }
 
 h3 {
@@ -38,10 +185,29 @@ h3 {
 a {
     color: $link-color;
     text-decoration: underline dotted;
+    &:hover {
+        color: $darkgreen;
+    }
 }
 
 .clear {
     clear: both;
+}
+
+img {
+    max-width: 100%;
+}
+
+@media screen and (max-width: $mobile){
+    .nomobile {
+        display: none;
+    }
+}
+
+@media screen and (min-width: $desktop){
+    .mobile {
+        display: none;
+    }
 }
 
 @import '_menu.scss';

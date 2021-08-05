@@ -1,8 +1,8 @@
 hr {
     border: none;
-    border-top: solid 1px $text-color;
+    border-top: solid 1px $darkblue;
     &.light {
-        border-color: #ccc;
+        border-color: $accent2;
     }
 }
 
@@ -64,23 +64,33 @@ section {
 .day {
     padding: 10px;
     td {padding: 10px !important;}
-    background: $blue;
+    background: $accent1;
     margin-top: 15px;
     color: white;
     position: sticky;
-    z-index: 2;
+    z-index: 3;
     top: 61px;
     h2 {
         margin: 0px;
         margin-top: 5px;
-    }
-    a {
         color: white;
     }
+    
+}
+.block {
+    background: $accent2;
+    margin-top: 15px;
+    color: white;
+    position: sticky;
+    z-index: 2;
+    top: 115px;
     .connect {
         float: right;
         max-width: 40%;
         text-align: right;
+    }
+    a {
+        color: white;
     }
 }
 
@@ -97,16 +107,30 @@ section {
     tr {
         border-top: solid 1px $grey;
         &.session {
-            background: $grey;
+            background: $brightgreen;
+            color: white;
             padding: 10px;
             padding-bottom: 5px;
             h3 {
                 margin: 0px;
+                color: white;
+            }
+            a {
+                color: white;
             }
         }
+        &.fill {
+            background: $background;
+            z-index: 2;
+            position: sticky;
+        }
+        &.informal,
         &.break {
             background: $lightGrey;
+            // background: white;
+            // color: $brightgreen;
             text-align: center;
+            font-style: italic;
             .time {
                 text-align: left;
             }
@@ -118,10 +142,13 @@ section {
             }
         }
         &.postersession {
-            background: $grey;
+            background: $darkgreen;
+            a {
+                color: $accent2
+            }
         }
         &.spacer {
-            background-color: white;
+            background-color: $background;
             td {
                 position: relative;
                 a {
@@ -132,6 +159,19 @@ section {
                     }
                 }
             }
+        }
+        &.blockspacer {
+            background-color: $background;
+            td {
+                position: relative;
+                a {
+                    position: absolute;
+                    top: -32px;
+                    @media screen and (min-width: $desktop){
+                        top: -70px;
+                    }
+                }
+            } 
         }
     }
     td {
@@ -250,7 +290,7 @@ section {
                     color: $link-color;
                 }
                 .icon-lock{
-                    color: $blue;
+                    color: $accent1;
                 }
             }
         }
@@ -307,7 +347,7 @@ section {
                 content: 'Please log in to access this content';
             }
             .icon-lock{
-                color: $blue;
+                color: $accent1;
             }
         }
         @media screen and (max-width: $mobile) {
@@ -345,7 +385,7 @@ table.table {
     thead {
         a {
             text-decoration: none;
-            color: $blue;
+            color: $accent1;
             &.sort-asc::after {
                 content: ' \25bc';
             }
@@ -436,11 +476,11 @@ table.table {
     .blocks {
         margin: -10px;
         div.outer {
-            border: 2px solid $blue;
+            border: 2px solid $accent1;
             margin: 10px;
             h3 {
                 color: white;
-                background: $blue;
+                background: $accent1;
                 padding: 5px;
                 margin: 0px;
             }
@@ -472,5 +512,5 @@ table.table {
 .takedown {
     margin: 20px 0;
     padding: 20px;
-    background: $grey;
+    background: $mustard;
 }

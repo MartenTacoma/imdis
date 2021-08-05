@@ -172,6 +172,6 @@ class ImdisAbstract
     }
     
     public function getUrl(): ?string{
-        return 'https://imdis.seadatanet.org/files/IMDIS2021_' . $this->imdisId . '_abstract.pdf';
+        return 'https://imdis.seadatanet.org/files/WORKINGNAME_' . $this->imdisId . '_abstract.pdf';
     }
 }

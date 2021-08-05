@@ -1,10 +1,15 @@
-#menu {
-    background: $blue;
+nav {
+    background: $accent1;
+    // background-image: linear-gradient(to top, $accent2 3px, transparent 3px);
     // overflow: auto;
     z-index: 99;
     position: sticky;
     top: 0px;
     padding: 0 10px;
+    border-top: solid 1px $accent1;
+    box-shadow: 0px 6px 12px -6px rgba(0,0,0,0.2);
+    // overflow-x: clip;
+    height: 42px;
     > div {
         max-width: 1400px;
         margin: 0px auto;
@@ -15,6 +20,7 @@
         text-decoration: none;
         display: block;
         padding: 9px 1.1vw;
+        height: 41px;
     }
     ul {
         margin: 0px;
@@ -35,7 +41,7 @@
             padding-top: 18px;
         }
         $hamburgerSize: 20px;
-        #menu {
+        nav {
             overflow: hidden;
         }
         #overlay-button {
@@ -60,6 +66,7 @@
                 &:before {
                   top: -($hamburgerSize / 3.5);
                   visibility: visible;
+                  display: block;
                 }
                 &:after {
                   top: ($hamburgerSize / 3.5);
@@ -111,74 +118,135 @@
             &.current {
                 > span,
                 > a {
-                    color: $accentcolor;
+                    border-color: $accent3;
                 }
             }
             ul {
                 display: none;
             }
+            &:hover {
+                > a, >span {
+                    color: $accent2;
+                }
+            }
+            
         }
     }
     @media screen and (min-width: $desktop){
         #overlay-button, #overlay-input {
             display: none;
         }
-        ul {
-            li {
-                float: left;
-                &.last {
-                    float: none;
-                    span::after {
-                        content: '\00a0';
-                    }
+        div > ul {
+            // border-top: solid 1px $accent2;
+            > li.last {
+                span::after {
+                    content: '\00a0';
                 }
-                ul {
+            }
+            
+            > li:not(.last) {
+                float: left;
+                ul.menu_level_1 {
                     position: absolute;
                     transition-property: opacity,visibility;
                     transition-duration: .25s,0s;
                     transition-delay: 0s,.5s;
                     opacity: 0;
                     visibility: hidden;
-                    background: $blue;
+                    display: none;
+                    margin-top: -3px;
                     li {
+                        &.current_ancestor,
+                        &.current {
+                            > span, > a {
+                                border-color: $accent3;
+                                font-weight: bold;
+                            }
+                        }
+                        
                         float: none;
                         position: relative;
+                        background: mix($accent1, $background, 5%);
+                        &.first {
+                            border-top: solid 3px $accent3;
+                        }
                         ul {
                             position: absolute;
                             left: 100%;
                             top: 0;
+                            border-left: solid 3px transparent;
+                            margin-top: -3px;
+                            transition-property: opacity,visibility;
+                            transition-duration: .25s,0s;
+                            transition-delay: 0s,.5s;
+                            opacity: 0;
+                            visibility: hidden;
                             display: none;
                             li {
                                 white-space: nowrap;
+                                &.first {
+                                    border-left:solid 3px $accent3;
+                                    // border-top: solid 3px $accent3;
+                                    margin-left: -3px;
+                                }
+                            }
+                            &.menu_level_2 {
+                                > li:not(.sub) {
+                                    white-space: initial;
+                                    > a, > span {
+                                        height: auto;
+                                        min-width: 250px;
+                                    }
+                                }
                             }
                         }
-                        &:hover ul{
+                        &:hover > ul{
+                            visibility: visible;
                             display: block;
+                            display: block;
+                            transition-property: visibility,opacity;
+                            transition-duration: 0s,.25s;
+                            transition-delay: 0s,0s;
+                            opacity: 1;
                         }
+                        span, a {
+                            border-color: $accent2;
+                            color: $accent3;
+                        }
+                        &:hover {
+                            background: $accent2;
+                            > span, > a {
+                                border-color: $accent3;
+                                color: white;
+                            }
+                        }
+
                     }
                 }
                 span,
                 a {
                     color: white;
-                    border-bottom: solid 3px $darkblue;
+                    border-bottom: solid 3px $accent1;
                     transition: border-color .2s ease;
-                    text-transform: uppercase;
                     font-size: 14px;
 
                 }
                 &.current_ancestor,
                 &.current {
                     > span, > a {
-                        border-color: $accentcolor;
-                        color: $accentcolor;
+                        border-color: $accent3;
+                        font-weight: bold;
                     }
                 }
                 &:hover {
-                    > a {
-                        border-color: $accentcolor;
+                    background: $accent2;
+                    > a, >span {
+                        color: white;
+                        border-color: $accent3;
                     }
                     ul {
                         visibility: visible;
+                        display: block;
                         transition-property: visibility,opacity;
                         transition-duration: 0s,.25s;
                         transition-delay: 0s,0s;

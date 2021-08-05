@@ -27,6 +27,16 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add('name')
             ->add('affiliation')
+            ->add(
+                'event',
+                null,
+                [
+                    'expanded' => true,
+                    'required'=>true,
+                    'label' => 'I want to register for:',
+                    'help' => 'You can select multiple options'
+                ]
+            )
             ->add('country',
             EntityType::class,
             [
@@ -35,7 +45,7 @@ class RegistrationFormType extends AbstractType
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.name');
                 },
-                'help'=>'We ask your country for statistics to report to the EU',
+                'help'=>'We ask your country because we like to know where people are coming from',
                 'placeholder'=>'Please select your country'
                 
             ])
@@ -95,44 +105,44 @@ class RegistrationFormType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
             ])
-            ->add('registrationType', ChoiceType::class, [
-                'mapped' => false,
-                'label' => 'Are you presenter at IMDIS 2021?',
-                    'help' => 'You are presenter if your name is bold on the program or poster list',
-                    'choices' => [
-                        'No'=>'no',
-                        'Yes, I present one or more posters' => 'poster',
-                        'Yes, I have one or more oral presentations' => 'oral',
-                        'Yes, I have one or more oral presentations and one or more posters' => 'both'
-                    ],
-                    'expanded' => true
-            ])
-            ->add(
-                'presentations',
-                CollectionType::class,
-                [
-                    'entry_type' => UserPresentationType::class,
-                    'entry_options' => ['label' => false],
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'by_reference' => false
-                ]
-            )
-            ->add(
-                'posters',
-                CollectionType::class,
-                [
-                    'entry_type' => UserPosterType::class,
-                    'entry_options' => ['label' => false],
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'by_reference' => false
-                ]
-            )
-            ->add('maillist', CheckboxType::class, [
-                'label' => 'Please add me to the IMDIS mailing list to keep me updated on future editions of IMDIS',
-                'required' => false
-            ])
+            // ->add('registrationType', ChoiceType::class, [
+            //     'mapped' => false,
+            //     'label' => 'Are you presenter at Southern Ocean Decade & Polar Data Forum Week 2021?',
+            //         'help' => 'You are presenter if your name is bold on the program or poster list',
+            //         'choices' => [
+            //             'No'=>'no',
+            //             'Yes, I present one or more posters' => 'poster',
+            //             'Yes, I have one or more oral presentations' => 'oral',
+            //             'Yes, I have one or more oral presentations and one or more posters' => 'both'
+            //         ],
+            //         'expanded' => true
+            // ])
+            // ->add(
+            //     'presentations',
+            //     CollectionType::class,
+            //     [
+            //         'entry_type' => UserPresentationType::class,
+            //         'entry_options' => ['label' => false],
+            //         'allow_add' => true,
+            //         'allow_delete' => true,
+            //         'by_reference' => false
+            //     ]
+            // )
+            // ->add(
+            //     'posters',
+            //     CollectionType::class,
+            //     [
+            //         'entry_type' => UserPosterType::class,
+            //         'entry_options' => ['label' => false],
+            //         'allow_add' => true,
+            //         'allow_delete' => true,
+            //         'by_reference' => false
+            //     ]
+            // )
+            // ->add('maillist', CheckboxType::class, [
+            //     'label' => 'Please add me to the IMDIS mailing list to keep me updated on future editions of IMDIS',
+            //     'required' => false
+            // ])
         ;
     }
 

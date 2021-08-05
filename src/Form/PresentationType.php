@@ -22,6 +22,12 @@ class PresentationType extends AbstractType
             ->add('slides_url')
             ->add('abstract')
             ->add('poster_session')
+            ->add('meeting_url')
+            ->add('meeting_id')
+            ->add('meeting_passcode')
+            ->add('time_end', TimeType::class, ['widget'=> 'single_text'])
+            ->add('hackathon')
+            ->add('workingGroup')
             ->add(
                 'presentationPeople',
                 CollectionType::class,

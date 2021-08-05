@@ -19,7 +19,18 @@
         &.reverse {
             flex-flow: row-reverse;
         }
-        .side {
+        aside {
+            .sidebar {
+                border-left: solid 3px $grey;
+                padding: 10px;
+                padding-left: 0px;
+                ul {
+                    padding-left: 20px;
+                }
+                li {
+                    // list-style: none;
+                }
+            }
             .sticky {
                 position: sticky;
                 top: 61px;
@@ -28,17 +39,24 @@
                 }
                 > div {
                     padding: 10px;
-                    background: $grey;
+                    border-left: solid 3px $grey;
                     margin-top: 15px;
                     h4 {
                         margin: 0px;
                         margin-bottom: 5px;
                     }
-                    ul {
-                        margin: 0px;
-                        padding: 0px;
-                        li {
-                            list-style: none;
+                    &:not(.menu){
+                        ul {
+                            margin: 0px;
+                            padding: 0px;
+                            li {
+                                list-style: none;
+                            }
+                        }
+                    }
+                    &.menu {
+                        ul {
+                            padding-left: 15px;
                         }
                     }
                 }
@@ -69,7 +87,7 @@
                         background: white;
                         cursor: pointer;
                         path {
-                            fill: $grey;
+                            fill: #ddd;
                             opacity: 1;
                             stroke-width: 0.5px;
                             stroke: white;
@@ -130,7 +148,7 @@
                             right: 20px;
                             color: white;
                             &:hover {
-                                color: $accentcolor;
+                                color: $accent3;
                             }
                             > span {
                                 display: inline-block;
@@ -166,10 +184,21 @@
         @media screen and (max-width: $mobile) {
             display: block;
         }
+        @media screen and (min-width: $desktop) {
+            &.equal {
+                gap: 0px;
+                div:first-child {
+                    margin-right: 15px;
+                }
+                div:not(:first-child) {
+                    padding-left: 15px;
+                    border-left: solid 3px $accent2;
+                }
+            }
+        }
     }
 }
-#top {
-    background: $blue;
+header {
     color: white;
     padding: 20px 10px;
     img {
@@ -181,6 +210,7 @@
     h1 {
         margin-top: 0px;
         margin-bottom: 5px;
+        color: white;
     }
    
     span {
@@ -200,14 +230,32 @@
         float: right;
         a {
             color: white;
+            &:hover {
+                color: $darkgreen;
+            }
         }
     }
 }
 
-#content {
+main {
     padding: 10px 20px;
     margin: 0px auto;
     padding-bottom: 20px;
+    background: $background;
+    max-width: 1440px;
+    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.2);
+    .breadcrumb {
+        padding: 0px;
+        li {
+            list-style: none;
+            &:not(:last-child){
+                float: left;
+                &:after {
+                    content: '\00a0\00BB\00a0';
+                }
+            }
+        }
+    }
     @media screen and (max-width: $mobile){
         padding: 10px;
     }
@@ -215,24 +263,81 @@
         font-style: italic;
         position: sticky;
         top: 41px;
-        background-color: white;
+        background-color: $background;
         z-index: 9;
         padding-top: 2px;
     }
+    .partners {
+        display: flex;
+        flex-wrap: wrap;
+        margin: auto;
+        $imgsize: 155px;
+        $padding: 10px;
+        $imgaspect: 2/3;
+        $partnersize: $imgsize + 2 * $padding;
+        .partner{
+            width: $partnersize;
+            height: ceil($imgsize * $imgaspect + 2 * $padding);
+            padding: $padding;
+            img {
+                vertical-align: middle;
+                max-width: 100%;
+                max-height: 100%;
+            }
+            &:hover {
+                img {
+                    opacity: 0.8;
+                }
+            }
+        }
+        @for $n from ceil(1440px/$partnersize) through 1 {
+            &.n#{$n} {
+                max-width: $n * $partnersize;
+                @for $m from $n through 1 {
+                    @media screen and (max-width: $m * $partnersize + 60px){
+                        max-width: ($m - 1) * $partnersize;
+                    }
+                }
+            }
+        }
+        &.funder {
+            $imgsize: 250px;
+            $padding: 30px;
+            $partnersize: $imgsize + 2 * $padding;
+            .partner {
+                width: $partnersize;
+                height: ceil($imgsize * $imgaspect + 2 * $padding);
+                padding: $padding;
+            }
+            @for $n from 1 through ceil(1440px/$partnersize) {
+                &.n#{$n} {
+                    max-width: $n * $partnersize;
+                    @for $m from $n through 1 {
+                        @media screen and (max-width: $m * $partnersize + 60px){
+                            max-width: ($m - 1) * $partnersize;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-#foot {
-    background: $blue;
+footer {
+    background: $accent1;
+    // border-top: solid 3px $accent2;
     color: white;
     padding: 10px;
     font-size: 14px;
+    margin-bottom: 10px;
+    box-shadow: 0px -6px 12px -6px rgba(0,0,0,0.2);
     > div {
         display: flex;
         flex-flow: row wrap;
         > div {
             flex-grow: 1;
             &:not(:first-child){
-                border-left: solid 1px rgba(255,255,255,0.75);
+                border-left: solid 3px $accent2;
                 padding-left: 10px;
                 margin-left: 10px;
             }
@@ -240,14 +345,21 @@
     }
     .header {
         font-size: 1rem;
+        color: $accent2;
+        font-weight: bold;
     }
     a {
         color: white;
+        text-decoration: none;
+        &:hover {
+            color: $accent2;
+        }
     }
     #legal,
     #bottomMenu {
         ul {
-            padding-left: 10px;
+            margin-top: 0px;
+            padding-left: 0px;
             li {
                 list-style: none;
             }
@@ -257,7 +369,7 @@
         .grid {
             display: flex;
             flex-flow: row wrap;
-            background: $darkblue;
+            background: $accent2;
             padding: 5px;
             margin: 10px;
             max-width: 470px;
@@ -294,29 +406,31 @@
     }
 }
 
-.register {
+.home .register {
     text-align: center;
     line-height: 0;
     width: calc(100% - 20px);
     padding-top: calc(50% / 1920 * 1080 - 20px);
     position: relative;
     cursor: pointer;
+    margin: 10px auto;
     div {
         position: absolute;
         top: 0px;
         bottom: 0px;
         left: 0px;
         right: 0px;
-        background: $blue;
+        background: $accent1;
         color: white;
         padding-top: calc(11% - 15px);
         font-size: 2em;
         text-transform: uppercase;
         &:hover {
-            background-color: $darkblue;
+            background-color: $accent2;
         }
     }
     @media screen and (min-width: $desktop){
+        width: calc(50% - 20px);
         padding-top: calc(25% / 1920 * 1080 - 20px);
         div {
             padding-top: calc(13% - 15px);
@@ -325,7 +439,7 @@
 }
 
 .frontvideo,
-.register {
+.home.register {
     @media screen and (min-width: $desktop){
         float: left;
         width: calc(50% - 20px);
@@ -483,5 +597,7 @@
     display: none;
     padding: 3px;
     font-size: 0.7em;
-    background: $grey;
+    background: #ddd;
+    border: solid 1px $teal;
+    border-radius: 2px;
 }

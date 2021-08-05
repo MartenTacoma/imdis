@@ -3,6 +3,7 @@
 namespace App\Menu;
 
 use App\Entity\ProgramBlock;
+use App\Entity\Event;
 use App\Entity\PosterSession;
 use App\Controller\PageController;
 use Knp\Menu\FactoryInterface;
@@ -40,53 +41,122 @@ class MenuBuilder
         return $this->doCreateMenu($options);
     }
     
+    private function createEventProgram($menu, $slug, $label){
+        $date = null;
+        $uri = $this->router->generate('program_index', ['event' => $slug]);
+        $menu[$label]->addChild('Programme', ['route' => 'program_index', 'routeParameters' => ['event' => $slug]]);
+        foreach($this->registry->getRepository(Event::class)->findOneBySlug($slug)->getProgramBlocks()  as $block){
+            $anchor = $block->getAnchor();
+            if($block->getDate() != $date){
+                $menu[$label]['Programme']->addChild(
+                    $block->getDate()->format('l d F'),
+                    ['uri' => $uri . '#' . $block->getDate()->format('Ymd')]
+                );
+                $date = $block->getDate();
+            }
+            $title = $block->getTimeStart()->format('H:i') . ' - ' . $block->getTimeEnd()->format('H:i');
+            foreach($block->getEvent() as $event){
+                if($event->getSlug() != $slug){
+                    $title .= ' | with ' . $event->getAlias();
+                }
+            }
+            foreach($block->getSession() as $session){
+                if(!empty($session->getTitle())) {
+                    $title .= ' | ' . $session->getTitle();
+                } elseif (!empty($session->getTheme())) {
+                    // $string .= $session->getTheme()->__toString();
+                }
+            }
+            $menu[$label]['Programme'][$block->getDate()->format('l d F')]->addChild(
+                $title,
+                ['uri'=> $uri . '#' . $anchor]
+            );
+        };
+        return $menu;
+    }
+    
     private function doCreateMenu(array $options, $last_empty = false): ItemInterface
     {
         $menu = $this->factory->createItem('root');
         $menu->addChild('Home', ['route' => 'index']);
         
-        $menu->addChild('Programme', ['route' => 'program_index']);
-        $uri = $this->router->generate('program_index');
+        $date = null;
+        $uri = $this->router->generate('program_index_short');
+        $menu->addChild('Combined Programme', ['route' => 'program_index_short']);
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
-            $title = $block->__toString();
             $anchor = $block->getAnchor();
-            $menu['Programme']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
+            if($block->getDate() != $date){
+                $menu['Combined Programme']->addChild(
+                    $block->getDate()->format('l d F'),
+                    ['uri' => $uri . '#' . $block->getDate()->format('Ymd')]);
+                $date = $block->getDate();
+            }
+            $title = $block->getTimeStart()->format('H:i') . ' - ' . $block->getTimeEnd()->format('H:i');
+            $events = [];
+            foreach($block->getEvent() as $event){
+                $events[] =  $event->getAlias();
+            }
+            $title .= ' | ' . implode(' & ', $events);
+            foreach($block->getSession() as $session){
+                if(!empty($session->getTitle())) {
+                    $title .= ' | ' . $session->getTitle();
+                } elseif (!empty($session->getTheme())) {
+                    // $string .= $session->getTheme()->__toString();
+                }
+            }
+            $menu['Combined Programme'][$block->getDate()->format('l d F')]->addChild(
+                $title,
+                ['uri'=> $uri . '#' . $anchor]
+            );
         };
         
-        $menu->addChild('Posters', ['route' => 'poster_index']);
-        $uri = $this->router->generate('poster_index');
-        foreach($this->registry->getRepository(PosterSession::class)->findAll() as $session){
-            $title = $session->__toString();
-            $anchor = $session->getAnchor();
-            $menu['Posters']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
-        };
+        $menu->addChild('SO Decade', ['route' => 'event_intro', 'routeParameters' => ['event' => 'sodecade']]);
+        $menu = $this->createEventProgram($menu, 'sodecade', 'SO Decade');
+        $menu['SO Decade']->addChild('Working Groups', ['route'=> 'wg_public', 'routeParameters' => ['event' => 'sodecade']]);
+        foreach ($this->registry->getRepository(Event::class)->findOneBySlug('sodecade')->getWorkingGroups() as $wg){
+            $menu['SO Decade']['Working Groups']->addChild($wg->getTitle(), ['route'=> 'wg_show', 'routeParameters' => ['slug' => $wg->getSlug()]]);
+        }
+        $menu['SO Decade']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'sodecade']]);
+        
+        $menu->addChild('PDF IV', ['route' => 'event_intro', 'routeParameters' => ['event' => 'pdfiv']]);
+        $menu = $this->createEventProgram($menu, 'pdfiv', 'PDF IV');
+        // $menu['PDF IV']->addChild('Posters', ['route' => 'poster_index']);
+        $menu['PDF IV']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'pdfiv']]);
+        foreach ($this->registry->getRepository(Event::class)->findOneBySlug('pdfiv')->getHackathons() as $hackathon){
+            $menu['PDF IV']['Hackathons']->addChild($hackathon->getTitle(), ['route'=> 'hackathon_show', 'routeParameters' => ['slug' => $hackathon->getSlug()]]);
+        }
+        // $uri = $this->router->generate('poster_index');
+        // foreach($this->registry->getRepository(PosterSession::class)->findAll() as $session){
+        //     $title = $session->__toString();
+        //     $anchor = $session->getAnchor();
+        //     $menu['PDF IV']['Posters']->addChild($title , ['uri'=> $uri . '#' . $anchor]);
+        // };
         
         $infoLabel = 'Conference Information';
-        $menu->addChild($infoLabel, ['route'=>'conference_info']);
+        $menu['PDF IV']->addChild($infoLabel, ['route'=>'conference_info']);
         // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
-        $menu[$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
-        $menu[$infoLabel]->addChild('Access Live Sessions of IMDIS 2021 (Zoom)', ['route'=>'zoom']);
-        $menu[$infoLabel]->addChild('Access Informal Sessions of IMDIS 2021 (Wonder.me)', ['route'=>'wonderme']);
-        $menu[$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
-        $menu[$infoLabel]->addChild('Contact', ['route'=>'contact']);
+        $menu['PDF IV'][$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
+        $menu['PDF IV'][$infoLabel]->addChild('Access Live Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Zoom)', ['route'=>'zoom']);
+        $menu['PDF IV'][$infoLabel]->addChild('Access Informal Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Wonder.me)', ['route'=>'wonderme']);
+        $menu['PDF IV'][$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
+        $menu['PDF IV'][$infoLabel]->addChild('Contact', ['route'=>'contact']);
         
-        // 'zoom' => 'Access Live Sessions of IMDIS 2021 (Zoom)',
-        // 'wonder.me' => 'Access Informal Sessions of IMDIS 2021 (Wonder.me)',
-        
+        $menu['PDF IV']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'pdfiv']]);
         $helpName = 'Guidelines';
-        $menu->addChild($helpName, ['route'=>'help_index']);
+        $menu['PDF IV']->addChild($helpName, ['route'=>'help_index']);
         foreach(PageController::$helppages as $id=>$label){
-            $menu[$helpName]->addChild($label, ['route'=>'help', 'routeParameters' => ['help' => $id]]);
+            $menu['PDF IV'][$helpName]->addChild($label, ['route'=>'help', 'routeParameters' => ['help' => $id]]);
         
         }
         if($this->registration_status !== 'future'){
-            $menu->addChild('Registrations', ['route'=>'user_index']);
             if ($this->auth->isGranted('ROLE_USER')) {
-                $menu['Registrations']->addChild('My registration', ['route'=>'user_self']);
+                $menu->addChild('Registrations', ['route'=>'user_index']);
+                $menu['Registrations']->addChild('My Registration', ['route'=>'user_self']);
+            } else {
+                $menu->addChild('Register', ['route' => 'app_register']);
+                $menu['Register']->addChild('View Registrations', ['route'=>'user_index']);
             }
         }
-        
-        $menu[$infoLabel]->addChild('Previous Editions', ['uri' => 'https://imdis.seadatanet.org/Previous-editions']);
         
         if ($this->auth->isGranted('ROLE_EDIT_PROGRAM') && false) {
             $menu->addChild('Admin', ['route'=>'admin']);
@@ -96,6 +166,7 @@ class MenuBuilder
             $menu['Admin']->addChild('Edit posters', ['route'=>'poster_manage']);
             
         }
+        $menu->addChild('Partners', ['route'=>'partners']);
         if($last_empty){
             $menu->addChild('');//empty last item needed for correct menu rendering
         }

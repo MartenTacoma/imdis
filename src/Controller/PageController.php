@@ -10,6 +10,7 @@ use App\Repository\UserRepository;
 use App\Repository\ThemeRepository;
 use App\Repository\ImdisAbstractRepository;
 use App\Repository\ProgramBlockRepository;
+use App\Repository\EventRepository;
 
 class PageController extends AbstractController
 {
@@ -28,20 +29,27 @@ class PageController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(UserRepository $users, ThemeRepository $themes, ImdisAbstractRepository $abstracts, ProgramBlockRepository $program): Response
+    public function index(
+        UserRepository $users,
+        ThemeRepository $themes,
+        ImdisAbstractRepository $abstracts,
+        ProgramBlockRepository $program,
+        EventRepository $eventRepository
+    ): Response
     {
         if($this->getParameter('app.dashboard') && $this->isGranted($this->getParameter('app.dashboard_role'))){
             return $this->render('page/dashboard.html.twig', [
-                'users' => $users->findAllStatistics(),
+                'users' => $users->findAllStatistics(null),
                 'themes' => $themes->findAll(),
                 'abstracts' => $abstracts->findAll(),
                 'program' => $program->findOneByCurrentOrNext()
             ]);
         } else {
             return $this->render('page/index.html.twig', [
-                'users' => $users->findAllStatistics(),
+                'users' => $users->findAllStatistics(null),
                 'themes' => $themes->findAll(),
-                'abstracts' => $abstracts->findAll()
+                'abstracts' => $abstracts->findAll(),
+                'events' => $eventRepository->findAll()
             ]);
         }
     }
@@ -124,8 +132,19 @@ class PageController extends AbstractController
         return $this->render(
             'page/menu.html.twig',
             [
-                'pagetitle' => 'Guidelines'
+                'pagetitle' => 'Guidelines',
+                'menu' => ['main', 'PDF IV', 'Guidelines']
             ]
+        );
+    }
+    
+    /**
+     * @Route("/partners", name="partners")
+     */
+    public function partners(): Response
+    {
+        return $this->render(
+            'page/partners.html.twig'
         );
     }
     
@@ -137,8 +156,27 @@ class PageController extends AbstractController
         return $this->render(
             'page/menu.html.twig',
             [
-                'pagetitle' => 'Conference Information'
+                'pagetitle' => 'Conference Information',
+                'menu' => ['main', 'PDF IV', 'Conference Information']
             ]
         );
+    }
+    
+    /**
+     * @Route("/{event}", name="event_intro", priority=-10)
+     */
+    public function event_intro(EventRepository $eventRepository, $event): Response
+    {
+        $event = $eventRepository->findOneBySlug($event);
+        if(empty($event)){
+            throw $this->createNotFoundException();
+        } else {
+            return $this->render(
+                'page/event.html.twig',
+                [
+                    'event' => $event
+                ]
+            );
+        }
     }
 }

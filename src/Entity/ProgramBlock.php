@@ -55,9 +55,15 @@ class ProgramBlock
      */
     private $ZoomPass;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="programBlocks")
+     */
+    private $event;
+
     public function __construct()
     {
         $this->session = new ArrayCollection();
+        $this->event = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,7 +163,11 @@ class ProgramBlock
         $string = $this->date->format('l d F') . ' '
             . $this->time_start->format('H:i') . ' - '
             . $this->time_end->format('H:i');
-            
+        $events = [];
+        foreach($this->getEvent() as $event){
+            $events[] = $event->getAlias();
+        }
+        $string .= ' | ' . implode(' / ', $events);
         $themes = [];
         
         foreach($this->session as $session){
@@ -173,7 +183,11 @@ class ProgramBlock
     
     public function getAnchor(): string
     {
-        return $this->date->format('Ymd') . $this->time_start->format('Hi');
+        $anchor = $this->date->format('Ymd') . $this->time_start->format('Hi');
+        foreach ($this->event as $event){
+            $anchor .= '_'.$event->getSlug();
+        }
+        return $anchor;
     }
 
     public function getZoomId(): ?string
@@ -196,6 +210,30 @@ class ProgramBlock
     public function setZoomPass(?string $ZoomPass): self
     {
         $this->ZoomPass = $ZoomPass;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->event->contains($event)) {
+            $this->event[] = $event;
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        $this->event->removeElement($event);
 
         return $this;
     }

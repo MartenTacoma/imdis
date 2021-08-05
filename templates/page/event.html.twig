@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% set pagetitle = event.name %}
+
+{% block side %}
+<div class="sidebar">{{knp_menu_render(menu ?? ['main', event.alias]) }}</div>
+{% endblock %}
+
+{% block main %}
+{{event.intro|raw}}
+{% endblock %}

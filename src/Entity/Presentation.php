@@ -72,6 +72,36 @@ class Presentation
      */
     private $users;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Hackathon::class, inversedBy="presentations")
+     */
+    private $hackathon;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $timeEnd;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $meetingUrl;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $meetingId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $meetingPasscode;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=WorkingGroup::class, inversedBy="presentations")
+     */
+    private $workingGroup;
+
     public function __construct()
     {
         $this->presentationPeople = new ArrayCollection();
@@ -206,6 +236,8 @@ class Presentation
             return $this->abstract->getTitle();
         } elseif (!empty($this->poster_session)) {
             return $this->poster_session->__toString();
+        } elseif (!empty($this->hackathon)) {
+            return $this->hackathon->__toString();
         } else {
             return $this->title;
         }
@@ -249,6 +281,78 @@ class Presentation
                 $user->setPresentation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHackathon(): ?Hackathon
+    {
+        return $this->hackathon;
+    }
+
+    public function setHackathon(?Hackathon $hackathon): self
+    {
+        $this->hackathon = $hackathon;
+
+        return $this;
+    }
+
+    public function getTimeEnd(): ?\DateTimeInterface
+    {
+        return $this->timeEnd;
+    }
+
+    public function setTimeEnd(?\DateTimeInterface $timeEnd): self
+    {
+        $this->timeEnd = $timeEnd;
+
+        return $this;
+    }
+
+    public function getMeetingUrl(): ?string
+    {
+        return $this->meetingUrl;
+    }
+
+    public function setMeetingUrl(string $meetingUrl): self
+    {
+        $this->meetingUrl = $meetingUrl;
+
+        return $this;
+    }
+
+    public function getMeetingId(): ?string
+    {
+        return $this->meetingId;
+    }
+
+    public function setMeetingId(string $meetingId): self
+    {
+        $this->meetingId = $meetingId;
+
+        return $this;
+    }
+
+    public function getMeetingPasscode(): ?string
+    {
+        return $this->meetingPasscode;
+    }
+
+    public function setMeetingPasscode(string $meetingPasscode): self
+    {
+        $this->meetingPasscode = $meetingPasscode;
+
+        return $this;
+    }
+
+    public function getWorkingGroup(): ?workingGroup
+    {
+        return $this->workingGroup;
+    }
+
+    public function setWorkingGroup(?WorkingGroup $workingGroup): self
+    {
+        $this->workingGroup = $workingGroup;
 
         return $this;
     }

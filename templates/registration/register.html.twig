@@ -10,7 +10,7 @@
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
-    <p>Welcome to IMDIS 2021. Please fill in the form below. After registration you can login with the details provided below. {# After completion of the form you will receive a link by email to verify your email address.#}</p>
+    <p>Welcome to Southern Ocean Decade & Polar Data Forum Week 2021. Please fill in the form below. After registration you can login with the details provided below. {# After completion of the form you will receive a link by email to verify your email address.#}</p>
     <hr/>
     {{ form_start(registrationForm) }}
     <h2>Personal details</h2>
@@ -30,11 +30,14 @@
     <hr class="light" />
         {{ form_row(registrationForm.show_in_list)}}
 <div class="togglefield field_show_email">{{ form_row(registrationForm.show_email)}}</div>
-<hr class="light"/>
-{{ form_row(registrationForm.maillist)}}
+<hr />
+{{form_row(registrationForm.event)}}
+
+{# <hr class="light"/>
+{{ form_row(registrationForm.maillist)}} #}
 
 <hr/>
-        
+{#        
 <h2>Presenting</h2>
 {{form_row(registrationForm.registrationType)}}
 <div class="togglefield field_presentations">
@@ -58,7 +61,7 @@ For more information on this consent form, please click <a href="{{ url('index')
     {% endfor %}
     </ul><button type="button" class="add_item_link" data-collection-holder-class="poster"><span class="icon-plus"></span> Add a poster</button>
 </div>
-<hr/>
+<hr/>#}
         <button type="submit" class="btn">Register</button>
         <div class="formEnd">{{ form_end(registrationForm) }}</div>
     <script type="text/javascript">

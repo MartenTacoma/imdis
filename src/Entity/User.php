@@ -9,12 +9,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -55,7 +56,7 @@ class User implements UserInterface
     private $affiliation;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Country::class)
+     * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="users")
      * @ORM\JoinColumn(name="country", referencedColumnName="id")
      */
     private $country;
@@ -81,9 +82,14 @@ class User implements UserInterface
     private $posters;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $maillist;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="users")
+     */
+    private $event;
 
     public function __construct(){
         if(empty($this->registration_time)){
@@ -91,6 +97,7 @@ class User implements UserInterface
         }
         $this->presentations = new ArrayCollection();
         $this->posters = new ArrayCollection();
+        $this->event = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -115,6 +122,11 @@ class User implements UserInterface
      * @see UserInterface
      */
     public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
@@ -328,5 +340,29 @@ class User implements UserInterface
             $return[] = array_search($role, UserController::$roles);
         }
         return $return;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->event->contains($event)) {
+            $this->event[] = $event;
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        $this->event->removeElement($event);
+
+        return $this;
     }
 }

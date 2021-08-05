@@ -50,7 +50,7 @@ class PosterController extends AbstractController
             'posters' => $posterRepository->findAll(),
         ]);
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="IMDIS2021_poster_consent_v'.date('Ymd_His').'.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="WORKINGNAME_poster_consent_v'.date('Ymd_His').'.csv"');
         return $response;
     }
      

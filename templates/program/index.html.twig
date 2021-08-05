@@ -12,6 +12,7 @@
                 <th>Time_start</th>
                 <th>Time_end</th>
                 <th>Session_url</th>
+                <th>Event</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,6 +24,7 @@
                 <td>{{ program_block.timeStart ? program_block.timeStart|date('H:i:s') : '' }}</td>
                 <td>{{ program_block.timeEnd ? program_block.timeEnd|date('H:i:s') : '' }}</td>
                 <td>{{ program_block.sessionUrl }}</td>
+                <td>{{ program_block.event|join(' & ')}}</td>
                 <td>
                     <button onclick="window.location.href='{{ path('program_block_show', {'id': program_block.id}) }}'">view</button>
                     <button onclick="window.location.href='{{ path('program_block_edit', {'id': program_block.id}) }}'"><span class="icon-pencil"></span> edit</button>

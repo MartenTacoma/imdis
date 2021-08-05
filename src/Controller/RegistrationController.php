@@ -11,11 +11,15 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -29,7 +33,12 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function register(
+        Request $request,
+        LoginFormAuthenticator $authenticator,
+        UserPasswordHasherInterface $passwordHasher,
+        UrlGeneratorInterface $urlGenerator
+    ): Response
     {
         if($this->getParameter('app.registration_status') !== 'open') {
             return $this->render('registration/closed.html.twig');
@@ -41,23 +50,21 @@ class RegistrationController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $user->setPassword(
-                    $passwordEncoder->encodePassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-                );
+                $user->setPassword($passwordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                ));
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
                 
                 $email = new TemplatedEmail();
-                $email->from(new Address('noreply@eupeodes.nl', 'IMDIS 2021'))
+                $email->from(new Address('info@sodecade-pdf4.org', 'Southern Ocean Decade & Polar Data Forum Week 2021'))
                     ->to($user->getEmail())
-                    ->subject('Registration confirmation IMDIS 2021')
+                    ->subject('Registration confirmation Southern Ocean Decade & Polar Data Forum Week 2021')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
-                    ->replyTo(new Address('imdis@seadatanet.org', 'IMDIS 2021'));
+                    ->replyTo(new Address('info@sodecade.org', 'Southern Ocean Decade & Polar Data Forum Week 2021'));
                 $context = $email->getContext();
                 $context['user'] = $user;
 
@@ -66,13 +73,11 @@ class RegistrationController extends AbstractController
                 $this->mailer->send($email);
 
                 $this->addFlash('success', 'Your account has been created. You will receive a confirmation shortly.');
-                
-                return $guardHandler->authenticateUserAndHandleSuccess(
-                    $user,
-                    $request,
-                    $authenticator,
-                    'main' // firewall name in security.yaml
+                $passport = new Passport(
+                    new UserBadge($user->getEmail()),
+                    new PasswordCredentials($form->get('plainPassword')->getData())
                 );
+                return new RedirectResponse($urlGenerator->generate('user_self'));
             }
 
             return $this->render('registration/register.html.twig', [

@@ -1,4 +1,4 @@
-<p>Thank you for registering for IMDIS 2021. We have recorded the following details for you:</p>
+<p>Thank you for registering for Southern Ocean Decade & Polar Data Forum Week 2021. We have recorded the following details for you:</p>
 
 <table class="table">
 <tr><th>Name</th><td>{{user.name}}</td></tr>
@@ -7,10 +7,10 @@
 <tr><th>E-mail</th><td>{{ user.email }}</td></tr>
 <tr><th>Show my details</th><td>{% if user.ShowInList == 'public' %}For everybody{% elseif user.ShowInList == 'login' %}For other (logged in) participants{% else %}Only for organizers{% endif %}</td></tr>
 {% if user.ShowInList != 'hidden' %}<tr><th>Show email for logged in users</th><td>{{user.ShowEmail ? 'Yes' : 'No' }}</td></tr>{% endif %}
-<tr><th>Add me to IMDIS maillist</th><td>{{ user.maillist ? 'Yes' : 'No'}}</td></tr>
-{% if user.registrationType == 'no' %}<tr><th>Are you a presenter?</th><td>No</td></tr>{% endif %}
+{#<tr><th>Add me to IMDIS maillist</th><td>{{ user.maillist ? 'Yes' : 'No'}}</td></tr>
+{% if user.registrationType == 'no' %}<tr><th>Are you a presenter?</th><td>No</td></tr>{% endif %}#}
 </table>
-
+{#
 {% if user.registrationType != 'no' %}<h2>Presenter consent</h2>
     {% if user.presentations|length %}
     <h3>Oral presentation(s)</h3>
@@ -32,3 +32,4 @@ For more information on this consent form, please click <a href="{{ url('index')
     <h3>Sending in presentation files</h3>
     <p>Please send your files {{imdis.presentation_submission|raw}}</p>
 {% endif %}
+#}
