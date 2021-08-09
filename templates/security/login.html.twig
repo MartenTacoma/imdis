@@ -22,10 +22,10 @@
         <label for="inputPassword" class="required">Password</label>
         <input type="password" name="password" id="inputPassword" class="form-control" required>
     </div>
-    <div>
+    {# <div>
         <label for="rememberMe">Remember me</label>
         <input type="checkbox" name="_remember_me" id="rememberMe">
-    </div>
+    </div> #}
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
