@@ -86,7 +86,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
     
-    public function findAllStatistics($event){
+    public function findAllStatistics($event = null){
         $q = $this->createQueryBuilder('u')
             ->select(
                 "count(u.id) AS total",
@@ -104,7 +104,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult()[0];
     }
     
-    public function findAllCountries($event){
+    public function findAllCountries($event = null){
         $q = $this->createQueryBuilder('u')
             ->join('u.country', 'c')
             ->select(

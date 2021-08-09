@@ -408,32 +408,20 @@ footer {
 
 .home .register {
     text-align: center;
-    line-height: 0;
     width: calc(100% - 20px);
-    padding-top: calc(50% / 1920 * 1080 - 20px);
     position: relative;
     cursor: pointer;
     margin: 10px auto;
     div {
-        position: absolute;
-        top: 0px;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
-        background: $accent1;
+        padding: 20px;
+        background: $accent2;
+        border: solid 3px $accent1;
         color: white;
-        padding-top: calc(11% - 15px);
         font-size: 2em;
         text-transform: uppercase;
         &:hover {
-            background-color: $accent2;
-        }
-    }
-    @media screen and (min-width: $desktop){
-        width: calc(50% - 20px);
-        padding-top: calc(25% / 1920 * 1080 - 20px);
-        div {
-            padding-top: calc(13% - 15px);
+            background-color: $accent1;
+            border-color: $accent2;
         }
     }
 }
