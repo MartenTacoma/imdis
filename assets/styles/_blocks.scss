@@ -20,6 +20,9 @@
             flex-flow: row-reverse;
         }
         aside {
+            &:empty{
+                display: none;
+            }
             .sidebar {
                 border-left: solid 3px $grey;
                 padding: 10px;
