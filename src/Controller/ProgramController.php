@@ -187,7 +187,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/session/{id}", name="program_session_delete", methods={"DELETE"})
+     * @Route("/session/{id}", name="program_session_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_delete(Request $request, ProgramSession $programSession): Response
