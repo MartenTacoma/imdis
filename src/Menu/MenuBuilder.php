@@ -146,12 +146,14 @@ class MenuBuilder
         // $menu['PDF IV'][$infoLabel]->addChild('Contact', ['route'=>'contact']);
         
         $menu['PDF IV']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'pdfiv']]);
+        
+        $menu['PDF IV']->addChild('SCADM Prize', ['route'=>'scadmprize']);
         $helpName = 'Guidelines';
         $menu['PDF IV']->addChild($helpName, ['route'=>'help_index']);
         foreach(PageController::$helppages as $id=>$label){
             $menu['PDF IV'][$helpName]->addChild($label, ['route'=>'help', 'routeParameters' => ['help' => $id]]);
-        
         }
+        
         if($this->registration_status !== 'future'){
             if ($this->auth->isGranted('ROLE_USER')) {
                 $menu->addChild('Registrations', ['route'=>'user_index']);
