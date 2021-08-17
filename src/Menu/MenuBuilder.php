@@ -80,13 +80,15 @@ class MenuBuilder
         $menu = $this->factory->createItem('root');
         $menu->addChild('Home', ['route' => 'index']);
         
-        $date = null;
+        $menu->addChild('General Info');
+        
         $uri = $this->router->generate('program_index_short');
-        $menu->addChild('Combined Programme', ['route' => 'program_index_short']);
+        $menu['General Info']->addChild('Combined Programme', ['route' => 'program_index_short']);
+        $date = null;
         foreach($this->registry->getRepository(ProgramBlock::class)->findAll() as $block){
             $anchor = $block->getAnchor();
             if($block->getDate() != $date){
-                $menu['Combined Programme']->addChild(
+                $menu['General Info']['Combined Programme']->addChild(
                     $block->getDate()->format('l d F'),
                     ['uri' => $uri . '#' . $block->getDate()->format('Ymd')]);
                 $date = $block->getDate();
@@ -104,11 +106,15 @@ class MenuBuilder
                     // $string .= $session->getTheme()->__toString();
                 }
             }
-            $menu['Combined Programme'][$block->getDate()->format('l d F')]->addChild(
+            $menu['General Info']['Combined Programme'][$block->getDate()->format('l d F')]->addChild(
                 $title,
                 ['uri'=> $uri . '#' . $anchor]
             );
         };
+        
+        $menu['General Info']->addChild('Access Live Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Zoom)', ['route'=>'zoom']);
+        $menu['General Info']->addChild('Access Informal Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Wonder.me)', ['route'=>'wonderme']);
+        $menu['General Info']->addChild('Contact', ['route'=>'contact']);
         
         $menu->addChild('SO Decade', ['route' => 'event_intro', 'routeParameters' => ['event' => 'sodecade']]);
         $menu = $this->createEventProgram($menu, 'sodecade', 'SO Decade');
@@ -133,13 +139,11 @@ class MenuBuilder
         // };
         
         $infoLabel = 'Conference Information';
-        $menu['PDF IV']->addChild($infoLabel, ['route'=>'conference_info']);
+        // $menu['PDF IV']->addChild($infoLabel, ['route'=>'conference_info']);
         // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
-        $menu['PDF IV'][$infoLabel]->addChild('Sessions', ['route'=>'theme_index']);
-        $menu['PDF IV'][$infoLabel]->addChild('Access Live Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Zoom)', ['route'=>'zoom']);
-        $menu['PDF IV'][$infoLabel]->addChild('Access Informal Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Wonder.me)', ['route'=>'wonderme']);
-        $menu['PDF IV'][$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
-        $menu['PDF IV'][$infoLabel]->addChild('Contact', ['route'=>'contact']);
+        $menu['PDF IV']->addChild('Sessions', ['route'=>'theme_index']);
+        // $menu['PDF IV'][$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
+        // $menu['PDF IV'][$infoLabel]->addChild('Contact', ['route'=>'contact']);
         
         $menu['PDF IV']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'pdfiv']]);
         $helpName = 'Guidelines';
