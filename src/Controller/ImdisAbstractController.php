@@ -94,7 +94,7 @@ class ImdisAbstractController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="imdis_abstract_delete", methods={"DELETE"})
+     * @Route("/{id}", name="imdis_abstract_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function delete(Request $request, ImdisAbstract $imdisAbstract): Response

@@ -116,7 +116,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/block/{id}", name="program_block_delete", methods={"DELETE"})
+     * @Route("/block/{id}", name="program_block_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function block_delete(Request $request, ProgramBlock $programBlock): Response
@@ -258,7 +258,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/presentation/{id}", name="presentation_delete", methods={"DELETE"})
+     * @Route("/presentation/{id}", name="presentation_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function delete(Request $request, Presentation $presentation): Response

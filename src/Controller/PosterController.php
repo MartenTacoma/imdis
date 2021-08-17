@@ -133,7 +133,7 @@ class PosterController extends AbstractController
     }
 
     /**
-     * @Route("/session/{id}", name="poster_session_delete", methods={"DELETE"})
+     * @Route("/session/{id}", name="poster_session_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function session_delete(Request $request, PosterSession $posterSession): Response
@@ -229,7 +229,7 @@ class PosterController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="poster_delete", methods={"DELETE"})
+     * @Route("/{id}", name="poster_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function delete(Request $request, Poster $poster): Response

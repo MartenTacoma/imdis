@@ -83,7 +83,7 @@ class ThemeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="theme_delete", methods={"DELETE"})
+     * @Route("/{id}", name="theme_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
     public function delete(Request $request, Theme $theme): Response

@@ -94,7 +94,7 @@ class CommitteeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="committee_delete", methods={"DELETE"})
+     * @Route("/{id}", name="committee_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function delete(Request $request, Committee $committee): Response

@@ -90,6 +90,16 @@ class PageController extends AbstractController
     }
     
     /**
+     * @Route("/scadmprize", name="scadmprize")
+     */
+    public function prize(): Response
+    {
+        return $this->render(
+            'page/prize.html.twig'
+        );
+    }
+    
+    /**
      * @Route("/chrome", name="chrome")
      */
     public function chrome(): Response

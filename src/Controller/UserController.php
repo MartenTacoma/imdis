@@ -189,7 +189,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/{id}", name="user_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
     public function delete(Request $request, User $user): Response
