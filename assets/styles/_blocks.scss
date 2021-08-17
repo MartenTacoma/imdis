@@ -190,6 +190,9 @@
         @media screen and (min-width: $desktop) {
             &.equal {
                 gap: 0px;
+                div {
+                    width: 50%;
+                }
                 div:first-child {
                     margin-right: 15px;
                 }

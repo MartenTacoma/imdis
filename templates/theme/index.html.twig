@@ -5,14 +5,14 @@
 {% block main %}
     {% for theme in themes %}
         <a name="{{theme.title}}"></a><h2>{{theme.title}}: {{theme.tagline}}</h2>
-        {{theme.abstracts|filter((a) => a.presentation)|length}} orals, {{theme.abstracts|filter((a) => a.poster)|length}} posters
+        {# {{theme.abstracts|filter((a) => a.presentation)|length}} orals, {{theme.abstracts|filter((a) => a.poster)|length}} posters #}
         {{theme.description|raw}}
     {% endfor %}
 {% endblock %}
 
-{% block side %}
+{# {% block side %}
 <div class="sticky"><div class="menu">
 <h3>Conference information</h3>
 {{ knp_menu_render(['main', 'PDF IV', 'Conference Information'])}}
 </div></div>
-{% endblock %}
+{% endblock %} #}
