@@ -53,6 +53,16 @@ class WorkingGroupController extends AbstractController
     }
 
     /**
+     * @Route("/{id}", name="wg_show_by_id", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function showById(WorkingGroup $wg): Response
+    {
+        return $this->render('wg/show.html.twig', [
+            'wg' => $wg,
+        ]);
+    }
+    
+    /**
      * @Route("/{slug}", name="wg_show", methods={"GET"})
      */
     public function show(WorkingGroup $wg): Response
@@ -62,16 +72,6 @@ class WorkingGroupController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="wg_show_by_id", methods={"GET"})
-     */
-    public function showById(WorkingGroup $wg): Response
-    {
-        return $this->render('wg/show.html.twig', [
-            'wg' => $wg,
-        ]);
-    }
-    
     /**
      * @Route("/{id}/edit", name="wg_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
