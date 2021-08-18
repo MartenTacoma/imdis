@@ -21,9 +21,9 @@ class PageController extends AbstractController
         'credits' => 'Copyright & Credits'
     ];
     public static $helppages = [
-        'poster' => 'Poster Presentations',
+        // 'poster' => 'Poster Presentations',
         'oral' => 'Oral Presentations',
-        'video' => 'Making a Video for Posters & Oral presentations'
+        'video' => 'Making a Video for Oral presentations'
     ];
     
     /**
