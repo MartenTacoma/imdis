@@ -190,15 +190,21 @@
         @media screen and (min-width: $desktop) {
             &.equal {
                 gap: 0px;
-                div {
+                > div {
                     width: 50%;
-                }
-                div:first-child {
-                    margin-right: 15px;
-                }
-                div:not(:first-child) {
-                    padding-left: 15px;
-                    border-left: solid 3px $accent2;
+                    &:first-child {
+                        margin-right: 15px;
+                    }
+                    &:not(:first-child) {
+                        padding-left: 15px;
+                        border-left: solid 3px $accent2;
+                        .partners & {
+                            border-left-width: 1px;
+                            hr {
+                                display: none;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -315,16 +321,23 @@ main {
                 height: ceil($imgsize * $imgaspect + 2 * $padding);
                 padding: $padding;
             }
-            @for $n from 1 through ceil(1440px/$partnersize) {
-                &.n#{$n} {
-                    max-width: $n * $partnersize;
-                    @for $m from $n through 1 {
-                        @media screen and (max-width: $m * $partnersize + 60px){
-                            max-width: ($m - 1) * $partnersize;
-                        }
-                    }
+            &.n2 {
+                max-width: 2 * $partnersize;
+                @media screen and (min-width: $desktop) and (max-width: (2 * $partnersize + 60px) * 2),
+                       screen and (max-width: 2 * $partnersize + 60px) {
+                    max-width: $partnersize;
                 }
             }
+            // @for $n from 1 through ceil(1440px/$partnersize) {
+            //     &.n#{$n} {
+            //         max-width: $n * $partnersize;
+            //         @for $m from $n through 1 {
+            //             @media screen and (max-width: ($m * $partnersize + 60px)*2){
+            //                 max-width: ($m - 1) * $partnersize;
+            //             }
+            //         }
+            //     }
+            // }
         }
     }
 }

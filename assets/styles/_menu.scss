@@ -1,15 +1,11 @@
 nav {
     background: $accent1;
-    // background-image: linear-gradient(to top, $accent2 3px, transparent 3px);
-    // overflow: auto;
     z-index: 99;
     position: sticky;
     top: 0px;
     padding: 0 10px;
     border-top: solid 1px $accent1;
     box-shadow: 0px 6px 12px -6px rgba(0,0,0,0.2);
-    // overflow-x: clip;
-    height: 42px;
     > div {
         max-width: 1400px;
         margin: 0px auto;
@@ -110,6 +106,9 @@ nav {
             padding: 10px 10px 25px;
             > li {
                 border-top: solid 1px $grey;
+                &.last {
+                    display:none;
+                }
             }
         }
         li {
@@ -133,6 +132,7 @@ nav {
         }
     }
     @media screen and (min-width: $desktop){
+        height: 42px;
         #overlay-button, #overlay-input {
             display: none;
         }
