@@ -175,10 +175,6 @@ class ImdisAbstract
 
         return $this;
     }
-    
-    public function getUrl(): ?string{
-        return 'https://imdis.seadatanet.org/files/WORKINGNAME_' . $this->imdisId . '_abstract.pdf';
-    }
 
     public function getAbstract(): ?string
     {

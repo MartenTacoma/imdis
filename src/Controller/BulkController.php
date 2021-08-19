@@ -27,37 +27,44 @@ class BulkController extends AbstractController
         $file = fopen('programma.csv', 'r');
         
         $entityManager = $this->getDoctrine()->getManager();
-
-        while($line = fgetcsv($file)){
-            if(preg_match('/^[0-9]{1}-[0-9]{2}/', $line[5])){
-                $theme = $themeRepository->findOneById(substr($line[5],0,1));
-                $abstract = new ImdisAbstract();
-                $abstract
-                    ->setTitle($line[3])
-                    ->setImdisId(substr($line[5],2))
-                    ->setTheme($theme)
-                ;
-                $authors = explode(',', str_replace([' and ', ', '], ',', $line['4']));
-                $n = 1;
+        $labels = fgetcsv($file);
+        while($line = array_combine($labels, fgetcsv($file))){
+            $theme = $themeRepository->findOneByTitle($line['Session']);
+            $abstract = new ImdisAbstract();
+            $abstract
+                ->setTitle($line['Title'])
+                ->setAbstract($line['Abstract'])
+                ->setImdisId($line['id'])
+                ->setTheme($theme)
+            ;
+            $person = new AbstractPerson();
+            $person->setName($line['Presenter'])
+                ->setIsPresenter(true)
+                ->setSort(1);
+            $abstract->addPerson($person);
+            if($line['Co']){
+                $authors = explode(',', $line['Co']);
+                $n = 2;
                 foreach ($authors as $author){
                     $person = new AbstractPerson();
                     $person->setName(trim($author))
-                        ->setIsPresenter($n == 1)
+                        ->setIsPresenter(false)
                         ->setSort($n);
                     $n++;
                     $abstract->addPerson($person);
                 }
-                $entityManager->persist($abstract);
-                
-                $presentation = new Presentation();
-                $presentation->setAbstract($abstract)
-                    ->setProgramSession($theme->getSession()[0])
-                    ->setTimeStart(new \DateTime(substr($line[1], 0, 5)))
-                    ->setType($PresentationTypeRepository->findOneById(strpos($line[2], 'Keynote') !== false ? 2 : 1));
-                $entityManager->persist($presentation);
-                
-                $entityManager->flush();
             }
+            
+            $entityManager->persist($abstract);
+                
+            $presentation = new Presentation();
+            $presentation->setAbstract($abstract)
+                ->setProgramSession($theme->getSession()[0])
+                ->setTimeStart(new \DateTime($line['Time']))
+                ->setType($PresentationTypeRepository->findOneById(1));
+            $entityManager->persist($presentation);
+            
+            $entityManager->flush();
         }
     }
     

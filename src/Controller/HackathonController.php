@@ -106,7 +106,7 @@ class HackathonController extends AbstractController
     {
         if (empty($event)){
             return $this->render('hackathon/public.html.twig', [
-                'hackathons' => $hackathonRepository->findAll(),
+                'hackathons' => $hackathonRepository->findAll(['title'=>'ASC']),
             ]);
         } else {
             $event = $eventRepository->findOneBySlug($event);

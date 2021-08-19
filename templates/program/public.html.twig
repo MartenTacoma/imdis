@@ -107,7 +107,7 @@
                     <td>
                         {{ shareButtons(url('program_index') ~ '#' ~ anchor, talk.abstract.title ?? talk.title) }}
                         <span class="id">{% if talk.abstract %}{{talk.abstract.ImdisId}}{% endif %} {% if is_granted('ROLE_EDIT_PROGRAM') %}<a href="{{path('presentation_edit', {'id': talk.id})}}"><span class="icon-pencil"></span></a></li>{% endif %}</span>
-                        <span class="title">{% if talk.abstract and talk.abstract.url %}<a href="{{talk.abstract.url}}">{{ talk.abstract.title }}</a>{% else %}{{ talk.abstract.title ?? talk.title }}{% endif %}</span>
+                        <span class="title">{% if talk.abstract %}<a href="{{ url('imdis_abstract_show', {'imdisId': talk.abstract.imdisId}) }}">{{ talk.abstract.title }}</a>{% else %}{{ talk.abstract.title ?? talk.title }}{% endif %}</span>
                     <span class="authors">{% apply spaceless %}
                     {% if talk.abstract %}
                         {%- for person in talk.abstract.people %}{%- if not loop.first %}{%- if loop.last %} and {% else %}, {% endif %}{% endif %}{%- if person.isPresenter %}<span class="speaker">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}

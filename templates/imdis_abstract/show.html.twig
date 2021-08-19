@@ -1,30 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% set pagetitle = imdis_abstract.title %}
 {% block title %}ImdisAbstract{% endblock %}
 
 {% block body %}
-    <h1>ImdisAbstract</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ imdis_abstract.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ imdis_abstract.title }}</td>
-            </tr>
-            <tr>
-                <th>ImdisId</th>
-                <td>{{ imdis_abstract.imdisId }}</td>
-            </tr>
-        </tbody>
-    </table>
+{%- for person in imdis_abstract.people %}{%- if not loop.first %}{%- if loop.last %} and {% else %}, {% endif %}{% endif %}{%- if person.isPresenter %}<span style="font-weight: bold">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}
 
-    <a href="{{ path('imdis_abstract_index') }}">back to list</a>
-
-    <a href="{{ path('imdis_abstract_edit', {'imdisId': imdis_abstract.imdisId}) }}">edit</a>
-
-    {{ include('imdis_abstract/_delete_form.html.twig') }}
+<p>{{ imdis_abstract.abstract }}</p>
 {% endblock %}
