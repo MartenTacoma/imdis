@@ -1,9 +1,8 @@
 {{ form_start(form) }}
-    {% if action == 'new' %}
-        {{form_row(form.imdisId)}}
-        {{form_row(form.theme)}}
-    {% endif %}
+    {{form_row(form.imdisId)}}
+    {{form_row(form.theme)}}
     {{form_row(form.title)}}
+    {{form_row(form.abstract)}}
     <strong>People (name | sort | is presenting)</strong>
     <ul class="subform people" data-prototype="{{ form_widget(form.people.vars.prototype)|e('html_attr') }}">
     {% for person in form.people %}

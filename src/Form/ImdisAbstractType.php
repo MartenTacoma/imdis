@@ -13,8 +13,9 @@ class ImdisAbstractType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('imdisId', null, ['label' => 'Abstract number'])
             ->add('title')
-            ->add('imdisId')
+            ->add('abstract')
             ->add('theme')
             ->add(
                 'people',
