@@ -140,8 +140,8 @@ class MenuBuilder
         
         $infoLabel = 'Conference Information';
         // $menu['PDF IV']->addChild($infoLabel, ['route'=>'conference_info']);
-        // $menu[$infoLabel]->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
-        $menu['PDF IV']->addChild('Sessions', ['route'=>'theme_index']);
+        $menu['PDF IV']->addChild('Abstracts', ['route'=>'imdis_abstract_index']);
+        // $menu['PDF IV']->addChild('Sessions', ['route'=>'theme_index']);
         // $menu['PDF IV'][$infoLabel]->addChild('Committees', ['route'=>'committee_index']);
         // $menu['PDF IV'][$infoLabel]->addChild('Contact', ['route'=>'contact']);
         

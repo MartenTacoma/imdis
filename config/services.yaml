@@ -47,6 +47,10 @@ services:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
             - { name: knp_menu.menu_builder, method: createFootMenu, alias: foot } # The alias is what is used to retrieve the menu
             - { name: knp_menu.menu_builder, method: createLegalMenu, alias: legal } # The alias is what is used to retrieve the menu
+    app.voter.request:
+        class: App\Voter\MenuVoter
+        tags:
+            - { name: knp_menu.voter }
     vich.uploader.poster_thumb:
         class: App\Naming\PosterThumbNamer
         public: true
