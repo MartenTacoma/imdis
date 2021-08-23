@@ -3,9 +3,17 @@
 {% set pagetitle = imdis_abstract.title %}
 {% block title %}ImdisAbstract{% endblock %}
 
-{% block body %}
+{% block main %}
 
 {%- for person in imdis_abstract.people %}{%- if not loop.first %}{%- if loop.last %} and {% else %}, {% endif %}{% endif %}{%- if person.isPresenter %}<span style="font-weight: bold">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}
 
 <p>{{ imdis_abstract.abstract }}</p>
+{% endblock %}
+
+{% block side %}
+{% if imdis_abstract.presentation %}
+<div class="sticky"><div><h3>Presentation</h3>
+    <span>{{imdis_abstract.presentation.ProgramSession.block.date|date('l d F')}}</span> <span>{{imdis_abstract.presentation.TimeStart|date('H:i')}} UTC</span>
+    </div></div>
+{% endif %}
 {% endblock %}
