@@ -2,7 +2,7 @@
     "devDependencies": {
         "@symfony/stimulus-bridge": "^2.0.0",
         "@symfony/webpack-encore": "^1.0.0",
-        "core-js": "^3.16.0",
+        "core-js": "^3.16.2",
         "regenerator-runtime": "^0.13.9",
         "sass-loader": "^12.1.0",
         "stimulus": "^2.0.0",
