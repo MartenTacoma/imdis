@@ -10,6 +10,14 @@
 {#<tr><th>Add me to IMDIS maillist</th><td>{{ user.maillist ? 'Yes' : 'No'}}</td></tr>
 {% if user.registrationType == 'no' %}<tr><th>Are you a presenter?</th><td>No</td></tr>{% endif %}#}
 </table>
+
+<p><strong>You are registered for:</strong></p><ul>
+{% for event in user.event %}
+    <li>{{event}}</li>
+{% else %}
+<em>No events</em>
+{% endfor %}
+</ul>
 {#
 {% if user.registrationType != 'no' %}<h2>Presenter consent</h2>
     {% if user.presentations|length %}
