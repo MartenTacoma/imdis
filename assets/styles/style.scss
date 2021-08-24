@@ -214,3 +214,7 @@ img {
 @import '_main.scss';
 @import '_form.scss';
 @import '_pages.scss';
+
+@media print {
+    @import '_print.scss';
+}
