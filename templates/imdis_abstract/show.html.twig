@@ -7,7 +7,7 @@
 
 {%- for person in imdis_abstract.people %}{%- if not loop.first %}{%- if loop.last %} and {% else %}, {% endif %}{% endif %}{%- if person.isPresenter %}<span style="font-weight: bold">{%- endif %}{{ person.name }}{%- if person.isPresenter %}</span>{%- endif %}{% endfor %}
 
-<p>{{ imdis_abstract.abstract }}</p>
+<p>{{ imdis_abstract.abstract|raw }}</p>
 {% endblock %}
 
 {% block side %}
