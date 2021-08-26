@@ -9,6 +9,8 @@ DTSTART:{{block.date|date('Ymd') }}T{{ block.timeStart|date('His') }}Z
 DTEND:{{block.date|date('Ymd') }}T{{ block.timeEnd|date('His') }}Z
 SUMMARY:{{block.event|join(' & ')|raw}}{% for session in block.session %}{% if session.title %} | {{ session.title }}{% elseif session.theme %} | {{ session.theme }}{% endif %}{% endfor %}
 
+{% if block.sessionUrl %}LOCATION: {{block.sessionUrl}}{% endif %}
+
 DESCRIPTION:{% if block.sessionUrl %}Join using {{block.sessionUrl}} {% if block.zoomId %}(Session id: {{block.ZoomId}}{% if block.ZoomPass %}, passcode: {{block.ZoomPass}}{% endif %}){% endif %}\n\n{% endif %}The session program can be found at {{url('program_index')}}#{{block.anchor}}
 END:VEVENT
 END:VCALENDAR
