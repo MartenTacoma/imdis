@@ -29,9 +29,14 @@ class WorkingGroupContact
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $sort;
 
     public function getId(): ?int
     {
@@ -67,9 +72,21 @@ class WorkingGroupContact
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email = null): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getSort(): ?int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(int $sort): self
+    {
+        $this->sort = $sort;
 
         return $this;
     }

@@ -15,6 +15,7 @@ class HackathonContactType extends AbstractType
         $builder
             ->add('name')
             ->add('email')
+            ->add('sort')
         ;
     }
 

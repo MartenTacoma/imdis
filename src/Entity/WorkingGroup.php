@@ -31,6 +31,7 @@ class WorkingGroup
 
     /**
      * @ORM\OneToMany(targetEntity=WorkingGroupContact::class, mappedBy="workingGroup", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $contact;
 

@@ -21,7 +21,7 @@
 <div><h3>Contact</h3>
 <ul>
 {% for contact in wg.contact %}
-<li>{{contact.name}} - <a href="mailto:{{contact.email}}">{{contact.email}}</a></li>
+<li>{{contact.name}}{% if contact.email %} - <a href="mailto:{{contact.email}}">{{contact.email}}</a>{% endif %}</li>
 {% endfor %}
 </ul>
 </div>

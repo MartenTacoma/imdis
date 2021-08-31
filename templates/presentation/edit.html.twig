@@ -18,12 +18,12 @@
     {% elseif presentation.presentationPeople %}
         {% for person in presentation.presentationPeople %}{% if not loop.first %}, {% endif %}{% if person.presenter %}<strong>{{person.name}}</strong>{% else %}{{person.name}}{% endif %}{% endfor %}
     {% endif %}
-    
+{#     
     <h3>Consent given by</h3><ul>
     {% for user in presentation.users %}
         <li>{{user.user.name}}, {{user.user.email}}</li>
     {% else %}
         <li>Nobody</li>
-    {% endfor %}
+    {% endfor %} #}
     {# {{ include('presentation/_delete_form.html.twig') }} #}
 {% endblock %}

@@ -31,6 +31,7 @@ class Hackathon
 
     /**
      * @ORM\OneToMany(targetEntity=HackathonContact::class, mappedBy="hackathon", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $contact;
 

@@ -6,7 +6,6 @@ use App\Entity\WorkingGroupContact;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class WorkingGroupContactType extends AbstractType
 {
@@ -15,6 +14,7 @@ class WorkingGroupContactType extends AbstractType
         $builder
             ->add('name')
             ->add('email')
+            ->add('sort')
         ;
     }
 
