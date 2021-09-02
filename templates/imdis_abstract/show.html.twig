@@ -11,9 +11,16 @@
 {% endblock %}
 
 {% block side %}
+<div class="sticky">
+{% if is_granted('ROLE_EDIT_PROGRAM') %}
+        <div class="admin"><h3>Maintainance</h3><ul>
+        <li><a href="{{ path('imdis_abstract_edit', {'imdisId': imdis_abstract.imdisId}) }}">edit</a></li>
+        </ul></div>
+    {% endif %}
 {% if imdis_abstract.presentation %}
-<div class="sticky"><div><h3>Presentation</h3>
+<div><h3>Presentation</h3>
     <span>{{imdis_abstract.presentation.ProgramSession.block.date|date('l d F')}}</span> <span>{{imdis_abstract.presentation.TimeStart|date('H:i')}} UTC</span>
-    </div></div>
+    </div>
 {% endif %}
+</div>
 {% endblock %}
