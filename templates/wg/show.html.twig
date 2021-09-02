@@ -27,7 +27,7 @@
 <div><h3>Contact</h3>
 <ul>
 {% for contact in wg.contact %}
-<li>{{contact.name}}{% if contact.email %} - <a href="mailto:{{contact.email}}">{{contact.email}}</a>{% endif %}</li>
+<li><strong>{{contact.name}}</strong>{% if contact.email %} - <a href="mailto:{{contact.email}}">{{contact.email}}</a>{% endif %}{% if contact.orcid %} - <a href="https://orcid.org/{{contact.orcid}}">{{contact.orcid}}</a>{% endif %}{% if contact.bio %}<br/>{{ contact.bio }}{% endif %}</li>
 {% endfor %}
 </ul>
 </div>

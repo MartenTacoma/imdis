@@ -14,6 +14,8 @@ class WorkingGroupContactType extends AbstractType
         $builder
             ->add('name')
             ->add('email')
+            ->add('orcid')
+            ->add('bio')
             ->add('sort')
         ;
     }

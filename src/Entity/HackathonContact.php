@@ -38,6 +38,21 @@ class HackathonContact
      */
     private $sort;
 
+    /**
+     * @ORM\Column(type="string", length=19, nullable=true)
+     */
+    private $orcid;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $bio;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $role;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +102,42 @@ class HackathonContact
     public function setSort(int $sort): self
     {
         $this->sort = $sort;
+
+        return $this;
+    }
+
+    public function getOrcid(): ?string
+    {
+        return $this->orcid;
+    }
+
+    public function setOrcid(?string $orcid): self
+    {
+        $this->orcid = $orcid;
+
+        return $this;
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+    public function setBio(?string $bio): self
+    {
+        $this->bio = $bio;
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }
