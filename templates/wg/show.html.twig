@@ -4,7 +4,11 @@
 
 {% block main %}
 <p><strong>{{wg.intro}}</strong></p>
+{% if is_granted('ROLE_USER') and wg.descriptionRegistered %}
+{{wg.descriptionRegistered|raw}}
+{% else %}
 {{wg.description|raw}}
+{% endif %}
 {% endblock %}
 
 {% block side %}

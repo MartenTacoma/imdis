@@ -24,6 +24,7 @@ class WorkingGroupType extends AbstractType
             ->add('title')
             ->add('intro', null, ['label' => 'Introduction text', 'help'=>'Shown on list and as first paragraph on workingGroup page'])
             ->add('description', null, ['label' => 'Description', 'help'=>'Shown after intro on workingGroup page'])
+            ->add('descriptionRegistered', null, ['label' => 'Description for registered participants', 'help'=>'Shown after intro on hackathon page for registered users. If left empty the general description is shown'])
             ->add('slug', null, ['label'=>'Url slug (the part after workingGroup/)'])
             ->add(
                 'contact',

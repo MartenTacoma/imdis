@@ -4,7 +4,11 @@
 
 {% block main %}
 <p><strong>{{hackathon.intro}}</strong></p>
+{% if is_granted('ROLE_USER') and hackathon.descriptionRegistered %}
+{{hackathon.descriptionRegistered|raw}}
+{% else %}
 {{hackathon.description|raw}}
+{% endif %}
 {% endblock %}
 
 {% block side %}

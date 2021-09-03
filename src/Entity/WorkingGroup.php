@@ -60,6 +60,11 @@ class WorkingGroup
      */
     private $links;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $descriptionRegistered;
+
     public function __construct()
     {
         $this->contact = new ArrayCollection();
@@ -235,6 +240,18 @@ class WorkingGroup
                 $link->setWorkingGroup(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescriptionRegistered(): ?string
+    {
+        return $this->descriptionRegistered;
+    }
+
+    public function setDescriptionRegistered(?string $descriptionRegistered): self
+    {
+        $this->descriptionRegistered = $descriptionRegistered;
 
         return $this;
     }
