@@ -3,6 +3,7 @@
 {% set pagetitle = 'Committees' %}
 
 {% block body %}
+{% if is_granted('ROLE_ADMIN') %}<a href="{{ path('committee_manage') }}">Edit committees</a>{% endif %}
 <div class="committees">
     {% for committee in committees %}
     <div>
@@ -12,6 +13,7 @@
     <li>{{person.name}}</li>
     {% endfor %}
     </ul>
+    {% if committee.url %}<a href="{{ committee.url }}">Read more</a>{% endif %}
     </div>
     {% endfor %}
 </div>

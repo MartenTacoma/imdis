@@ -1,5 +1,6 @@
 {{ form_start(form) }}
     {{form_row(form.name)}}
+    {{form_row(form.url)}}
     <strong>People (name | sort)</strong>
     <ul class="subform people" data-prototype="{{ form_widget(form.people.vars.prototype)|e('html_attr') }}">
     {% for chair in form.people %}

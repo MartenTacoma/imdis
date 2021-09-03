@@ -14,6 +14,7 @@ class CommitteeType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('url', null, ['label'=>'Read more link'])
             ->add(
                 'people',
                 CollectionType::class,
