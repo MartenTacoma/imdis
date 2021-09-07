@@ -4,6 +4,8 @@
 
 {% block side %}
 <div class="sticky">
+<div><a href="{{ event ? path('user_countries_event_csv', {'event': event.slug}) : path('user_countries_csv') }}">Download as csv</a></div>
+
 <div><table class="table" style="width:100%">
     <tr><th>Registrations</th><td>{{ stats.total }}</td></tr>
     <tr><th>Countries</th><td>{{ stats.countries }}</td></tr>

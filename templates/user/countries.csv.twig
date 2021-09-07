@@ -1,0 +1,4 @@
+"Continent","Country","Registrations"
+{% for country in countries %}
+"{{country.continent}}","{{country.name}}","{{country.registrations}}"
+{% endfor %}

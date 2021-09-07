@@ -56,6 +56,7 @@
     {% if stats.countries > 0 %}
         <div>
             {% include 'user/map.html.twig' %}
+            {% if is_granted('ROLE_ALL_REGISTRATIONS') %}<a href="{{ event ? path('user_countries_event', {'event': event.slug}) : path('user_countries') }}">List all countries</a>{% endif %}
         </div>
     {% endif %}
 </div>

@@ -25,19 +25,48 @@ class UserController extends AbstractController
         'View presentation consent lists' => 'ROLE_CONSENT'
     ];
     
+    /**
+     * @Route("/countries.csv", name="user_countries_csv", methods={"GET"})
+     * @Route("/{event}/countries.csv", name="user_countries_event_csv", methods={"GET"})
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
+     */
+    function user_countries_csv(UserRepository $userRepository, EventRepository $eventRepository, $event = null): Response
+    {
+        if (!empty($event)){
+            $event = $eventRepository->findOneBySlug($event);
+            if (empty($event)){
+                throw $this->createNotFoundException();
+            }
+        }
+        $this->countries = $userRepository->findAllCountries($event);
+        
+        $response = $this->render('user/countries.csv.twig', ['countries'=>$this->countries]);
+        // $response->headers->set('Content-Type', 'text/csv');
+        // $response->headers->set('Content-Disposition', 'attachment; filename="'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
+        return $response;
+    }
     
     /**
      * @Route("/countries", name="user_countries", methods={"GET"})
+     * @Route("/{event}/countries", name="user_countries_event", methods={"GET"})
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    function user_countries(UserRepository $userRepository): Response
+    function user_countries(UserRepository $userRepository, EventRepository $eventRepository, $event = null): Response
     {
-        $this->countries = $userRepository->findAllCountries();
+        if (!empty($event)){
+            $event = $eventRepository->findOneBySlug($event);
+            if (empty($event)){
+                throw $this->createNotFoundException();
+            }
+        }
+        $this->countries = $userRepository->findAllCountries($event);
         $this->map();
         return $this->render('user/statistics.html.twig', [
-            'stats' => $userRepository->findAllStatistics(),
+            'stats' => $userRepository->findAllStatistics($event),
             'countries' => $this->countries,
             'colors' => $this->colors ?? [],
-            'labels' => $this->labels ?? []
+            'labels' => $this->labels ?? [],
+            'event' => $event
         ]);
     }
     
@@ -267,7 +296,7 @@ class UserController extends AbstractController
         $events = $eventRepository->findAll();
         $response = $this->render('user/export.csv.twig', ['users'=>$users, 'events'=>$events, 'event'=>$event]);
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="WORKINGNAME_'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
         return $response;
     }
 }
