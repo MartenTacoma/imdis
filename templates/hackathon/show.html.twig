@@ -14,7 +14,7 @@
 <div>
 <ul>
 {% for contact in hackathon.contact %}
-<li><strong>{{contact.name}}</strong>{% if contact.email %} - <a href="mailto:{{contact.email}}">{{contact.email}}</a>{% endif %}{% if contact.orcid %} - <a href="https://orcid.org/{{contact.orcid}}">{{contact.orcid}}</a>{% endif %}{% if contact.bio %}<br/>{{ contact.bio }}{% endif %}</li>
+<li><strong>{{contact.name}}</strong>{% if contact.email %} - <a href="mailto:{{contact.email}}">{{contact.email}}</a>{% endif %}{% if contact.orcid %} - <a href="https://orcid.org/{{contact.orcid}}"><span class="icon-orcid"></span> {{contact.orcid}}</a>{% endif %}{% if contact.bio %}<br/>{{ contact.bio }}{% endif %}</li>
 {% endfor %}
 </ul>
 </div>
