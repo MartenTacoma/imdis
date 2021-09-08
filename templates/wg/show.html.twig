@@ -9,6 +9,18 @@
 {% else %}
 {{wg.description|raw}}
 {% endif %}
+
+{% if wg.contact|length %}
+<div>
+<ul>
+{% for contact in wg.contact %}
+<li><strong>{{contact.name}}</strong>{% if contact.email %} - <a href="mailto:{{contact.email}}">{{contact.email}}</a>{% endif %}{% if contact.orcid %} - <a href="https://orcid.org/{{contact.orcid}}">{{contact.orcid}}</a>{% endif %}{% if contact.bio %}<br/>{{ contact.bio }}{% endif %}</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+
 {% endblock %}
 
 {% block side %}
@@ -25,16 +37,6 @@
 <li>{{event}}</li>
 {% endfor %}
 </ul></div>
-{% endif %}
-
-{% if wg.contact|length %}
-<div><h3>Contact</h3>
-<ul>
-{% for contact in wg.contact %}
-<li><strong>{{contact.name}}</strong>{% if contact.email %} - <a href="mailto:{{contact.email}}">{{contact.email}}</a>{% endif %}{% if contact.orcid %} - <a href="https://orcid.org/{{contact.orcid}}">{{contact.orcid}}</a>{% endif %}{% if contact.bio %}<br/>{{ contact.bio }}{% endif %}</li>
-{% endfor %}
-</ul>
-</div>
 {% endif %}
 
 {% if wg.presentations|length %}
