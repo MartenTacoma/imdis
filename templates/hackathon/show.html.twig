@@ -12,6 +12,7 @@
 
 {% if hackathon.contact|length %}
 <div>
+<h2>Convener{% if hackathon.contact|length > 1%}s{% endif %}</h2>
 <ul>
 {% for contact in hackathon.contact %}
 <li><strong>{{contact.name}}</strong>{% if contact.email %} - <a href="mailto:{{contact.email}}">{{contact.email}}</a>{% endif %}{% if contact.orcid %} - <a href="https://orcid.org/{{contact.orcid}}"><span class="icon-orcid"></span> {{contact.orcid}}</a>{% endif %}{% if contact.bio %}<br/>{{ contact.bio }}{% endif %}</li>
