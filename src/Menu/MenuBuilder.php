@@ -80,7 +80,7 @@ class MenuBuilder
         $menu = $this->factory->createItem('root');
         $menu->addChild('Home', ['route' => 'index']);
         
-        $menu->addChild('General Info');
+        $menu->addChild('General Info', ['route' => 'general_info']);
         
         $uri = $this->router->generate('program_index_short');
         $menu['General Info']->addChild('Combined Programme', ['route' => 'program_index_short']);

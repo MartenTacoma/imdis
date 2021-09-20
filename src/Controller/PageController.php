@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\UserRepository;
@@ -144,6 +145,20 @@ class PageController extends AbstractController
             [
                 'pagetitle' => 'Guidelines',
                 'menu' => ['main', 'PDF IV', 'Guidelines']
+            ]
+        );
+    }
+    
+    /**
+     * @Route("/general_info", name="general_info")
+     */
+    public function general_info(): Response
+    {
+        return $this->render(
+            'page/menu.html.twig',
+            [
+                'pagetitle' => 'General Info',
+                'menu' => ['main', 'General Info']
             ]
         );
     }
