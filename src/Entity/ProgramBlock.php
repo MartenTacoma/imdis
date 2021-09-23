@@ -150,7 +150,7 @@ class ProgramBlock
     }
     
     public function getStatus(){
-        if (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_end->format('H:i')) + 900 + 7200){
+        if (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_end->format('H:i')) + 7200){
             return 'past';
         } elseif (time() > strtotime($this->date->format('Y-m-d') . ' '. $this->time_start->format('H:i')) - 900 + 7200) {
             return 'current';
