@@ -242,7 +242,31 @@ class UserController extends AbstractController
         return $this->index($userRepository, $eventRepository, true, $event);
     }
     
+
     /**
+     * @Route("/registrations.csv", name="user_csv", methods={"GET"})
+     * @Route("/{event}/registrations.csv", name="user_csv_event", methods={"GET"})
+     * @IsGranted("ROLE_ALL_REGISTRATIONS")
+     */
+    public function csv(UserRepository $userRepository, EventRepository $eventRepository, $event = null): Response
+    {
+        if(empty($event)){
+            $users = $userRepository->findAll();
+        } else {
+            $event = $eventRepository->findOneBySlug($event);
+            if (empty($event)){
+                throw $this->createNotFoundException();
+            }
+            $users = $event->getUsers();
+        }
+        $events = $eventRepository->findAll();
+        $response = $this->render('user/export.csv.twig', ['users'=>$users, 'events'=>$events, 'event'=>$event]);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
+        return $response;
+    }
+    
+        /**
      * @Route("/{event}/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository, EventRepository $eventRepository, $admin = false, $event='list'): Response
@@ -275,28 +299,5 @@ class UserController extends AbstractController
             'event' => $event,
             'events' => $eventRepository->findAll()
         ]);
-    }
-    
-    /**
-     * @Route("/registrations.csv", name="user_csv", methods={"GET"})
-     * @Route("/{event}/registrations.csv", name="user_csv_event", methods={"GET"})
-     * @IsGranted("ROLE_ALL_REGISTRATIONS")
-     */
-    public function csv(UserRepository $userRepository, EventRepository $eventRepository, $event = null): Response
-    {
-        if(empty($event)){
-            $users = $userRepository->findAll();
-        } else {
-            $event = $eventRepository->findOneBySlug($event);
-            if (empty($event)){
-                throw $this->createNotFoundException();
-            }
-            $users = $event->getUsers();
-        }
-        $events = $eventRepository->findAll();
-        $response = $this->render('user/export.csv.twig', ['users'=>$users, 'events'=>$events, 'event'=>$event]);
-        $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
-        return $response;
     }
 }
