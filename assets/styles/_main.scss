@@ -514,7 +514,12 @@ table.table {
 .takedown {
     margin: 20px 0;
     padding: 20px;
-    background: $mustard;
+    background: $accent1;
+    text-align: center;
+    color: white;
+    a {
+        color: white
+    }
 }
 
 textarea {

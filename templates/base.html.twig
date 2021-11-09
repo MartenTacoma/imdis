@@ -35,7 +35,7 @@
 {% endif %}
 </ol>
                 <h1>{% if pagetitle is defined %}{{ pagetitle|raw }}{% else %}Welcome{% endif %}</h1>
-                {# <div class="takedown">This website is a under construction. No guarantee can be given that information on this website is accurate.</div> #}
+                <div class="takedown"><strong>This website will be taken offline in the second half of December.</strong><br/>All content from the Southern Ocean Decade will remain available at <a href="https://www.sodecade.org/">the Southern Ocean Decade website</a>.<br/>All content from Polar Data Forum IV will remain available at <a href="https://polar-data-forum.org">the Polar Data Forum website</a>.</div>
                 {% for message in app.flashes('success') %}
                     <div class="alert alert-success">
                         {{ message }}
