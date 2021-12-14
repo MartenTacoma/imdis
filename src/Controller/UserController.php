@@ -41,8 +41,8 @@ class UserController extends AbstractController
         $this->countries = $userRepository->findAllCountries($event);
         
         $response = $this->render('user/countries.csv.twig', ['countries'=>$this->countries]);
-        // $response->headers->set('Content-Type', 'text/csv');
-        // $response->headers->set('Content-Disposition', 'attachment; filename="'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.(empty($event) ? '' : $event->getSlug(). '_').'registration_v'.date('Ymd_His').'.csv"');
         return $response;
     }
     
