@@ -19,6 +19,9 @@ class ProgramBlockRepository extends ServiceEntityRepository
         parent::__construct($registry, ProgramBlock::class);
     }
 
+    /**
+     * @return mixed
+     */
     public function findAll(){
         return $this->createQueryBuilder('p')
             ->orderBy('p.date, p.time_start', 'ASC')

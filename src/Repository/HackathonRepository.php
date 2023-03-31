@@ -19,6 +19,9 @@ class HackathonRepository extends ServiceEntityRepository
         parent::__construct($registry, Hackathon::class);
     }
     
+    /**
+     * @return mixed
+     */
     public function findAll(){
         return $this->findBy([], ['title' => 'ASC']);
     }

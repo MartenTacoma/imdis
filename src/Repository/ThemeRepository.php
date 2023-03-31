@@ -19,7 +19,9 @@ class ThemeRepository extends ServiceEntityRepository
         parent::__construct($registry, Theme::class);
     }
 
-    
+    /**
+     * @return mixed
+     */
     public function findAll(){
         return $this->findBy([], ['title' => 'ASC']);
     }

@@ -45,33 +45,35 @@ class MenuBuilder
         $date = null;
         $uri = $this->router->generate('program_index', ['event' => $slug]);
         $menu[$label]->addChild('Programme', ['route' => 'program_index', 'routeParameters' => ['event' => $slug]]);
-        foreach($this->registry->getRepository(Event::class)->findOneBySlug($slug)->getProgramBlocks()  as $block){
-            $anchor = $block->getAnchor();
-            if($block->getDate() != $date){
-                $menu[$label]['Programme']->addChild(
-                    $block->getDate()->format('l d F'),
-                    ['uri' => $uri . '#' . $block->getDate()->format('Ymd')]
+        if ($this->registry->getRepository(Event::class)->findOneBySlug($slug)){
+            foreach($this->registry->getRepository(Event::class)->findOneBySlug($slug)->getProgramBlocks()  as $block){
+                $anchor = $block->getAnchor();
+                if($block->getDate() != $date){
+                    $menu[$label]['Programme']->addChild(
+                        $block->getDate()->format('l d F'),
+                        ['uri' => $uri . '#' . $block->getDate()->format('Ymd')]
+                    );
+                    $date = $block->getDate();
+                }
+                $title = $block->getTimeStart()->format('H:i') . ' - ' . $block->getTimeEnd()->format('H:i');
+                foreach($block->getEvent() as $event){
+                    if($event->getSlug() != $slug){
+                        $title .= ' | with ' . $event->getAlias();
+                    }
+                }
+                foreach($block->getSession() as $session){
+                    if(!empty($session->getTitle())) {
+                        $title .= ' | ' . $session->getTitle();
+                    } elseif (!empty($session->getTheme())) {
+                        // $string .= $session->getTheme()->__toString();
+                    }
+                }
+                $menu[$label]['Programme'][$block->getDate()->format('l d F')]->addChild(
+                    $title,
+                    ['uri'=> $uri . '#' . $anchor]
                 );
-                $date = $block->getDate();
-            }
-            $title = $block->getTimeStart()->format('H:i') . ' - ' . $block->getTimeEnd()->format('H:i');
-            foreach($block->getEvent() as $event){
-                if($event->getSlug() != $slug){
-                    $title .= ' | with ' . $event->getAlias();
-                }
-            }
-            foreach($block->getSession() as $session){
-                if(!empty($session->getTitle())) {
-                    $title .= ' | ' . $session->getTitle();
-                } elseif (!empty($session->getTheme())) {
-                    // $string .= $session->getTheme()->__toString();
-                }
-            }
-            $menu[$label]['Programme'][$block->getDate()->format('l d F')]->addChild(
-                $title,
-                ['uri'=> $uri . '#' . $anchor]
-            );
-        };
+            };
+        }
         return $menu;
     }
     
@@ -117,21 +119,21 @@ class MenuBuilder
         $menu['General Info']->addChild('Committees', ['route'=>'committee_index']);
         $menu['General Info']->addChild('Contact', ['route'=>'contact']);
         
-        $menu->addChild('SO Decade', ['route' => 'event_intro', 'routeParameters' => ['event' => 'sodecade']]);
-        $menu = $this->createEventProgram($menu, 'sodecade', 'SO Decade');
-        $menu['SO Decade']->addChild('Working Groups', ['route'=> 'wg_public', 'routeParameters' => ['event' => 'sodecade']]);
-        foreach ($this->registry->getRepository(Event::class)->findOneBySlug('sodecade')->getWorkingGroups() as $wg){
-            $menu['SO Decade']['Working Groups']->addChild($wg->getTitle(), ['route'=> 'wg_show', 'routeParameters' => ['slug' => $wg->getSlug()]]);
-        }
-        $menu['SO Decade']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'sodecade']]);
+        // $menu->addChild('SO Decade', ['route' => 'event_intro', 'routeParameters' => ['event' => 'sodecade']]);
+        // $menu = $this->createEventProgram($menu, 'sodecade', 'SO Decade');
+        // $menu['SO Decade']->addChild('Working Groups', ['route'=> 'wg_public', 'routeParameters' => ['event' => 'sodecade']]);
+        // foreach ($this->registry->getRepository(Event::class)->findOneBySlug('sodecade')->getWorkingGroups() as $wg){
+        //     $menu['SO Decade']['Working Groups']->addChild($wg->getTitle(), ['route'=> 'wg_show', 'routeParameters' => ['slug' => $wg->getSlug()]]);
+        // }
+        // $menu['SO Decade']->addChild('Registrations', ['route'=>'user_index', 'routeParameters' => ['event' => 'sodecade']]);
         
         $menu->addChild('PDF IV', ['route' => 'event_intro', 'routeParameters' => ['event' => 'pdfiv']]);
         $menu = $this->createEventProgram($menu, 'pdfiv', 'PDF IV');
         // $menu['PDF IV']->addChild('Posters', ['route' => 'poster_index']);
-        $menu['PDF IV']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'pdfiv']]);
-        foreach ($this->registry->getRepository(Event::class)->findOneBySlug('pdfiv')->getHackathons() as $hackathon){
-            $menu['PDF IV']['Hackathons']->addChild($hackathon->getTitle(), ['route'=> 'hackathon_show', 'routeParameters' => ['slug' => $hackathon->getSlug()]]);
-        }
+        // $menu['PDF IV']->addChild('Hackathons', ['route'=> 'hackathon_public', 'routeParameters' => ['event' => 'pdfiv']]);
+        // foreach ($this->registry->getRepository(Event::class)->findOneBySlug('pdfiv')->getHackathons() as $hackathon){
+        //     $menu['PDF IV']['Hackathons']->addChild($hackathon->getTitle(), ['route'=> 'hackathon_show', 'routeParameters' => ['slug' => $hackathon->getSlug()]]);
+        // }
         // $uri = $this->router->generate('poster_index');
         // foreach($this->registry->getRepository(PosterSession::class)->findAll() as $session){
         //     $title = $session->__toString();
