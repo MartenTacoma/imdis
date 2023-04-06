@@ -8,6 +8,7 @@ use App\Repository\PosterSessionRepository;
 use App\Entity\Poster;
 use App\Form\PosterType;
 use App\Repository\PosterRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,14 +81,17 @@ class PosterController extends AbstractController
      * @Route("/session/new", name="poster_session_new", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function session_new(Request $request): Response
+    public function session_new(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $posterSession = new PosterSession();
         $form = $this->createForm(PosterSessionType::class, $posterSession);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($posterSession);
             $entityManager->flush();
 
@@ -115,13 +119,17 @@ class PosterController extends AbstractController
      * @Route("/session/{id}/edit", name="poster_session_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function session_edit(Request $request, PosterSession $posterSession): Response
+    public function session_edit(
+        Request $request,
+        PosterSession $posterSession,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(PosterSessionType::class, $posterSession);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('poster_session_index');
         }
@@ -136,10 +144,14 @@ class PosterController extends AbstractController
      * @Route("/session/{id}", name="poster_session_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function session_delete(Request $request, PosterSession $posterSession): Response
+    public function session_delete(
+        Request $request,
+        PosterSession $posterSession,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$posterSession->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($posterSession);
             $entityManager->flush();
         }
@@ -162,14 +174,17 @@ class PosterController extends AbstractController
      * @Route("/new", name="poster_new", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function new(Request $request): Response
+    public function new(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $poster = new Poster();
         $form = $this->createForm(PosterType::class, $poster);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($poster);
             $entityManager->flush();
             if(!empty($poster->getPreview()->getName())){
@@ -201,13 +216,17 @@ class PosterController extends AbstractController
      * @Route("/{id}/edit", name="poster_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function edit(Request $request, Poster $poster): Response
+    public function edit(
+        Request $request,
+        Poster $poster,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(PosterType::class, $poster);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
             if(!empty($poster->getPreview()->getName())){
                 $this->resizeImage('img/poster/thumbs/'.$poster->getPreview()->getName());
             }
@@ -232,10 +251,14 @@ class PosterController extends AbstractController
      * @Route("/{id}", name="poster_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function delete(Request $request, Poster $poster): Response
+    public function delete(
+        Request $request,
+        Poster $poster,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$poster->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($poster);
             $entityManager->flush();
         }

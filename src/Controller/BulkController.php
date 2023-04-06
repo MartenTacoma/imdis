@@ -8,6 +8,7 @@ use App\Entity\AbstractPerson;
 use App\Repository\ImdisAbstractRepository;
 use App\Repository\ThemeRepository;
 use App\Repository\PresentationTypeRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,11 +23,14 @@ class BulkController extends AbstractController
     /**
      * @Route("/oral")
      */
-    function index(ThemeRepository $themeRepository, PresentationTypeRepository $PresentationTypeRepository) {
-        
+    function index(
+        ThemeRepository $themeRepository,
+        PresentationTypeRepository $PresentationTypeRepository,
+        ManagerRegistry $doctrine
+    ) {
         $file = fopen('programma.csv', 'r');
         
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $doctrine->getManager();
         $labels = fgetcsv($file);
         while($line = array_combine($labels, fgetcsv($file))){
             $theme = $themeRepository->findOneByTitle($line['Session']);
@@ -71,11 +75,14 @@ class BulkController extends AbstractController
     /**
      * @Route("/poster")
      */
-    function poster(ThemeRepository $themeRepository) {
+    function poster(
+        ThemeRepository $themeRepository,
+        ManagerRegistry $doctrine
+    ) {
         
         $file = fopen('posters.csv', 'r');
         
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $doctrine->getManager();
 
         while($line = fgetcsv($file)){
             if(!empty(trim($line[0]))){

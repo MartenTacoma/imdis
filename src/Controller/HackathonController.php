@@ -6,6 +6,7 @@ use App\Entity\Hackathon;
 use App\Form\HackathonType;
 use App\Repository\HackathonRepository;
 use App\Repository\EventRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,14 +33,17 @@ class HackathonController extends AbstractController
      * @Route("/new", name="hackathon_new", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function new(Request $request): Response
+    public function new(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $hackathon = new Hackathon();
         $form = $this->createForm(HackathonType::class, $hackathon);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($hackathon);
             $entityManager->flush();
 
@@ -66,13 +70,17 @@ class HackathonController extends AbstractController
      * @Route("/{id}/edit", name="hackathon_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function edit(Request $request, Hackathon $hackathon): Response
+    public function edit(
+        Request $request,
+        Hackathon $hackathon,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(HackathonType::class, $hackathon);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('hackathon_index');
         }
@@ -87,10 +95,14 @@ class HackathonController extends AbstractController
      * @Route("/{id}", name="hackathon_delete", methods={"POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function delete(Request $request, Hackathon $hackathon): Response
+    public function delete(
+        Request $request,
+        Hackathon $hackathon,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$hackathon->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($hackathon);
             $entityManager->flush();
         }

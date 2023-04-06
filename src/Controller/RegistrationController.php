@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,7 +38,8 @@ class RegistrationController extends AbstractController
         Request $request,
         LoginFormAuthenticator $authenticator,
         UserPasswordHasherInterface $passwordHasher,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        ManagerRegistry $doctrine
     ): Response
     {
         if($this->getParameter('app.registration_status') !== 'open') {
@@ -55,16 +57,16 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 ));
 
-                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager = $doctrine->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
                 
                 $email = new TemplatedEmail();
-                $email->from(new Address('info@sodecade-pdf4.org', 'Southern Ocean Decade & Polar Data Forum Week 2021'))
+                $email->from(new Address('info@sodecade-pdf4.org', 'Polar Data Forum V'))
                     ->to($user->getEmail())
-                    ->subject('Registration confirmation Southern Ocean Decade & Polar Data Forum Week 2021')
+                    ->subject('Registration confirmation Polar Data Forum V')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
-                    ->replyTo(new Address('info@sodecade.org', 'Southern Ocean Decade & Polar Data Forum Week 2021'));
+                    ->replyTo(new Address('info@sodecade.org', 'Polar Data Forum V'));
                 $context = $email->getContext();
                 $context['user'] = $user;
 

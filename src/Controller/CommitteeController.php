@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Committee;
 use App\Form\CommitteeType;
 use App\Repository\CommitteeRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,14 +42,17 @@ class CommitteeController extends AbstractController
      * @Route("/new", name="committee_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function new(Request $request): Response
+    public function new(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $committee = new Committee();
         $form = $this->createForm(CommitteeType::class, $committee);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($committee);
             $entityManager->flush();
 
@@ -76,13 +80,16 @@ class CommitteeController extends AbstractController
      * @Route("/{id}/edit", name="committee_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function edit(Request $request, Committee $committee): Response
+    public function edit(
+        Request $request,
+        Committee $committee,
+        ManagerRegistry $doctrine): Response
     {
         $form = $this->createForm(CommitteeType::class, $committee);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('committee_index');
         }
@@ -97,10 +104,14 @@ class CommitteeController extends AbstractController
      * @Route("/{id}", name="committee_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function delete(Request $request, Committee $committee): Response
+    public function delete(
+        Request $request,
+        Committee $committee,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$committee->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($committee);
             $entityManager->flush();
         }

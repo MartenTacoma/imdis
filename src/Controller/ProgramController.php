@@ -13,6 +13,7 @@ use App\Form\PresentationType as PresentationForm;
 use App\Repository\PresentationRepository;
 use App\Repository\EventRepository;
 use App\Entity\PresentationType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,14 +64,17 @@ class ProgramController extends AbstractController
      * @Route("/block/new", name="program_block_new", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function block_new(Request $request): Response
+    public function block_new(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $programBlock = new ProgramBlock();
         $form = $this->createForm(ProgramBlockType::class, $programBlock);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($programBlock);
             $entityManager->flush();
 
@@ -98,13 +102,17 @@ class ProgramController extends AbstractController
      * @Route("/block/{id}/edit", name="program_block_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function block_edit(Request $request, ProgramBlock $programBlock): Response
+    public function block_edit(
+        Request $request,
+        ProgramBlock $programBlock,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(ProgramBlockType::class, $programBlock);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('program_block_index');
         }
@@ -119,10 +127,14 @@ class ProgramController extends AbstractController
      * @Route("/block/{id}", name="program_block_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function block_delete(Request $request, ProgramBlock $programBlock): Response
+    public function block_delete(
+        Request $request,
+        ProgramBlock $programBlock,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$programBlock->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($programBlock);
             $entityManager->flush();
         }
@@ -134,7 +146,11 @@ class ProgramController extends AbstractController
      * @Route("/block/{id}/session", name="program_block_session", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function session_block_new(Request $request, ProgramBlock $programBlock): Response
+    public function session_block_new(
+        Request $request,
+        ProgramBlock $programBlock,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $programSession = new ProgramSession();
         $programSession->setBlock($programBlock);
@@ -142,7 +158,7 @@ class ProgramController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($programSession);
             $entityManager->flush();
 
@@ -170,12 +186,16 @@ class ProgramController extends AbstractController
      * @Route("/session/{id}/edit", name="program_session_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function session_edit(Request $request, ProgramSession $programSession): Response
+    public function session_edit(
+        Request $request,
+        ProgramSession $programSession,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(ProgramSessionType::class, $programSession);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('program_session_show', ['id' => $programSession->getId()]);
         }
@@ -190,10 +210,14 @@ class ProgramController extends AbstractController
      * @Route("/session/{id}", name="program_session_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function session_delete(Request $request, ProgramSession $programSession): Response
+    public function session_delete(
+        Request $request,
+        ProgramSession $programSession,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$programSession->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($programSession);
             $entityManager->flush();
         }
@@ -205,7 +229,11 @@ class ProgramController extends AbstractController
      * @Route("/session/{id}/presentation", name="presentation_new", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function new(Request $request, ProgramSession $programSession): Response
+    public function new(
+        Request $request,
+        ProgramSession $programSession,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $presentation = new Presentation();
         $presentation->setProgramSession($programSession);
@@ -213,14 +241,14 @@ class ProgramController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($presentation);
             $entityManager->flush();
 
             return $this->redirectToRoute('program_session_show', ['id' => $programSession->getId()]);
         }
         
-        $repository = $this->getDoctrine()->getRepository(PresentationType::class);
+        $repository = $doctrine->getRepository(PresentationType::class);
         
         $types = $repository->findAll();
         
@@ -235,18 +263,22 @@ class ProgramController extends AbstractController
      * @Route("/presentation/{id}/edit", name="presentation_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function edit(Request $request, Presentation $presentation): Response
+    public function edit(
+        Request $request,
+        Presentation $presentation,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(PresentationForm::class, $presentation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('program_index');
         }
 
-        $repository = $this->getDoctrine()->getRepository(PresentationType::class);
+        $repository = $doctrine->getRepository(PresentationType::class);
         
         $types = $repository->findAll();
         
@@ -261,10 +293,14 @@ class ProgramController extends AbstractController
      * @Route("/presentation/{id}", name="presentation_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function delete(Request $request, Presentation $presentation): Response
+    public function delete(
+        Request $request,
+        Presentation $presentation,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$presentation->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($presentation);
             $entityManager->flush();
         }
@@ -311,7 +347,7 @@ class ProgramController extends AbstractController
                 'program/public.html.twig',
                 [
                     'program' => $programBlockRepository->findAll(),
-                    'intro' => 'Welcome to Southern Ocean Decade & Polar Data Forum Week 2021. Southern Ocean Decade & Polar Data Forum Week 2021 is entirely online.'
+                    'intro' => 'Welcome to Polar Data Forum V. Polar Data Forum Vis entirely online.'
                 ]
             );
         } else {

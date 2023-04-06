@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Theme;
 use App\Form\ThemeType;
 use App\Repository\ThemeRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,14 +31,17 @@ class ThemeController extends AbstractController
      * @Route("/new", name="theme_new", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function new(Request $request): Response
+    public function new(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $theme = new Theme();
         $form = $this->createForm(ThemeType::class, $theme);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($theme);
             $entityManager->flush();
 
@@ -65,13 +69,17 @@ class ThemeController extends AbstractController
      * @Route("/{id}/edit", name="theme_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function edit(Request $request, Theme $theme): Response
+    public function edit(
+        Request $request,
+        Theme $theme,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(ThemeType::class, $theme);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('theme_index');
         }
@@ -86,10 +94,14 @@ class ThemeController extends AbstractController
      * @Route("/{id}", name="theme_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function delete(Request $request, Theme $theme): Response
+    public function delete(
+        Request $request,
+        Theme $theme,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$theme->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($theme);
             $entityManager->flush();
         }

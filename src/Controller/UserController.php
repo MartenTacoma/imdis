@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Repository\EventRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -140,7 +141,10 @@ class UserController extends AbstractController
      * @Route("/edit", name="registration_edit", methods={"GET", "POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function self_edit(Request $request): Response
+    public function self_edit(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -149,7 +153,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('user_self');
         }
@@ -165,14 +169,17 @@ class UserController extends AbstractController
      * @Route("/new", name="user_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function new(Request $request): Response
+    public function new(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -200,13 +207,17 @@ class UserController extends AbstractController
      * @Route("/{id<\d+>}/edit", name="user_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(
+        Request $request,
+        User $user,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('user_admin');
         }
@@ -221,10 +232,13 @@ class UserController extends AbstractController
      * @Route("/{id}", name="user_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_ALL_REGISTRATIONS")
      */
-    public function delete(Request $request, User $user): Response
+    public function delete(
+        Request $request,
+        User $user,
+        ManagerRegistry $doctrine): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
         }
@@ -295,7 +309,7 @@ class UserController extends AbstractController
             'countries' => $this->countries,
             'colors' => $this->colors ?? [],
             'labels' => $this->labels ?? [],
-            'eventName' => empty($event) ? 'Southern Ocean Decade & Polar Data Forum Week 2021' : $event->getName(),
+            'eventName' => empty($event) ? 'Polar Data Forum V' : $event->getName(),
             'event' => $event,
             'events' => $eventRepository->findAll()
         ]);

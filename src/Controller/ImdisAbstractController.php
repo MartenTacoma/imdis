@@ -6,6 +6,7 @@ use App\Entity\ImdisAbstract;
 use App\Form\ImdisAbstractType;
 use App\Repository\ImdisAbstractRepository;
 use App\Repository\ThemeRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,14 +43,17 @@ class ImdisAbstractController extends AbstractController
      * @Route("/new", name="imdis_abstract_new", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function new(Request $request): Response
+    public function new(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $imdisAbstract = new ImdisAbstract();
         $form = $this->createForm(ImdisAbstractType::class, $imdisAbstract);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($imdisAbstract);
             $entityManager->flush();
 
@@ -76,13 +80,17 @@ class ImdisAbstractController extends AbstractController
      * @Route("/{imdisId}/edit", name="imdis_abstract_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function edit(Request $request, ImdisAbstract $imdisAbstract): Response
+    public function edit(
+        Request $request,
+        ImdisAbstract $imdisAbstract,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(ImdisAbstractType::class, $imdisAbstract);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('imdis_abstract_manage');
         }
@@ -97,10 +105,14 @@ class ImdisAbstractController extends AbstractController
      * @Route("/{id}", name="imdis_abstract_delete", methods={"DELETE","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function delete(Request $request, ImdisAbstract $imdisAbstract): Response
+    public function delete(
+        Request $request,
+        ImdisAbstract $imdisAbstract,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$imdisAbstract->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($imdisAbstract);
             $entityManager->flush();
         }

@@ -6,6 +6,7 @@ use App\Entity\WorkingGroup;
 use App\Form\WorkingGroupType;
 use App\Repository\WorkingGroupRepository;
 use App\Repository\EventRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,14 +33,17 @@ class WorkingGroupController extends AbstractController
      * @Route("/new", name="wg_new", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function new(Request $request): Response
+    public function new(
+        Request $request,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $wg = new WorkingGroup();
         $form = $this->createForm(WorkingGroupType::class, $wg);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($wg);
             $entityManager->flush();
 
@@ -76,13 +80,17 @@ class WorkingGroupController extends AbstractController
      * @Route("/{id}/edit", name="wg_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function edit(Request $request, WorkingGroup $wg): Response
+    public function edit(
+        Request $request,
+        WorkingGroup $wg,
+        ManagerRegistry $doctrine
+    ): Response
     {
         $form = $this->createForm(WorkingGroupType::class, $wg);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('wg_index');
         }
@@ -97,10 +105,14 @@ class WorkingGroupController extends AbstractController
      * @Route("/{id}", name="wg_delete", methods={"POST"})
      * @IsGranted("ROLE_EDIT_PROGRAM")
      */
-    public function delete(Request $request, WorkingGroup $wg): Response
+    public function delete(
+        Request $request,
+        WorkingGroup $wg,
+        ManagerRegistry $doctrine
+    ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$wg->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->remove($wg);
             $entityManager->flush();
         }
