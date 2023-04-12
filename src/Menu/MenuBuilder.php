@@ -114,8 +114,8 @@ class MenuBuilder
             );
         };
         
-        $menu['General Info']->addChild('Access Live Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Zoom)', ['route'=>'zoom']);
-        $menu['General Info']->addChild('Access Informal Sessions of Southern Ocean Decade & Polar Data Forum Week 2021 (Wonder.me)', ['route'=>'wonderme']);
+        $menu['General Info']->addChild('Access Live Sessions of Polar Data Forum V (Zoom)', ['route'=>'zoom']);
+        $menu['General Info']->addChild('Access Informal Sessions of Polar Data Forum V (Wonder.me)', ['route'=>'wonderme']);
         $menu['General Info']->addChild('Committees', ['route'=>'committee_index']);
         $menu['General Info']->addChild('Contact', ['route'=>'contact']);
         

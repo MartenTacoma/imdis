@@ -107,7 +107,7 @@ class RegistrationFormType extends AbstractType
             ])
             // ->add('registrationType', ChoiceType::class, [
             //     'mapped' => false,
-            //     'label' => 'Are you presenter at Southern Ocean Decade & Polar Data Forum Week 2021?',
+            //     'label' => 'Are you presenter at Polar Data Forum V?',
             //         'help' => 'You are presenter if your name is bold on the program or poster list',
             //         'choices' => [
             //             'No'=>'no',
